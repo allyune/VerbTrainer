@@ -7,15 +7,6 @@ namespace VerbTrainer.Models.Domain
 {
 	public class Conjugation
     {
-        [Key, Column(Order = 0)]
-        public Guid VerbId { get; set; }
-
-        [Key, Column(Order = 1)]
-        public Guid TenseId { get; set; }
-
-        public string Text { get; set; }
-        public string Transcription { get; set; }
-        public string Meaning { get; set; }
 
         [ForeignKey("VerbId")]
         public Verb Verb { get; set; }
@@ -23,6 +14,13 @@ namespace VerbTrainer.Models.Domain
         [ForeignKey("TenseId")]
         public Tense Tense { get; set; }
 
+        public string Text { get; set; }
+        public string Transcription { get; set; }
+        public string Meaning { get; set; }
+
+
+        public Guid VerbId { get; set; }
+        public Guid TenseId { get; set; }
     }
 }
 
