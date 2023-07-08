@@ -7,7 +7,6 @@ namespace VerbTrainer.Models.Domain
 {
 	public class Conjugation
     {
-
         [ForeignKey("VerbId")]
         public Verb Verb { get; set; }
 
@@ -19,8 +18,8 @@ namespace VerbTrainer.Models.Domain
         public string Meaning { get; set; }
 
 
-        public Guid VerbId { get; set; }
-        public Guid TenseId { get; set; }
+        public int VerbId { get; set; }
+        public int TenseId { get; set; }
     }
 }
 
