@@ -9,8 +9,6 @@ namespace VerbTrainer.Models.Domain
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-
-        public ICollection<Conjugation> Conjugations { get; set; }
     }
 }
 
