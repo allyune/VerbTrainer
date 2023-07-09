@@ -1,6 +1,12 @@
-﻿@{
+﻿@using HebrewVerbs
+
+@model List<Verb>
+
+@{
     ViewData["Title"] = "Home Page";
 }
+
+
 <div class="navbar-secondary">
     <div>
         <select class="form-select">
@@ -34,18 +40,15 @@
                 <div>Meaning</div>
                 <div>Verb</div>
             </div>
-            <div class="table-row">
-                <div>Binyan 1</div>
-                <div>Root 1</div>
-                <div>Meaning 1</div>
-                <div>Verb 1</div>
-            </div>
-            <div class="table-row">
-                <div>Binyan 2</div>
-                <div>Root 2</div>
-                <div>Meaning 2</div>
-                <div>Verb 2</div>
-            </div>
+            @foreach (var verb in Model)
+                {
+                    <div class="table-row">
+                        <div>@verb.Binyan</div>
+                        <div>@verb.Root</div>
+                        <div>@verb.Meaning </div>
+                        <div>@verb.Name </div>
+                    </div>
+                }
         </div>
         <!-- Add more table rows as needed -->
     </div>
@@ -99,4 +102,4 @@
             <div id="trainer-container"></div>
         </div>
     </div>
-    </div>
+</div>

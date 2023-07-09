@@ -36,7 +36,7 @@ main {
 html, body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    height: 100%;
 }
 
 .navbar {
@@ -69,9 +69,8 @@ html, body {
 }
 
 .main-container {
-/*    height: 100vh;*/
+    height: calc(100vh - 150px);
     display: flex;
-    justify-content: flex-start;
 }
 
 /*Left side of the app */
@@ -79,16 +78,15 @@ html, body {
 .left-container {
     padding: 20px;
     width: 50%;
-    flex: 0 0 auto;
+    overflow-y: hidden;
 }
 
 .table-container {
     overflow-y: auto;
+    max-height: calc(100vh - 150px);
     display: grid;
     grid-template-columns: 1fr;
-/*    height: 90%;*/
 }
-
 
 .table-controls {
     display: flex;
@@ -181,6 +179,7 @@ html, body {
     width: 50%;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .right-top {
