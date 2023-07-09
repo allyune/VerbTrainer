@@ -7,10 +7,8 @@ namespace VerbTrainer.Models.Domain
 
 	public class Tense
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 		public string Name { get; set; }
-
-        public ICollection<Conjugation> Conjugations { get; set; }
     }
 }
 

@@ -4,26 +4,26 @@ using VerbTrainer.Models.Domain;
 
 namespace VerbTrainer.Data
 {
-	public class VerbTrainerDbContext: DbContext
+	public class VerbTrainerDbContext : DbContext
 	{
 
-        public VerbTrainerDbContext(DbContextOptions options) : base(options)
-        {
+		public VerbTrainerDbContext(DbContextOptions options) : base(options)
+		{
 
-        }
+		}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Conjugation>()
-                .HasKey(c => new { c.VerbId, c.TenseId });
-        }
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Conjugation>()
+				.HasKey(c => new { c.VerbId, c.TenseId });
+		}
 
-        public DbSet<Binyan> binyans { get; set; }
-        public DbSet<Verb> verbs { get; set; }
-        public DbSet<Tense> tenses { get; set; }
-        public DbSet<Conjugation> conjugations { get; set; }
+		public DbSet<Binyan> Binyanim { get; set; }
+		public DbSet<Verb> Verbs { get; set; }
+		public DbSet<Tense> Tenses { get; set; }
+		public DbSet<Conjugation> Conjugations { get; set; }
 
 
-    }
+	}
 }
 
