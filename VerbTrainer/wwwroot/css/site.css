@@ -6,6 +6,10 @@
   html {
     font-size: 16px;
   }
+
+   .container {
+        max-width: 100%;
+   }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -13,10 +17,252 @@
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.navbar {
+    margin-bottom: 0px!important;
+}
+
+.navbar-secondary {
+    width: 100%;
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 10px;
+    margin-top: 0;
+}
+
+.form-select {
+    background-color: #f1f1f1;
+    border: none;
+}
+
+.navbar-secondary div {
+    margin-right: 10px!important;
+}
+
+.container {
+    margin: 0 0!important;
+    padding: 0 0!important;
+    width: 100%!important;
+}
+
+.main-container {
+/*    height: 100vh;*/
+    display: flex;
+    justify-content: flex-start;
+}
+
+/*Left side of the app */
+
+.left-container {
+    padding: 20px;
+    width: 50%;
+    flex: 0 0 auto;
+}
+
+.table-container {
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+/*    height: 90%;*/
+}
+
+
+.table-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #18AEB8;
+    padding: 5px 15px;
+}
+
+.btn-table {
+    background-color: #464EA3;
+    color: white;
+}
+
+.btn-table:hover {
+    background-color: #545cb3;
+    color: white;
+}
+
+
+.table-header {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: stretch;
+    gap: 0px;
+    background-color: #f1f1f1;
+    font-weight: bold;
+    text-align: center;
+}
+
+.table-header div {
+    position: relative;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.table-header div:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background-image: linear-gradient(darkgrey 33%, transparent 0);
+    background-position: right;
+    background-size: 1px 3px;
+    background-repeat: repeat-y;
+}
+
+
+.table-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: stretch;
+    gap: 0;
+    background-color: #fff;
+    margin: 0;
+    text-align: center;
+}
+
+.table-row div {
+    position: relative;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.table-row div:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background-image: linear-gradient(darkgrey 33%, transparent 0);
+    background-position: right;
+    background-size: 1px 3px;
+    background-repeat: repeat-y;
+}
+
+
+/*Right side of the app*/
+.right-container {
+    padding: 20px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-top {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.right-top div:first-child {
+    margin-right: 20px;
+}
+
+.right-container > div {
+margin-bottom: 20px;
+}
+
+#delay-text {
+    text-transform: uppercase;
+    margin-top: 10px;
+    font-size: 1 rem;
+    margin: 10px 0;
+}
+
+#delay-inputs {
+    display: flex;
+}
+
+.checkbox-label {
+    text-transform: uppercase;
+}
+
+.timer-container {
+    padding: 10px;
+    border: 1px dotted darkgrey;
+}
+
+#delay-inputs input[type="number"] {
+    max-width: 60px;
+    border: none;
+    border-bottom: 1px solid darkgrey;
+}
+
+#delay-inputs label {
+    font-size: 0.8rem;
+}
+
+#delay-inputs > div:first-child {
+    margin-right: 10px;
+}
+
+#btn-start {
+    background-color: #18AEB8;
+    color: white;
+    text-transform: uppercase;
+}
+
+#btn-start svg {
+    width: 30px;
+    height: 30px;
+}
+
+#btn-start:hover {
+    background-color: #30b6bf;
+}
+
+.checkboxes {
+    display: flex;
+    margin-top: 10px;
+}
+
+.checkboxes label {
+    font-size: 0.8rem;
+}
+
+#right-bottom {
+    flex: 1 1 auto;
+    position: relative;
+}
+
+#trainer-container {
+    background-color: #18AEB8;
+    width: 100%;
+    height: 100%;
 }

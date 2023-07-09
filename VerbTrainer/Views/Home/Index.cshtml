@@ -1,9 +1,102 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="navbar-secondary">
+    <div>
+        <select class="form-select">
+            <option selected value="hebrew">Hebrew mode</option>
+            <option value="english">English mode</option>
+        </select>
+    </div>
+    <div>
+        <select class="form-select">
+            <option selected value="allVerbs"> All verbs</option>
+            <option value="favourites">Favourites</option>
+        </select>
+    </div>
 </div>
 
+<div class="main-container">
+    <div class="left-container">
+        <div class="table-container">
+            <div class="table-controls">
+                <div>
+                    <button class="btn-table btn btn-sm btn-info">Sort by visibility</button>
+                    <button class="btn-table btn btn-sm btn-info">Shuffle</button>
+                </div>
+                <div>
+                    <input type="text" class="form-control form-control-sm" placeholder="Search">
+                </div>
+            </div>
+            <div class="table-header">
+                <div>Binyan</div>
+                <div>Root</div>
+                <div>Meaning</div>
+                <div>Verb</div>
+            </div>
+            <div class="table-row">
+                <div>Binyan 1</div>
+                <div>Root 1</div>
+                <div>Meaning 1</div>
+                <div>Verb 1</div>
+            </div>
+            <div class="table-row">
+                <div>Binyan 2</div>
+                <div>Root 2</div>
+                <div>Meaning 2</div>
+                <div>Verb 2</div>
+            </div>
+        </div>
+        <!-- Add more table rows as needed -->
+    </div>
+
+    <div class="right-container">
+
+        <div class="right-top">
+            <div class="trainer-setting-container">
+                <div class="timer-container">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="enableTimer">
+                        <label class="form-check-label checkbox-label" for="enableTimer">Enable timer</label>
+                    </div>
+                    <p id="delay-text">Delay</p>
+                    <div id="delay-inputs">
+                        <div>
+                            <label for="question" class="checkbox-label">Question:</label>
+                            <input type="number" id="question">
+                        </div>
+                        <div>
+                            <label for="answer" class="checkbox-label">Answer:</label>
+                            <input type="number" id="answer">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkboxes">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="includeTenses">
+                        <label class="form-check-label checkbox-label" for="includeTenses">
+                            Include tenses
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="goBackwards">
+                        <label class="form-check-label checkbox-label" for="goBackwards">
+                            Go backwards
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button type="button" class="btn btn-lg" id="btn-start">
+                    Start training <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                        <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="right-bottom">
+            <div id="trainer-container"></div>
+        </div>
+    </div>
+    </div>
