@@ -26,7 +26,7 @@ public class HomeController : Controller
             verb => verb.BinyanId,
             binyan => binyan.Id,
             (verb, binyan) => new Verb
-            {
+            {   Id = verb.Id,
                 Name = verb.Name,
                 Binyan = binyan.Name,
                 Root = verb.Root,
@@ -36,9 +36,23 @@ public class HomeController : Controller
         return View(verbs);
     }
 
-    public IActionResult Privacy()
+    [HttpGet]
+    public IActionResult GetVerbConjugations(int id)
     {
-        return View();
+        var conjugations = _dbContext.Conjugations
+            .Join(_dbContext.Tenses,
+            conjugation => conjugation.TenseId,
+            tense => tense.Id,
+            (conjugation, tense) => new Conjugation
+            {
+                Meaning = conjugation.Meaning,
+                Tense = tense.Name,
+                Text = conjugation.Text,
+                VerbId = conjugation.VerbId,
+                Transcription = conjugation.Transcription
+            })
+            .Where(c => c.VerbId == id).ToList(); ;
+        return Json(conjugations);
     }
 
     private readonly VerbTrainerDbContext _dbContext;

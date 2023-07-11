@@ -17,4 +17,41 @@
             }
         }
     });
+
+    var tableRows = document.querySelectorAll(".table-row");
+    tableRows.forEach(row => {
+        row.addEventListener('click', async function () {
+            var verbId = this.getAttribute('verb-id');
+            try {
+                let response = await fetch(`/Home/GetVerbConjugations/${verbId}`);
+                if (!response.ok) throw response.status;
+                let verbConjugations = await response.json();
+                var trainerContainer = document.getElementById('trainer-container');
+                trainerContainer.innerHTML = '';
+                for (var conjugation of verbConjugations) {
+                    var conjDiv = document.createElement('div');
+                    conjDiv.classList.add('conj-div')
+                    //Meaning
+                    var conjMeaning = document.createElement('p');
+                    conjMeaning.innerHTML = conjugation.meaning
+                    conjDiv.appendChild(conjMeaning);
+                    //Text
+                    var conjText = document.createElement('p');
+                    conjText.innerHTML = conjugation.text
+                    conjDiv.appendChild(conjText);
+                    //Transcriptio
+                    var conjTranscription = document.createElement('p');
+                    conjTranscription.innerHTML = conjugation.transcription
+                    conjDiv.appendChild(conjTranscription);
+
+                    trainerContainer.appendChild(conjDiv);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        })
+    })
 });
+
+
+

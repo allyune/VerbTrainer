@@ -24,7 +24,7 @@
 
 <div class="main-container">
     <div class="left-container">
-        <div class="table-container">
+        <div id="table-container">
             <div class="table-controls">
                 <div>
                     <button class="btn-table btn btn-sm btn-info">Sort by visibility</button>
@@ -43,7 +43,7 @@
 
            @foreach (var verb in Model)
                 {
-                    <div class="table-row">
+                    <div class="table-row" verb-id="@verb.Id">
                         <div class="binyan">@verb.Binyan</div>
                         <div class="root">@verb.Root</div>
                         <div class="meaning">@verb.Meaning </div>
@@ -51,7 +51,6 @@
                     </div>
                 }
         </div>
-        <!-- Add more table rows as needed -->
     </div>
 
     <div class="right-container">
@@ -67,11 +66,11 @@
                     <div id="delay-inputs">
                         <div>
                             <label for="question" class="checkbox-label">Question:</label>
-                            <input type="number" id="question">
+                            <input type="number" id="question" min="1">
                         </div>
                         <div>
                             <label for="answer" class="checkbox-label">Answer:</label>
-                            <input type="number" id="answer">
+                            <input type="number" id="answer" min="1">
                         </div>
                     </div>
                 </div>
@@ -100,7 +99,8 @@
         </div>
 
         <div id="right-bottom">
-            <div id="trainer-container"></div>
+            <div id="trainer-container">
+            </div>
         </div>
     </div>
 </div>

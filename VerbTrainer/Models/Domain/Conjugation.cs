@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VerbTrainer.Models.Domain
 {
-	public class Conjugation
+    public class Conjugation
     {
         [ForeignKey("VerbId")]
         public Verb Verb { get; set; }

@@ -9,13 +9,13 @@ namespace VerbTrainer.Models.Domain
 		public string Name { get; set; }
 		public string Root { get; set; }
 		public string Meaning { get; set; }
-        public ICollection<Conjugation> Conjugations { get; set; }
+		public ICollection<Conjugation> Conjugations { get; set; }
 
-        [ForeignKey("Binyan")]
-        public int BinyanId { get; set; }
-        public Binyan Binyan { get; set; }
+		[ForeignKey("Binyan")]
+		public int BinyanId { get; set; }
+		public Binyan Binyan { get; set; }
 
 
-    }
+	}
 
 }
