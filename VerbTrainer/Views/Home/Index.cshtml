@@ -31,7 +31,7 @@
                     <button class="btn-table btn btn-sm btn-info">Shuffle</button>
                 </div>
                 <div>
-                    <input type="text" class="form-control form-control-sm" placeholder="Search">
+                    <input type="text" class="form-control form-control-sm" id="verb-search" placeholder="Search">
                 </div>
             </div>
             <div class="table-header">
@@ -40,13 +40,14 @@
                 <div>Meaning</div>
                 <div>Verb</div>
             </div>
-            @foreach (var verb in Model)
+
+           @foreach (var verb in Model)
                 {
                     <div class="table-row">
-                        <div>@verb.Binyan</div>
-                        <div>@verb.Root</div>
-                        <div>@verb.Meaning </div>
-                        <div>@verb.Name </div>
+                        <div class="binyan">@verb.Binyan</div>
+                        <div class="root">@verb.Root</div>
+                        <div class="meaning">@verb.Meaning </div>
+                        <div class="name">@verb.Name </div>
                     </div>
                 }
         </div>
