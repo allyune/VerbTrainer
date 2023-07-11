@@ -39,7 +39,7 @@
                     var conjText = document.createElement('p');
                     conjText.innerHTML = conjugation.text
                     conjDiv.appendChild(conjText);
-                    //Transcriptio
+                    //Transcription
                     var conjTranscription = document.createElement('p');
                     conjTranscription.innerHTML = conjugation.transcription
                     conjDiv.appendChild(conjTranscription);
