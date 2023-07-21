@@ -36,9 +36,17 @@ function tableSearch(searchText) {
             row.style.display = '';
         }
     }
-    };
+};
+
+function styleActiveRow(row) {
+    row.classList.add('row-clicked')
+}
 
 document.addEventListener('DOMContentLoaded', function () {
+    var trainingInProgress = false;
+    var activeRow = document.querySelector('.table-row')
+    styleActiveRow(activeRow);
+    loadConjugations(activeRow.getAttribute('verb-id'));
     var searchInput = document.getElementById('verb-search');
     searchInput.addEventListener('input', function () {
         var searchText = this.value.toLowerCase();
@@ -48,20 +56,22 @@ document.addEventListener('DOMContentLoaded', function () {
     tableRows.forEach(row => {
         row.addEventListener('click', async function () {
             var verbId = this.getAttribute('verb-id');
+            activeRow.classList.toggle('row-clicked');
+            activeRow = this;
+            styleActiveRow(this);
             try {
                 loadConjugations(verbId)
             }
             catch (e) {
             console.log(e);
-        }
+            }
+        })
     })
-})
 });
 
 
-
 var startTrainingButton = document.querySelector('#btn-start');
-    startTrainingButton.addEventListener(click, () => {
+    startTrainingButton.addEventListener('click', function () {
         var trainerContainer = document.getElementById('trainer-container');
         trainerContainer.innerHTML = '';
     });

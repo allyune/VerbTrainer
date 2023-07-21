@@ -151,6 +151,10 @@ html, body {
     cursor: pointer;
 }
 
+.row-clicked {
+    background-color: #f1f1f1;
+}
+
 .table-row:hover {
     background-color: #f1f1f1;
 }
