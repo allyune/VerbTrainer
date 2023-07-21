@@ -282,6 +282,7 @@ margin-bottom: 20px;
     align-items: flex-start;
     margin: 10px;
     flex-wrap: wrap;
+    width: 150px;
 }
 
 .conj-div p {

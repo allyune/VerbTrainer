@@ -40,5 +40,9 @@ app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+        name: "verbConjugations",
+        pattern: "{controller=Home}/{action=GetVerbConjugations}/{id?}");
+
 app.Run();
 

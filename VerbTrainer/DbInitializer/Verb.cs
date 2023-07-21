@@ -60,9 +60,9 @@ namespace HebrewVerbs
 		public string Binyan { get; set; }
 		public string Root { get; set; }
 		public string Meaning { get; set; }
-		public List<Tense> Tenses { get; set; }
+        public List<Tense> Tenses { get; set; }
 
-		public Conjugation this[string tense]
+        public Conjugation this[string tense]
 		{
 			get
 			{

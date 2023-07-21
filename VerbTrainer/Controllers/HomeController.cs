@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using VerbTrainer.Data;
 using VerbTrainer.Models;
 using HebrewVerbs;
+using VerbTrainer.ViewModels;
+using Newtonsoft.Json;
 
 namespace VerbTrainer.Controllers;
 
@@ -26,14 +28,37 @@ public class HomeController : Controller
             verb => verb.BinyanId,
             binyan => binyan.Id,
             (verb, binyan) => new Verb
-            {   Id = verb.Id,
+            {
+                Id = verb.Id,
                 Name = verb.Name,
                 Binyan = binyan.Name,
                 Root = verb.Root,
                 Meaning = verb.Meaning
             })
     .ToList();
-        return View(verbs);
+
+        List<Conjugation> conjugations = _dbContext.Conjugations
+            .Join(_dbContext.Tenses,
+            conjugation => conjugation.TenseId,
+            tense => tense.Id,
+            (conjugation, tense) => new Conjugation
+            {
+                Meaning = conjugation.Meaning,
+                Tense = tense.Name,
+                Text = conjugation.Text,
+                VerbId = conjugation.VerbId,
+                Transcription = conjugation.Transcription
+            }).ToList();
+
+        string VerbsConjugations = SerializeConjugations(conjugations);
+
+        var VerbConjViewModel = new IndexViewModel
+        {
+            Verbs = verbs,
+            Conjugations = VerbsConjugations
+        };
+
+        return View(VerbConjViewModel);
     }
 
     [HttpGet]
@@ -51,9 +76,24 @@ public class HomeController : Controller
                 VerbId = conjugation.VerbId,
                 Transcription = conjugation.Transcription
             })
-            .Where(c => c.VerbId == id).ToList(); ;
+            .Where(c => c.VerbId == id).ToList();
         return Json(conjugations);
     }
+
+
+    private string SerializeConjugations(List<Conjugation> conjugations)
+    {
+        return JsonConvert.SerializeObject(conjugations.Select(c => new
+        {
+            VerbId = c.VerbId,
+            Tense = c.Tense,
+            Text = c.Text,
+            Meaning = c.Meaning,
+            Transcription = c.Transcription
+        }));
+    }
+
+   
 
     private readonly VerbTrainerDbContext _dbContext;
 

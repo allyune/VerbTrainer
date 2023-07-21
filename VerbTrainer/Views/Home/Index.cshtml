@@ -1,6 +1,6 @@
 ﻿@using HebrewVerbs
 
-@model List<Verb>
+@model VerbTrainer.ViewModels.IndexViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -41,15 +41,15 @@
                 <div>Verb</div>
             </div>
 
-           @foreach (var verb in Model)
-                {
-                    <div class="table-row" verb-id="@verb.Id">
-                        <div class="binyan">@verb.Binyan</div>
-                        <div class="root">@verb.Root</div>
-                        <div class="meaning">@verb.Meaning </div>
-                        <div class="name">@verb.Name </div>
-                    </div>
-                }
+            @foreach (var verb in Model.Verbs)
+            {
+                <div class="table-row" verb-id="@verb.Id">
+                    <div class="binyan">@verb.Binyan</div>
+                    <div class="root">@verb.Root</div>
+                    <div class="meaning">@verb.Meaning </div>
+                    <div class="name">@verb.Name </div>
+                </div>
+            }
         </div>
     </div>
 
@@ -104,3 +104,8 @@
         </div>
     </div>
 </div>
+
+<script>
+    const conjugationsData = @Html.Raw(Model.Conjugations);
+</script>
+<script src="~/js/index.js"></script>

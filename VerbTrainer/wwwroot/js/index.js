@@ -23,9 +23,8 @@
         row.addEventListener('click', async function () {
             var verbId = this.getAttribute('verb-id');
             try {
-                let response = await fetch(`/Home/GetVerbConjugations/${verbId}`);
-                if (!response.ok) throw response.status;
-                let verbConjugations = await response.json();
+                var verbConjugations = conjugationsData.filter(verb => verb.VerbId == verbId);
+                console.log(verbConjugations);
                 var trainerContainer = document.getElementById('trainer-container');
                 trainerContainer.innerHTML = '';
                 for (var conjugation of verbConjugations) {
@@ -33,15 +32,15 @@
                     conjDiv.classList.add('conj-div')
                     //Meaning
                     var conjMeaning = document.createElement('p');
-                    conjMeaning.innerHTML = conjugation.meaning
+                    conjMeaning.innerHTML = conjugation.Meaning
                     conjDiv.appendChild(conjMeaning);
                     //Text
                     var conjText = document.createElement('p');
-                    conjText.innerHTML = conjugation.text
+                    conjText.innerHTML = conjugation.Text
                     conjDiv.appendChild(conjText);
                     //Transcription
                     var conjTranscription = document.createElement('p');
-                    conjTranscription.innerHTML = conjugation.transcription
+                    conjTranscription.innerHTML = conjugation.Transcription
                     conjDiv.appendChild(conjTranscription);
 
                     trainerContainer.appendChild(conjDiv);
@@ -52,6 +51,5 @@
         })
     })
 });
-
 
 
