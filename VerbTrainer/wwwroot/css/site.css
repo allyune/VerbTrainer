@@ -96,14 +96,19 @@ html, body {
     padding: 5px 15px;
 }
 
-.btn-table {
+.btn-purple {
     background-color: #464EA3;
     color: white;
 }
 
-.btn-table:hover {
+.btn-purple:hover {
     background-color: #545cb3;
     color: white;
+}
+
+.btn-purple:active {
+    background-color: #464EA3 !important;
+    color: white !important;
 }
 
 
@@ -246,13 +251,24 @@ margin-bottom: 20px;
     text-transform: uppercase;
 }
 
-#btn-start svg {
+#btn-stop {
+    background-color: #D32020;
+    color: white;
+    text-transform: uppercase;
+    display: none;
+}
+
+.btn-lg svg {
     width: 30px;
     height: 30px;
 }
 
 #btn-start:hover {
     background-color: #30b6bf;
+}
+
+#btn-stop:hover {
+    background-color: #d62d2d;
 }
 
 .checkboxes {
@@ -273,6 +289,9 @@ margin-bottom: 20px;
     background-color: #f1f1f1;
     width: 100%;
     height: 100%;
+}
+
+.trainer-container-conjugations {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -291,4 +310,34 @@ margin-bottom: 20px;
 
 .conj-div p {
     margin: 5px;
+}
+
+.trainer-active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.training-conj-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.training-conj-div p {
+    font-size: 2rem;
+    
+}
+
+.training-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.training-buttons > button {
+    margin: 15px;
+    text-transform: uppercase;
+    font-size: 1.1rem;
 }
