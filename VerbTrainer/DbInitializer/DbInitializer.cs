@@ -65,7 +65,19 @@ namespace VerbTrainer.DbInitializer
 				}
 			}
 
-			_context.SaveChanges();
+			_context.Users.Add(new User { Name = "Polina" });
+			_context.Users.Add(new User { Name = "Yakir" });
+            _context.SaveChanges();
+
+            _context.Decks.Add(new Deck { Id = 1, UserId = 1, Name = "Top 100 Hebrew Verbs" });
+            _context.SaveChanges();
+			Deck deck = _context.Decks.First(d => d.Name == "Top 100 Hebrew Verbs");
+
+            List<Models.Domain.Verb> top100 = _context.Verbs.ToList();
+
+			top100.ForEach(v => _context.DeckVerbs.Add(new DeckVerb { DeckId = deck.Id, VerbId = v.Id }));
+
+            _context.SaveChanges();
 		}
 	}
 }

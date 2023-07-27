@@ -10,8 +10,9 @@ namespace VerbTrainer.Models.Domain
 		public string Root { get; set; }
 		public string Meaning { get; set; }
 		public ICollection<Conjugation> Conjugations { get; set; }
+        public ICollection<DeckVerb> DeckVerbs { get; set; }
 
-		[ForeignKey("Binyan")]
+        [ForeignKey("Binyan")]
 		public int BinyanId { get; set; }
 		public Binyan Binyan { get; set; }
 

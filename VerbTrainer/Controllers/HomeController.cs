@@ -13,6 +13,7 @@ namespace VerbTrainer.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly VerbTrainerDbContext _dbContext;
 
     public HomeController(ILogger<HomeController> logger, VerbTrainerDbContext dbContext)
     {
@@ -93,9 +94,7 @@ public class HomeController : Controller
         }));
     }
 
-   
-
-    private readonly VerbTrainerDbContext _dbContext;
+  
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
