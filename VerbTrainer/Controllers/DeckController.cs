@@ -6,6 +6,9 @@ using VerbTrainer.Data;
 using VerbTrainer.Models;
 using VerbTrainer.DTOs;
 using VerbTrainer.Models.Domain;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace VerbTrainer.Controllers
@@ -80,6 +83,7 @@ namespace VerbTrainer.Controllers
         }
 
         [HttpGet("user/{id}")]
+        [Authorize]
         public IActionResult GetUserDecks(int id)
         {
             User? user = _dbContext.Users.Include(u => u.Decks).FirstOrDefault(u => u.Id == id);

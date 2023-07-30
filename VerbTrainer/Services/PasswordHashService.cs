@@ -13,13 +13,27 @@ namespace VerbTrainer.Services
         {
             byte[] salt = RandomNumberGenerator.GetBytes(keySize);
             saltString = Convert.ToHexString(salt);
-            var hash = Rfc2898DeriveBytes.Pbkdf2(
+            byte[] hash = Rfc2898DeriveBytes.Pbkdf2(
                 Encoding.UTF8.GetBytes(password),
                 salt,
                 iterations,
                 hashAlgorithm,
                 keySize);
             return Convert.ToHexString(hash);
+        }
+
+        public bool VerifyPasswordHash(string password, string savedHash, string saltString)
+        {
+
+            byte[] providedHash = Rfc2898DeriveBytes.Pbkdf2(
+                Encoding.UTF8.GetBytes(password),
+                Convert.FromHexString(saltString),
+                iterations,
+                hashAlgorithm,
+                keySize);
+            Console.WriteLine("Provided password hash: " + Convert.ToHexString(providedHash));
+            Console.WriteLine("Saved password hash: " + savedHash);
+            return CryptographicOperations.FixedTimeEquals(providedHash, Convert.FromHexString(savedHash));
         }
 
     }

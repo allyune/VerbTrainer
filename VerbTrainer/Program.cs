@@ -2,22 +2,39 @@
 using Microsoft.EntityFrameworkCore;
 using VerbTrainer.DbInitializer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using VerbTrainer.Services;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("appsettings.json");
+
+string validAudience = builder.Configuration["JwtSettings:Audience"];
+string validIssuer = builder.Configuration["JwtSettings:Issuer"];
+string secretKey = builder.Configuration["JwtSettings:Key"];
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<DbInitializer>();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
-        options => builder.Configuration.Bind("JwtSettings", options))
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-        options => builder.Configuration.Bind("CookieSettings", options));
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = true,
+        ValidAudience = validAudience,
+        ValidateIssuer = true,
+        ValidIssuer = validIssuer,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretKey))
+    };
+});
 builder.Services.AddDbContext<VerbTrainerDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerConnectionString")));
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
+
 
 var app = builder.Build();
 
@@ -40,9 +57,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
