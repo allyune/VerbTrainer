@@ -21,18 +21,18 @@ namespace VerbTrainerAuth.Controllers
         private readonly IPasswordHashService _passwordHashService;
         private readonly IJWTService _jwtService;
         private readonly IConfiguration _configuration;
-        private readonly HttpContext _httpContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AuthController(ILogger<AuthController> logger, VerbTrainerAuthDbContext dbContext,
                               IPasswordHashService passwordHashService, IJWTService jWTService,
-                              IConfiguration configuration, HttpContext httpContext)
+                              IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _dbContext = dbContext;
             _passwordHashService = passwordHashService;
             _jwtService = jWTService;
             _configuration = configuration;
-            _httpContext = httpContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost("login")]
@@ -70,7 +70,9 @@ namespace VerbTrainerAuth.Controllers
                     cookieOptions.Secure = true;
                 }
 
-                HttpContext.Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
+                HttpContext context = _httpContextAccessor.HttpContext;
+
+                context.Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
                 return Ok(accessToken);
             }
 

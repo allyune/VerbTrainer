@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VerbTrainer.DTOs;
-using VerbTrainer.Models.Domain;
+using VerbTrainerAuth.Models.Domain;
 using VerbTrainerAuth.Data;
 using VerbTrainerAuth.Services;
 

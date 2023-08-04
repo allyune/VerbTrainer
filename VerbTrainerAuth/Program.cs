@@ -30,6 +30,7 @@ builder.Services.AddDbContext<VerbTrainerAuthDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerAuthConnectionString")));
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
