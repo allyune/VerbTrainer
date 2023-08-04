@@ -2,14 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using VerbTrainer.DbInitializer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using VerbTrainer.Services;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddJsonFile("appsettings.json");
+//builder.Configuration.AddJsonFile("appsettings.json");
 
 string validAudience = builder.Configuration["JwtSettings:Audience"];
 string validIssuer = builder.Configuration["JwtSettings:Issuer"];
@@ -33,7 +32,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 builder.Services.AddDbContext<VerbTrainerDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerConnectionString")));
-builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 
 
 var app = builder.Build();
@@ -93,12 +91,6 @@ app.MapControllerRoute(
     name: "AddVerbToDeck",
     pattern: "api/deck/verb",
     defaults: new { controller = "Deck", action = "AddVerbToDeck" }
-);
-
-app.MapControllerRoute(
-    name: "RegisterUser",
-    pattern: "api/auth/register",
-    defaults: new { controller = "Auth", action = "RegisterUser" }
 );
 
 

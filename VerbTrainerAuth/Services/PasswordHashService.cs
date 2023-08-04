@@ -2,9 +2,9 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace VerbTrainer.Services
+namespace VerbTrainerAuth.Services
 {
-	public class PasswordHashService : IPasswordHashService
+    public class PasswordHashService : IPasswordHashService
     {
         const int keySize = 64;
         const int iterations = 350000;
@@ -31,8 +31,6 @@ namespace VerbTrainer.Services
                 iterations,
                 hashAlgorithm,
                 keySize);
-            Console.WriteLine("Provided password hash: " + Convert.ToHexString(providedHash));
-            Console.WriteLine("Saved password hash: " + savedHash);
             return CryptographicOperations.FixedTimeEquals(providedHash, Convert.FromHexString(savedHash));
         }
 

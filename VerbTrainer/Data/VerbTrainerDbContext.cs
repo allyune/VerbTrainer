@@ -42,6 +42,8 @@ namespace VerbTrainer.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Deck> Decks { get; set; }
         public DbSet<DeckVerb> DeckVerbs { get; set; }
+        public DbSet<RevokedAccessToken> RevokedAccessTokens { get; set; }
+        public DbSet<RevokedRefreshToken> RevokedRefreshTokens { get; set; }
     }
 }
 
