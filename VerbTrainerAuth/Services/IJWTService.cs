@@ -1,15 +1,19 @@
 ﻿using System;
-using VerbTrainer.DTOs;
+using System.Security.Claims;
+using VerbTrainerAuth.DTOs;
 
 namespace VerbTrainerAuth.Services
 {
 	public interface IJWTService
 	{
-        string IssueAccessToken(LoginDto loginData);
+        string IssueAccessToken(IssueAccessTokenDto loginData);
         string IssueRefreshToken(LoginDto loginData);
         double GetRefreshTokenLifespan(bool rememberUser);
         bool RevokeAccessToken(string accessToken);
         bool RevokeRefreshToken(string refreshToken);
+        bool ValidateToken(string token);
+        IEnumerable<Claim> GetTokenPrincipal(string token);
+        bool IsTokenExpired(string token);
     }
 }
 

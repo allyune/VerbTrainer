@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainer.DTOs
+namespace VerbTrainerAuth.DTOs
 {
 	public class LoginDto
 	{

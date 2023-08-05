@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using VerbTrainer.DTOs;
 using VerbTrainerAuth.Models.Domain;
 using VerbTrainerAuth.Data;
 using VerbTrainerAuth.Services;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using VerbTrainerAuth.DTOs;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace VerbTrainerAuth.Controllers
 {
@@ -35,6 +39,7 @@ namespace VerbTrainerAuth.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
+
         [HttpPost("login")]
         public IActionResult LoginUser([FromBody] LoginDto data)
         {
@@ -52,7 +57,7 @@ namespace VerbTrainerAuth.Controllers
             bool passwordValid = _passwordHashService.VerifyPasswordHash(password, savedPasswordHash, savedSalt);
             if (passwordValid)
             {
-                string accessToken = _jwtService.IssueAccessToken(data);
+                string accessToken = _jwtService.IssueAccessToken(new IssueAccessTokenDto { Email = data.email});
                 string refreshToken = _jwtService.IssueRefreshToken(data);
                 double refreshTokenLifespan = _jwtService.GetRefreshTokenLifespan(data.rememberUser);
 
@@ -61,23 +66,55 @@ namespace VerbTrainerAuth.Controllers
                     HttpOnly = true,
                     IsEssential = true,
                     SameSite = SameSiteMode.None,
-                    Expires = DateTime.Now.AddDays(refreshTokenLifespan)
-                };
-         
+                    Expires = DateTime.Now.AddDays(refreshTokenLifespan),
+                    Secure = false
+            };
+
+                HttpContext context = _httpContextAccessor.HttpContext;
 
                 if (Request.IsHttps)
                 {
                     cookieOptions.Secure = true;
                 }
 
-                HttpContext context = _httpContextAccessor.HttpContext;
-
-                context.Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
+                context.Response.Cookies.Append("RefreshToken", refreshToken, cookieOptions);
                 return Ok(accessToken);
             }
 
             return NotFound("Wrong email or password");
         }
-    }
+
+        [HttpPost("refresh")]
+        public IActionResult RefreshToken([FromBody] AccessTokenDto AccessTokenPayload)
+        {
+            HttpContext context = _httpContextAccessor.HttpContext;
+            if (context.Request.Cookies.TryGetValue("RefreshToken", out var refreshToken))
+            {
+                if (_jwtService.ValidateToken(refreshToken))
+                {
+                    string oldAccessToken = AccessTokenPayload.AccessToken;
+                    IEnumerable<Claim> tokenClaims = _jwtService.GetTokenPrincipal(oldAccessToken);
+                    string emailClaimValue = tokenClaims.SingleOrDefault(claim => claim.Type == ClaimTypes.Email)?.Value;
+                    string newAccessToken = _jwtService.IssueAccessToken(new IssueAccessTokenDto { Email = emailClaimValue });
+                    bool oldTokenRevoked = _jwtService.RevokeAccessToken(oldAccessToken);
+                    if (!oldTokenRevoked && !_jwtService.IsTokenExpired(oldAccessToken))
+                    {
+                        return Ok(oldAccessToken);
+                    }
+                    else if (!oldTokenRevoked)
+                    {
+                        return Ok(newAccessToken);
+                    }
+                    return Ok(newAccessToken);
+                }
+                _jwtService.RevokeRefreshToken(refreshToken);
+                _jwtService.RevokeAccessToken(AccessTokenPayload.AccessToken);
+                return Unauthorized("Refresh token not valid");
+            }
+            _jwtService.RevokeAccessToken(AccessTokenPayload.AccessToken);
+            return BadRequest("No Refresh token provided");
+
+        }
+     }
 }
 
