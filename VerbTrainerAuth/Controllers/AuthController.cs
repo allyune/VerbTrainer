@@ -25,18 +25,18 @@ namespace VerbTrainerAuth.Controllers
         private readonly IPasswordHashService _passwordHashService;
         private readonly IJWTService _jwtService;
         private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        //private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AuthController(ILogger<AuthController> logger, VerbTrainerAuthDbContext dbContext,
                               IPasswordHashService passwordHashService, IJWTService jWTService,
-                              IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+                              IConfiguration configuration)
         {
             _logger = logger;
             _dbContext = dbContext;
             _passwordHashService = passwordHashService;
             _jwtService = jWTService;
             _configuration = configuration;
-            _httpContextAccessor = httpContextAccessor;
+            //_httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -57,6 +57,21 @@ namespace VerbTrainerAuth.Controllers
             bool passwordValid = _passwordHashService.VerifyPasswordHash(password, savedPasswordHash, savedSalt);
             if (passwordValid)
             {
+                //rovoke tokens if exist
+                string? authHeader = Request.Headers.Authorization;
+                _ = Request.Cookies.TryGetValue("RefreshToken", out var oldRefreshToken);
+
+                if (authHeader != null)
+                {
+                    string oldAccessToken = authHeader.Substring("Bearer ".Length);
+                    _jwtService.RevokeAccessToken(oldAccessToken);
+                }
+
+                if (oldRefreshToken != null)
+                {
+                    _jwtService.RevokeRefreshToken(oldRefreshToken);
+                }
+
                 string accessToken = _jwtService.IssueAccessToken(new IssueAccessTokenDto { Email = data.email});
                 string refreshToken = _jwtService.IssueRefreshToken(data);
                 double refreshTokenLifespan = _jwtService.GetRefreshTokenLifespan(data.rememberUser);
@@ -70,14 +85,12 @@ namespace VerbTrainerAuth.Controllers
                     Secure = false
             };
 
-                HttpContext context = _httpContextAccessor.HttpContext;
-
                 if (Request.IsHttps)
                 {
                     cookieOptions.Secure = true;
                 }
 
-                context.Response.Cookies.Append("RefreshToken", refreshToken, cookieOptions);
+                Response.Cookies.Append("RefreshToken", refreshToken, cookieOptions);
                 return Ok(accessToken);
             }
 
@@ -87,8 +100,7 @@ namespace VerbTrainerAuth.Controllers
         [HttpPost("refresh")]
         public IActionResult RefreshToken([FromBody] AccessTokenDto AccessTokenPayload)
         {
-            HttpContext context = _httpContextAccessor.HttpContext;
-            if (context.Request.Cookies.TryGetValue("RefreshToken", out var refreshToken))
+            if (Request.Cookies.TryGetValue("RefreshToken", out var refreshToken))
             {
                 if (_jwtService.ValidateToken(refreshToken))
                 {
