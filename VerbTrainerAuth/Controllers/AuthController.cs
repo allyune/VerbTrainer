@@ -98,13 +98,13 @@ namespace VerbTrainerAuth.Controllers
         }
 
         [HttpPost("refresh")]
-        public IActionResult RefreshToken([FromBody] AccessTokenDto AccessTokenPayload)
+        public IActionResult RefreshToken()
         {
-            if (Request.Cookies.TryGetValue("RefreshToken", out var refreshToken))
+            string? oldAccessToken = _jwtService.GetAccessTokenFromHeader(Request.Headers);
+            if (oldAccessToken != null && Request.Cookies.TryGetValue("RefreshToken", out var refreshToken))
             {
                 if (_jwtService.ValidateToken(refreshToken))
                 {
-                    string oldAccessToken = AccessTokenPayload.AccessToken;
                     IEnumerable<Claim> tokenClaims = _jwtService.GetTokenPrincipal(oldAccessToken);
                     string emailClaimValue = tokenClaims.SingleOrDefault(claim => claim.Type == ClaimTypes.Email)?.Value;
                     string newAccessToken = _jwtService.IssueAccessToken(new IssueAccessTokenDto { Email = emailClaimValue });
@@ -120,11 +120,10 @@ namespace VerbTrainerAuth.Controllers
                     return Ok(newAccessToken);
                 }
                 _jwtService.RevokeRefreshToken(refreshToken);
-                _jwtService.RevokeAccessToken(AccessTokenPayload.AccessToken);
+                _jwtService.RevokeAccessToken(oldAccessToken);
                 return Unauthorized("Refresh token not valid");
             }
-            _jwtService.RevokeAccessToken(AccessTokenPayload.AccessToken);
-            return BadRequest("No Refresh token provided");
+            return BadRequest("One of tokens is not provided");
 
         }
      }

@@ -154,14 +154,22 @@ namespace VerbTrainerAuth.Services
         {
             var tokenClaims = GetTokenPrincipal(token);
             var tokenExpiration = tokenClaims.SingleOrDefault(claim => claim.Type == "exp")?.Value;
-            //Console.WriteLine($"Token expiration in claims: {tokenExpiration}");
-            //Console.WriteLine($"Parsed long value from token exp {long.Parse(tokenExpiration)}");
-            //Console.WriteLine($"Current time in ms: {DateTimeOffset.UtcNow.ToUnixTimeSeconds()}");
             if (tokenExpiration == null || DateTimeOffset.UtcNow.ToUnixTimeSeconds() > long.Parse(tokenExpiration))
             {
                 return true;
             }
             return false;
+        }
+
+        public string? GetAccessTokenFromHeader(IHeaderDictionary headers)
+        {
+            string? authHeader = headers.Authorization;
+            if (authHeader != null && authHeader.StartsWith("Bearer "))
+            {
+                string accessToken = authHeader.Substring("Bearer ".Length);
+                return accessToken;
+            }
+            return null;
         }
     }
 }
