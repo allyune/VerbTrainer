@@ -15,6 +15,7 @@ string secretKey = builder.Configuration["JwtSettings:Key"];
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
+
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateAudience = true,
@@ -26,6 +27,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretKey))
     };
 });
+
 builder.Services.AddDbContext<VerbTrainerAuthDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerAuthConnectionString")));
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
@@ -47,11 +49,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
-

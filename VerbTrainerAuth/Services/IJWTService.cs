@@ -14,7 +14,8 @@ namespace VerbTrainerAuth.Services
         bool ValidateToken(string token);
         IEnumerable<Claim> GetTokenPrincipal(string token);
         bool IsTokenExpired(string token);
-        string? GetAccessTokenFromHeader(IHeaderDictionary headers);
+        bool IsAccessTokenBlacklisted(string token);
+        bool IsRefreshTokenBlacklisted(string token);
     }
 }
 

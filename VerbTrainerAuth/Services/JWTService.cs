@@ -8,6 +8,9 @@ using VerbTrainerAuth.Controllers;
 using VerbTrainerAuth.DTOs;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Npgsql;
+using System.Linq.Expressions;
 
 namespace VerbTrainerAuth.Services
 {
@@ -62,15 +65,29 @@ namespace VerbTrainerAuth.Services
 
         public bool RevokeRefreshToken(string refreshToken)
         {
+            string encodedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(refreshToken));
             try
             {
-                _dbContext.RevokedRefreshTokens.Add(new RevokedRefreshToken { Token = refreshToken });
+
+                _dbContext.RevokedRefreshTokens.Add(new RevokedRefreshToken { Token = encodedToken });
                 _dbContext.SaveChanges();
                 return true;
             }
 
-            catch (Exception e)
+            catch (DbUpdateException e)
             {
+                if (e.InnerException is PostgresException postgresException) {
+                    Console.WriteLine("SAVING EXCEPTION");
+                    switch (postgresException.SqlState)
+                    {
+                        case "23505":
+                            _logger.LogInformation($"Refresh Token {refreshToken} already invalid", e);
+                            return true;
+                        default:
+                            _logger.LogCritical($"Could not invalidate refresh token {refreshToken}", e);
+                            return false;
+                    }
+                }
                 _logger.LogCritical($"Could not invalidate refresh token {refreshToken}", e);
                 return false;
             }
@@ -78,15 +95,29 @@ namespace VerbTrainerAuth.Services
 
         public bool RevokeAccessToken(string accessToken)
         {
+            string encodedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(accessToken));
             try
             {
-                _dbContext.RevokedAccessTokens.Add(new RevokedAccessToken { Token = accessToken });
+                _dbContext.RevokedAccessTokens.Add(new RevokedAccessToken { Token = encodedToken });
                 _dbContext.SaveChanges();
                 return true;
             }
 
-            catch (Exception e)
+            catch (DbUpdateException e)
             {
+                if (e.InnerException is PostgresException postgresException)
+                {
+                    Console.WriteLine("SAVING EXCEPTION");
+                    switch (postgresException.SqlState)
+                    {
+                        case "23505":
+                            _logger.LogInformation($"Access Token {accessToken} already invalid", e);
+                            return true;
+                        default:
+                            _logger.LogCritical($"Could not invalidate access token {accessToken}", e);
+                            return false;
+                    }
+                }
                 _logger.LogCritical($"Could not invalidate access token {accessToken}", e);
                 return false;
             }
@@ -131,6 +162,29 @@ namespace VerbTrainerAuth.Services
             };
         }
 
+        //TODO: Implement class Token with fields id and type
+        public bool IsAccessTokenBlacklisted(string accessToken)
+        {
+            string encodedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(accessToken));
+            RevokedAccessToken? tokenExists = _dbContext.RevokedAccessTokens.FirstOrDefault(t => t.Token == encodedToken);
+            if (tokenExists != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsRefreshTokenBlacklisted(string refreshToken)
+        {
+            string encodedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(refreshToken));
+            RevokedRefreshToken? tokenExists = _dbContext.RevokedRefreshTokens.FirstOrDefault(t => t.Token == encodedToken);
+            if (tokenExists != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public IEnumerable<Claim> GetTokenPrincipal(string token)
         {
             var secretkey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]));
@@ -159,17 +213,6 @@ namespace VerbTrainerAuth.Services
                 return true;
             }
             return false;
-        }
-
-        public string? GetAccessTokenFromHeader(IHeaderDictionary headers)
-        {
-            string? authHeader = headers.Authorization;
-            if (authHeader != null && authHeader.StartsWith("Bearer "))
-            {
-                string accessToken = authHeader.Substring("Bearer ".Length);
-                return accessToken;
-            }
-            return null;
         }
     }
 }

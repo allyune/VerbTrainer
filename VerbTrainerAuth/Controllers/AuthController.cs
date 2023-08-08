@@ -13,6 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 using VerbTrainerAuth.DTOs;
 using System.Security.Claims;
 using System.Security.Principal;
+using VerbTrainerAuth.AuthHelpers;
 
 namespace VerbTrainerAuth.Controllers
 {
@@ -25,7 +26,6 @@ namespace VerbTrainerAuth.Controllers
         private readonly IPasswordHashService _passwordHashService;
         private readonly IJWTService _jwtService;
         private readonly IConfiguration _configuration;
-        //private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AuthController(ILogger<AuthController> logger, VerbTrainerAuthDbContext dbContext,
                               IPasswordHashService passwordHashService, IJWTService jWTService,
@@ -100,10 +100,10 @@ namespace VerbTrainerAuth.Controllers
         [HttpPost("refresh")]
         public IActionResult RefreshToken()
         {
-            string? oldAccessToken = _jwtService.GetAccessTokenFromHeader(Request.Headers);
-            if (oldAccessToken != null && Request.Cookies.TryGetValue("RefreshToken", out var refreshToken))
+            string? oldAccessToken = JwtHelpers.GetAccessTokenFromHeader(Request.Headers);
+            if (oldAccessToken != null && Request.Cookies.TryGetValue("RefreshToken", out string refreshToken))
             {
-                if (_jwtService.ValidateToken(refreshToken))
+                if (!_jwtService.IsRefreshTokenBlacklisted(refreshToken) && _jwtService.ValidateToken(refreshToken))
                 {
                     IEnumerable<Claim> tokenClaims = _jwtService.GetTokenPrincipal(oldAccessToken);
                     string emailClaimValue = tokenClaims.SingleOrDefault(claim => claim.Type == ClaimTypes.Email)?.Value;
