@@ -33,6 +33,14 @@ namespace VerbTrainer.Data
                 .WithOne(dv => dv.Verb)
                 .HasForeignKey(dv => dv.VerbId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RevokedAccessToken>()
+                .HasIndex(t => t.Token)
+                .IsUnique();
+
+            modelBuilder.Entity<RevokedRefreshToken>()
+                .HasIndex(t => t.Token)
+                .IsUnique();
         }
 
 		public DbSet<Binyan> Binyanim { get; set; }
