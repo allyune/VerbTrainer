@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Net.Mail;
+using VerbTrainerEmail.Domain.Base;
 using VerbTrainerEmail.Domain.ValueObjects;
 
 namespace VerbTrainerEmail.Domain.Entities.Email
 {
-	public class Email
+	public class Email : BaseEntity
 	{
-        public Guid Id { get; private set; }
         public EmailType Type { get; private set; }
         public EmailSubject Subject { get; private set; }
         public EmailBody Body { get; private set; }
