@@ -2,7 +2,7 @@
 using VerbTrainerEmail.Domain.Base;
 using VerbTrainerEmail.Domain.ValueObjects;
 
-namespace VerbTrainerEmail.Domain
+namespace VerbTrainerEmail.Domain.Entities.User
 {
 	public class User : BaseEntity
 	{

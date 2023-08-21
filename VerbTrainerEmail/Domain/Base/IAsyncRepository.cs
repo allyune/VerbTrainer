@@ -5,7 +5,7 @@ namespace VerbTrainerEmail.Domain.Base
 {
     public interface IAsyncReadRepository<T> where T : BaseEntity
     {
-        Task<T> GetAsync(Expression<Func<T, bool>> expression);
+        Task<T?> GetAsync(Expression<Func<T, bool>> expression);
 
         Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
     }
@@ -17,6 +17,8 @@ namespace VerbTrainerEmail.Domain.Base
         Task<T> UpdateAsync(T entity);
 
         Task<bool> DeleteAsync(T entity);
+
+        Task<int> SaveChanges();
     }
 
 }  
