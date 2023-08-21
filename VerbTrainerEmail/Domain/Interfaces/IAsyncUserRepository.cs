@@ -5,9 +5,8 @@ using VerbTrainerEmail.Domain.Entities.User;
 
 namespace VerbTrainerEmail.Domain.Interfaces
 {
-	public interface IAsyncUserRepository : IAsyncReadRepository<User>
+	public interface IAsyncUserRepository : IAsyncReadOnlyRepository<User>
     {
-        Task<Email> ListEmails(User user);
     }
 }
 

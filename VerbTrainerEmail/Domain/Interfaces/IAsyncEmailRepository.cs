@@ -5,10 +5,10 @@ using VerbTrainerEmail.Domain.ValueObjects;
 
 namespace VerbTrainerEmail.Domain.Interfaces
 {
-	public interface IAsyncEmailRepository : IAsyncReadRepository<Email>, IAsyncWriteRepository<Email>
+	public interface IAsyncEmailRepository : IAsyncRepository<Email>
     {
 		Task<EmailStatus> GetEmailStatus(Email email);
-		Task UpdateEmailStatus(Email email, EmailStatus newStatus);
+		Task<List<Email>> ListEmailsByUserId(Guid userId);
 	}
 }
 

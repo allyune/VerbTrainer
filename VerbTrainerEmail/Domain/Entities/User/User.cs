@@ -27,7 +27,6 @@ namespace VerbTrainerEmail.Domain.Entities.User
 		{
 			return new User(id, email, firstName, lastName, status, lastLogin);
 		}
-
     }
 }
 

@@ -14,6 +14,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +27,10 @@
     <None Remove="Domain\Entities\Email\" />
     <None Remove="Application\" />
     <None Remove="Domain\Interfaces\" />
+    <None Remove="Infrastructure\Data\" />
+    <None Remove="Infrastructure\Repositories\" />
+    <None Remove="Application\User\" />
+    <None Remove="Application\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
@@ -36,5 +42,9 @@
     <Folder Include="Domain\Base\" />
     <Folder Include="Application\" />
     <Folder Include="Domain\Interfaces\" />
+    <Folder Include="Infrastructure\Data\" />
+    <Folder Include="Infrastructure\Repositories\" />
+    <Folder Include="Application\User\" />
+    <Folder Include="Application\Email\" />
   </ItemGroup>
 </Project>
