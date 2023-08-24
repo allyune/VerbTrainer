@@ -16,7 +16,7 @@ string secretKey = builder.Configuration["JwtSettings:Key"];
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<DbInitializer>();
+//builder.Services.AddTransient<DbInitializer>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -36,14 +36,14 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerConnecti
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-	var services = scope.ServiceProvider;
+//using (var scope = app.Services.CreateScope())
+//{
+//	var services = scope.ServiceProvider;
 
-	var initialiser = services.GetRequiredService<DbInitializer>();
+//	var initialiser = services.GetRequiredService<DbInitializer>();
 
-	initialiser.Run();
-}
+//	initialiser.Run();
+//}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

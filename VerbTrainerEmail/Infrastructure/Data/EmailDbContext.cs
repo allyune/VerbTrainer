@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using VerbTrainerEmail.Domain.Entities.Email;
-using VerbTrainerEmail.Domain.Entities.User;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Design;
+using VerbTrainerEmail.Infrastructure.Data.Models;
+using VerbTrainerSharedModels.Models.User;
+using Email = VerbTrainerEmail.Infrastructure.Data.Models.Email;
 
 namespace VerbTrainerEmail.Infrastructure.Data
 {
@@ -13,7 +15,23 @@ namespace VerbTrainerEmail.Infrastructure.Data
         {
         }
 
-        // should it reference main service?
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            //modelBuilder.Entity<HistoryRow>().ToTable("sharedmigrationshistory");
+
+            modelBuilder.Entity<Email>()
+                .HasMany(e => e.Attachments)
+                .WithOne(a => a.Email)
+                .HasForeignKey(a => a.EmailId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EmailAttachment>()
+                .HasOne(a => a.Email)
+                .WithMany(e => e.Attachments)
+                .HasForeignKey(a => a.EmailId);
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Email> Emails { get; set; }
     }

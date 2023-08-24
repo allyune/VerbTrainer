@@ -2,17 +2,16 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace VerbTrainerAuth.Models.Domain
+namespace VerbTrainerEmail.Infrastructure.Data.Models
 {
-	public class User
+	public class EmailAttachment
 	{
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-		public string? Name { get; set; }
-        public string? Email { get; set; }
-        public string? Password { get; set; }
-        public string? Salt { get; set; }
+        public required string Content { get; set; }
+        public int EmailId { get; set; }
+        public Email Email { get; set; }
     }
 }
 

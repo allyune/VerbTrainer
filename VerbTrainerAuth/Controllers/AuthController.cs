@@ -14,6 +14,7 @@ using VerbTrainerAuth.DTOs;
 using System.Security.Claims;
 using System.Security.Principal;
 using VerbTrainerAuth.AuthHelpers;
+using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainerAuth.Controllers
 {
@@ -46,6 +47,7 @@ namespace VerbTrainerAuth.Controllers
             string email = data.email;
             string password = data.password;
             bool remeberUser = data.rememberUser;
+            //TODO: Switch user model to user entity
             User? userInfo = _dbContext.Users.FirstOrDefault(u => u.Email == email);
             if (userInfo == null)
             {

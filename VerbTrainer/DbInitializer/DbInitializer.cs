@@ -1,13 +1,12 @@
 ﻿using HebrewVerbs;
-using Microsoft.EntityFrameworkCore;
-using System.Resources;
 using System.Xml.Serialization;
 using VerbTrainer.Data;
 using VerbTrainer.Models.Domain;
+using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainer.DbInitializer
 {
-	public class DbInitializer
+    public class DbInitializer
 	{
 		private VerbTrainerDbContext _context;
 		private Verbs? _verbs;
@@ -26,7 +25,7 @@ namespace VerbTrainer.DbInitializer
 
 		public void Run()
 		{
-			_context.Database.EnsureDeleted();
+			//_context.Database.EnsureDeleted();
 			_context.Database.EnsureCreated();
 
 			var ti = 0;
@@ -65,8 +64,6 @@ namespace VerbTrainer.DbInitializer
 				}
 			}
 
-			_context.Users.Add(new User { Name = "Polina" });
-			_context.Users.Add(new User { Name = "Yakir" });
             _context.SaveChanges();
 
             _context.Decks.Add(new Deck { Id = 1, UserId = 1, Name = "Top 100 Hebrew Verbs" });
