@@ -5,18 +5,18 @@ namespace VerbTrainerEmail.Domain.Base
 {
     public interface IAsyncReadOnlyRepository<T> where T : BaseEntity
     {
-        Task<T?> GetAsync(Expression<Func<T, bool>> expression);
+        Task<T?> GetAsync(Guid Id);
 
         Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
     }
 
     public interface IAsyncRepository<T> where T : BaseEntity
     {
-        Task<T?> GetAsync(Expression<Func<T, bool>> expression);
+        Task<T?> GetAsync(Guid id);
 
         Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
 
-        Task<T> AddAsync(T entity);
+        Task AddAsync(T entity);
 
         Task<T> UpdateAsync(T entity);
 

@@ -7,8 +7,7 @@ namespace VerbTrainerEmail.Domain.Interfaces
 {
 	public interface IAsyncEmailRepository : IAsyncRepository<Email>
     {
-		Task<EmailStatus> GetEmailStatus(Email email);
-		Task<List<Email>> ListEmailsByUserId(Guid userId);
+
 	}
 }
 

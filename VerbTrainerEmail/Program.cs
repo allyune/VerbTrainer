@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VerbTrainerEmail.Domain.Interfaces;
+using VerbTrainerEmail.Infrastructure;
 using VerbTrainerEmail.Infrastructure.Data;
+using VerbTrainerEmail.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<EmailDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerAuthConnectionString")));
+
+builder.Services.AddScoped<IAsyncEmailRepository, AsyncEmailRepository>();
+builder.Services.AddScoped<IAsyncUserRepository, AsyncUserRepository>();
 
 var app = builder.Build();
 

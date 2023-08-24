@@ -16,9 +16,9 @@ namespace VerbTrainerEmail.Infrastructure.Repositories
             _dbSet = dbContext.Set<T>();
         }
 
-        Task<T?> IAsyncReadOnlyRepository<T>.GetAsync(Expression<Func<T, bool>> expression)
+        Task<T?> IAsyncReadOnlyRepository<T>.GetAsync(Guid id)
         {
-            return _dbSet.FirstOrDefaultAsync(expression);
+            return _dbSet.FirstOrDefaultAsync(e => e.Id == id);
         }
 
         Task<List<T>> IAsyncReadOnlyRepository<T>.ListAsync(Expression<Func<T, bool>> expression)
@@ -38,9 +38,9 @@ namespace VerbTrainerEmail.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        Task<T?> IAsyncRepository<T>.GetAsync(Expression<Func<T, bool>> expression)
+        Task<T?> IAsyncRepository<T>.GetAsync(Guid id)
         {
-            return _dbSet.FirstOrDefaultAsync(expression);
+            return _dbSet.FirstOrDefaultAsync(e => e.Id == id);
         }
 
         Task<List<T>> IAsyncRepository<T>.ListAsync(Expression<Func<T, bool>> expression)
@@ -48,10 +48,9 @@ namespace VerbTrainerEmail.Infrastructure.Repositories
             return _dbSet.Where(expression).ToListAsync();
         }
 
-        async Task<T> IAsyncRepository<T>.AddAsync(T entity)
+        async Task IAsyncRepository<T>.AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
-            return entity;
         }
 
         Task<T> IAsyncRepository<T>.UpdateAsync(T entity)
