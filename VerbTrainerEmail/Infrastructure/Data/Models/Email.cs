@@ -21,9 +21,8 @@ namespace VerbTrainerEmail.Infrastructure.Data.Models
         public ICollection<EmailAttachment>? Attachments { get; set; }
 
 
-        private Email(int type, string from, int toUserId,
-                      string subject, string body, int status,
-                      ICollection<EmailAttachment> attachments)
+        private  Email(int type, string from, int toUserId,
+                      string subject, string body, int status)
         {
             Type = type;
             From = from;
@@ -31,16 +30,14 @@ namespace VerbTrainerEmail.Infrastructure.Data.Models
             Subject = subject;
             Body = body;
             Status = status;
-            Attachments = attachments;
+       
         }
 
         public static Email CreateNew(EmailType type, string from, int toUserId,
-                                      EmailSubject subject, EmailBody body, EmailStatus status,
-                                      List<EmailAttachment> attachments)
+                                      EmailSubject subject, EmailBody body, EmailStatus status)
         {
             return new Email((int)type, from, toUserId,
-                             subject.Value, body.Text, (int)status,
-                             attachments);
+                             subject.Value, body.Text, (int)status);
         }
     }
 }

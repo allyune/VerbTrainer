@@ -7,7 +7,7 @@ namespace VerbTrainerEmail.Domain.Entities.Email
 {
     public class Email : BaseEntity
     {
-        public int? Id { get; private set; }
+        public int Id { get; private set; }
         public EmailType Type { get; private set; }
         public string From { get; private set; }
         public int ToUserId { get; private set; }
@@ -16,7 +16,7 @@ namespace VerbTrainerEmail.Domain.Entities.Email
         public EmailStatus Status { get; private set; }
         public List<EmailAttachment>? Attachments { get; private set; }
 
-        private Email(int? id, EmailType type, int toUserId, EmailSubject subject, EmailBody body, List<EmailAttachment>? attachments)
+        private Email(int id, EmailType type, int toUserId, EmailSubject subject, EmailBody body, List<EmailAttachment>? attachments)
         {
             Id = id;
             Type = type;
@@ -43,7 +43,8 @@ namespace VerbTrainerEmail.Domain.Entities.Email
 
             if (Enum.IsDefined(typeof(TransientEmailType), type))
             {
-                return new Email(null, type, toUserId, subject, body, attachments);
+                Random rand = new Random();
+                return new Email(rand.Next(100000, 1000000), type, toUserId, subject, body, attachments);
             }
             throw new ArgumentException("Invalid email type: trying to create Transient email of type", nameof(type));
         }

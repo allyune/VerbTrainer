@@ -80,7 +80,7 @@ namespace VerbTrainerEmail.Application.Email
         Task<EmailEntity.Email?> GetEmailById(int id);
         Task<EmailStatus?> GetEmailStatusAsync(int id);
         Task<List<EmailEntity.Email>?> ListEmailsByUserId(int userId);
-        Task SaveEmail(EmailEntity.Email email);
+        Task WriteEmailToDb(EmailModel.Email email);
     }
 }
 
