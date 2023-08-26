@@ -7,12 +7,12 @@ namespace VerbTrainerEmail.Domain.Entities.User
 	public class User : BaseEntity
 	{
 		public string Email { get; private set; }
-		public string FirstName { get; private set; }
-        public string LastName { get; private set; }
+		public string? FirstName { get; private set; }
+        public string? LastName { get; private set; }
 		public UserStatus Status { get; private set; }
 		public DateTime? LastLogin { get; private set; }
 
-		private User(Guid id, string email, string firstName,
+		private User(int id, string email, string firstName,
 					 string lastName, UserStatus status, DateTime? lastLogin)
 		{
 			Email = email;
@@ -22,7 +22,7 @@ namespace VerbTrainerEmail.Domain.Entities.User
 			LastLogin = lastLogin;
         }
 
-		public static User CreateNew(Guid id, string email, string firstName,
+		public static User CreateNew(int id, string email, string firstName,
                      string lastName, UserStatus status, DateTime? lastLogin = null)
 		{
 			return new User(id, email, firstName, lastName, status, lastLogin);

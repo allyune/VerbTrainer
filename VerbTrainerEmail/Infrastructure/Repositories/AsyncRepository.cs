@@ -3,10 +3,12 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using VerbTrainerEmail.Domain.Base;
 using VerbTrainerEmail.Infrastructure.Data;
+using VerbTrainerEmail.Infrastructure.Data.Models;
+using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainerEmail.Infrastructure.Repositories
 {
-    public abstract class AsyncReadOnlyRepository<T> : IAsyncReadOnlyRepository<T> where T : BaseEntity
+    public abstract class AsyncReadOnlyRepository<T> : IAsyncReadOnlyRepository<T> where T : User
     {
 
         private readonly DbSet<T> _dbSet;
@@ -16,7 +18,7 @@ namespace VerbTrainerEmail.Infrastructure.Repositories
             _dbSet = dbContext.Set<T>();
         }
 
-        Task<T?> IAsyncReadOnlyRepository<T>.GetAsync(Guid id)
+        Task<T?> IAsyncReadOnlyRepository<T>.GetAsync(int id)
         {
             return _dbSet.FirstOrDefaultAsync(e => e.Id == id);
         }
@@ -27,7 +29,7 @@ namespace VerbTrainerEmail.Infrastructure.Repositories
         }
     }
 
-    public abstract class AsyncRepository<T> : IAsyncRepository<T> where T : BaseEntity
+    public abstract class AsyncRepository<T> : IAsyncRepository<T> where T : BaseEmailSenderModel
     {
         private readonly DbSet<T> _dbSet;
         private readonly EmailDbContext _dbContext;
@@ -38,7 +40,7 @@ namespace VerbTrainerEmail.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        Task<T?> IAsyncRepository<T>.GetAsync(Guid id)
+        Task<T?> IAsyncRepository<T>.GetAsync(int id)
         {
             return _dbSet.FirstOrDefaultAsync(e => e.Id == id);
         }

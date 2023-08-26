@@ -1,18 +1,16 @@
 ﻿using System;
-namespace VerbTrainerEmail.Domain.Base
+namespace VerbTrainerEmail.Infrastructure.Data.Models
 {
-    public abstract class BaseEntity
-    {
-        public DateTime Created { get; set; }
-        public DateTime? Updated { get; set; }
-
-        protected BaseEntity()
-        {
-        }
+    public abstract class BaseEmailSenderModel
+	{
+        public int Id { get; private set; }
+		protected BaseEmailSenderModel()
+		{
+		}
 
         public override bool Equals(object obj)
         {
-            var compareTo = obj as BaseEntity;
+            var compareTo = obj as BaseEmailSenderModel;
 
             if (ReferenceEquals(this, compareTo))
                 return true;
@@ -23,7 +21,7 @@ namespace VerbTrainerEmail.Domain.Base
             return Id.Equals(compareTo.Id);
         }
 
-        public static bool operator ==(BaseEntity a, BaseEntity b)
+        public static bool operator ==(BaseEmailSenderModel a, BaseEmailSenderModel b)
         {
             if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
                 return true;
@@ -34,7 +32,7 @@ namespace VerbTrainerEmail.Domain.Base
             return a.Equals(b);
         }
 
-        public static bool operator !=(BaseEntity? a, BaseEntity? b) => !(a == b);
+        public static bool operator !=(BaseEmailSenderModel? a, BaseEmailSenderModel? b) => !(a == b);
 
         public override string ToString()
         {

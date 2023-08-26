@@ -5,7 +5,7 @@ namespace VerbTrainerEmail.Domain.ValueObjects
 {
     public class EmailSubject : ValueObject
     {
-        public string Value { get; }
+        public string Value { get; private set; }
 
         private EmailSubject(string value)
         {

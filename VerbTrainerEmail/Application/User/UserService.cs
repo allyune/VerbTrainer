@@ -1,6 +1,7 @@
 ﻿using System;
 using VerbTrainerEmail.Domain.Interfaces;
-using VerbTrainerEmail.Domain.Entities.User;
+using SharedUser = VerbTrainerSharedModels.Models.User;
+using EmailUser = VerbTrainerEmail.Domain.Entities.User;
 
 namespace VerbTrainerEmail.Application.User
 {
@@ -14,18 +15,23 @@ namespace VerbTrainerEmail.Application.User
 			_userRepository = userRepository;
 		}
 
-		public async Task<Domain.Entities.User.User> GetUserById(Guid id)
+		// Returns a User Domain entity created from User model.
+		public async Task<EmailUser.User?> GetUserById(int id)
 		{
-			// might return null = need a check for null-result at the caller
-			return await _userRepository.GetAsync(id);
+			SharedUser.User? userModel = await _userRepository.GetAsync(id);
+            if (userModel != null)
+            {
+                return UserMapper.ModelToEntity(userModel);
+            }
 
-		}
+            return null;
+        }
 
     }
 
 	public interface IUserService
 	{
-		Task<Domain.Entities.User.User> GetUserById(Guid id);
+		Task<EmailUser.User?> GetUserById(int id);
     }
 }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using VerbTrainerEmail.Domain.Base;
-using VerbTrainerEmail.Domain.Entities.Email;
-using VerbTrainerEmail.Domain.ValueObjects;
+using VerbTrainerEmail.Infrastructure.Data.Models;
 
 namespace VerbTrainerEmail.Domain.Interfaces
 {

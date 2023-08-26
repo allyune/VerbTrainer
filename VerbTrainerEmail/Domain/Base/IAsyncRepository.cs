@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Linq.Expressions;
+using VerbTrainerEmail.Infrastructure.Data.Models;
+using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainerEmail.Domain.Base
 {
-    public interface IAsyncReadOnlyRepository<T> where T : BaseEntity
+    public interface IAsyncReadOnlyRepository<T> where T : User
     {
-        Task<T?> GetAsync(Guid Id);
+        Task<T?> GetAsync(int Id);
 
         Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
     }
 
-    public interface IAsyncRepository<T> where T : BaseEntity
+    public interface IAsyncRepository<T> where T : BaseEmailSenderModel
     {
-        Task<T?> GetAsync(Guid id);
+        Task<T?> GetAsync(int id);
 
         Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
 

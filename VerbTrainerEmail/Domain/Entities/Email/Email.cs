@@ -7,15 +7,16 @@ namespace VerbTrainerEmail.Domain.Entities.Email
 {
     public class Email : BaseEntity
     {
+        public int? Id { get; private set; }
         public EmailType Type { get; private set; }
         public string From { get; private set; }
-        public Guid ToUserId { get; private set; }
+        public int ToUserId { get; private set; }
         public EmailSubject Subject { get; private set; }
         public EmailBody Body { get; private set; }
         public EmailStatus Status { get; private set; }
         public List<EmailAttachment>? Attachments { get; private set; }
 
-        private Email(Guid id, EmailType type, Guid toUserId, EmailSubject subject, EmailBody body, List<EmailAttachment>? attachments)
+        private Email(int? id, EmailType type, int toUserId, EmailSubject subject, EmailBody body, List<EmailAttachment>? attachments)
         {
             Id = id;
             Type = type;
@@ -26,10 +27,25 @@ namespace VerbTrainerEmail.Domain.Entities.Email
             Attachments = attachments;
         }
 
-        public static Email CreateNew(EmailType type, Guid toUserId, EmailSubject subject, EmailBody body, List<EmailAttachment>? attachments = null)
+        // creates an instance of persistent email (will be saved to the db)
+        public static Email CreateWithEmailId(int id, EmailType type, int toUserId, EmailSubject subject, EmailBody body, List<EmailAttachment>? attachments = null)
         {
-            var id = Guid.NewGuid();
-            return new Email(id, type, toUserId, subject, body, attachments);
+            if (Enum.IsDefined(typeof(PersistentEmailType), type))
+            {
+                return new Email(id, type, toUserId, subject, body, attachments);
+            }
+            throw new ArgumentException("Invalid email type: trying to create Persistent email of type", nameof(type));
+        }
+
+        //creates an instance of transient email (will be sent and discarded)
+        public static Email CreateWithoutEmailId(EmailType type, int toUserId, EmailSubject subject, EmailBody body, List<EmailAttachment>? attachments = null)
+        {
+
+            if (Enum.IsDefined(typeof(TransientEmailType), type))
+            {
+                return new Email(null, type, toUserId, subject, body, attachments);
+            }
+            throw new ArgumentException("Invalid email type: trying to create Transient email of type", nameof(type));
         }
 
         public void SetStatus(EmailStatus newStatus)

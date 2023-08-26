@@ -16,6 +16,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +35,8 @@
     <None Remove="Infrastructure\Repositories\" />
     <None Remove="Application\User\" />
     <None Remove="Application\Email\" />
+    <None Remove="Controllers\" />
+    <None Remove="Infrastructure\Data\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
@@ -46,5 +52,12 @@
     <Folder Include="Infrastructure\Repositories\" />
     <Folder Include="Application\User\" />
     <Folder Include="Application\Email\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Infrastructure\Data\Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VerbTrainerModels\SharedModels.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>
