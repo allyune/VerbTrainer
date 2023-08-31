@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Design;
 using VerbTrainerAuth.Models.Domain;
 using VerbTrainerSharedModels.Models.User;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VerbTrainerAuth.Data
 {
@@ -26,10 +27,11 @@ namespace VerbTrainerAuth.Data
                 .HasIndex(t => t.Token)
                 .IsUnique();
 
-            modelBuilder.Ignore<User>();
         }
 
+        [NotMapped]
         public DbSet<User> Users { get; set; }
+
         public DbSet<RevokedAccessToken> RevokedAccessTokens { get; set; }
         public DbSet<RevokedRefreshToken> RevokedRefreshTokens { get; set; }
 	}

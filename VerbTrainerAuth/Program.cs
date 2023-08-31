@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using VerbTrainerAuth.Data;
 using VerbTrainerAuth.Services;
+using VerbTrainerAuth.Infrastructure.Messaging.Configuration;
+using VerbTrainerAuth.Infrastructure.Messaging.Producer;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json");
@@ -11,6 +13,7 @@ builder.Configuration.AddJsonFile("appsettings.json");
 string validAudience = builder.Configuration["JwtSettings:Audience"];
 string validIssuer = builder.Configuration["JwtSettings:Issuer"];
 string secretKey = builder.Configuration["JwtSettings:Key"];
+var rabbitMqSection = builder.Configuration.GetSection("MessagingSettings");
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -33,6 +36,8 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerAuthConn
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IRabbitMqConnectionFactory, RabbitMqConnectionFactory>();
+builder.Services.AddScoped<IMessagingProducer, MessagingProducer>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
