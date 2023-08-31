@@ -4,8 +4,9 @@ using VerbTrainer.DbInitializer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
-
-
+using RabbitMQ.Client;
+using VerbTrainer.Infrastructure.Messaging.Configuration;
+using VerbTrainer.Infrastructure.Messaging.Producer;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Configuration.AddJsonFile("appsettings.json");
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 string validAudience = builder.Configuration["JwtSettings:Audience"];
 string validIssuer = builder.Configuration["JwtSettings:Issuer"];
 string secretKey = builder.Configuration["JwtSettings:Key"];
+var rabbitMqSection = builder.Configuration.GetSection("MessagingSettings");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -32,7 +34,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 builder.Services.AddDbContext<VerbTrainerDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerConnectionString")));
-
+builder.Services.AddScoped<IRabbitMqConnectionFactory, RabbitMqConnectionFactory>();
+builder.Services.AddScoped<IMessagingProducer, MessagingProducer>();
 
 var app = builder.Build();
 
