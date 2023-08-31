@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VerbTrainer.Infrastructure.Messaging.Consumer;
 using VerbTrainerEmail.Domain.Interfaces;
 using VerbTrainerEmail.Infrastructure;
 using VerbTrainerEmail.Infrastructure.Data;
+using VerbTrainerEmail.Infrastructure.Messaging.Configuration;
+using VerbTrainerEmail.Infrastructure.Messaging.Consumer;
 using VerbTrainerEmail.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,15 +20,18 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerAuthConn
 
 builder.Services.AddScoped<IAsyncEmailRepository, AsyncEmailRepository>();
 builder.Services.AddScoped<IAsyncUserRepository, AsyncUserRepository>();
+builder.Services.AddTransient<IRabbitMqConnectionFactory, RabbitMqConnectionFactory>();
+builder.Services.AddHostedService<ConsumerHostedService>();
+
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 
 app.UseHttpsRedirection();
 
