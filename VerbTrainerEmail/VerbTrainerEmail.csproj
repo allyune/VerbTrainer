@@ -1,0 +1,73 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="RabbitMQ.Client.Core.DependencyInjection" Version="5.0.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Domain\" />
+    <None Remove="Infrastructure\" />
+    <None Remove="Domain\Entities\" />
+    <None Remove="Domain\Entities\User\" />
+    <None Remove="Domain\ValueObjects\" />
+    <None Remove="Domain\Entities\Email\" />
+    <None Remove="Application\" />
+    <None Remove="Domain\Interfaces\" />
+    <None Remove="Infrastructure\Data\" />
+    <None Remove="Infrastructure\Repositories\" />
+    <None Remove="Application\User\" />
+    <None Remove="Application\Email\" />
+    <None Remove="Controllers\" />
+    <None Remove="Infrastructure\Data\Models\" />
+    <None Remove="Infrastructure\Messaging\" />
+    <None Remove="Infrastructure\Messaging\Consumer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Domain\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Domain\Entities\" />
+    <Folder Include="Domain\Entities\User\" />
+    <Folder Include="Domain\ValueObjects\" />
+    <Folder Include="Domain\Entities\Email\" />
+    <Folder Include="Domain\Base\" />
+    <Folder Include="Application\" />
+    <Folder Include="Domain\Interfaces\" />
+    <Folder Include="Infrastructure\Data\" />
+    <Folder Include="Infrastructure\Repositories\" />
+    <Folder Include="Application\User\" />
+    <Folder Include="Application\Email\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Infrastructure\Data\Models\" />
+    <Folder Include="Infrastructure\Messaging\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\Messaging\Consumer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VerbTrainerModels\SharedModels.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\VerbTrainerMessaging\VerbTrainerMessaging.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

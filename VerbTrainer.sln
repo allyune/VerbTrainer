@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainer", "VerbTrainer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainerAuth", "VerbTrainerAuth\VerbTrainerAuth.csproj", "{7BB523AB-6826-4E69-9B2E-678B4F914E23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbbTrainerEmail", "VerbTrainerEmail\VerbbTrainerEmail.csproj", "{46A94585-4CB3-4EEE-84A6-3AEA02E3F894}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainerEmail", "VerbTrainerEmail\VerbTrainerEmail.csproj", "{46A94585-4CB3-4EEE-84A6-3AEA02E3F894}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "VerbTrainerModels\SharedModels.csproj", "{A046B09B-7EC6-433D-90F4-641988C76BBA}"
 EndProject
