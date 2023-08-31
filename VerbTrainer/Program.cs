@@ -4,8 +4,9 @@ using VerbTrainer.DbInitializer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
-
-
+using RabbitMQ.Client;
+using VerbTrainer.Infrastructure.Messaging.Configuration;
+using VerbTrainer.Infrastructure.Messaging.Producer;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Configuration.AddJsonFile("appsettings.json");
@@ -13,10 +14,11 @@ var builder = WebApplication.CreateBuilder(args);
 string validAudience = builder.Configuration["JwtSettings:Audience"];
 string validIssuer = builder.Configuration["JwtSettings:Issuer"];
 string secretKey = builder.Configuration["JwtSettings:Key"];
+var rabbitMqSection = builder.Configuration.GetSection("MessagingSettings");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<DbInitializer>();
+//builder.Services.AddTransient<DbInitializer>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -32,18 +34,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 builder.Services.AddDbContext<VerbTrainerDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerConnectionString")));
-
+builder.Services.AddScoped<IRabbitMqConnectionFactory, RabbitMqConnectionFactory>();
+builder.Services.AddScoped<IMessagingProducer, MessagingProducer>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-	var services = scope.ServiceProvider;
+//using (var scope = app.Services.CreateScope())
+//{
+//	var services = scope.ServiceProvider;
 
-	var initialiser = services.GetRequiredService<DbInitializer>();
+//	var initialiser = services.GetRequiredService<DbInitializer>();
 
-	initialiser.Run();
-}
+//	initialiser.Run();
+//}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

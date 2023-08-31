@@ -1,12 +1,11 @@
 ﻿using System;
 using VerbTrainerEmail.Domain.Base;
 using VerbTrainerEmail.Domain.Entities.Email;
-
+using VerbTrainerSharedModels.Models.User;
 namespace VerbTrainerEmail.Domain.Interfaces
 {
-	public interface IAsyncUserRepository : IAsyncReadRepository<User>
+	public interface IAsyncUserRepository : IAsyncReadOnlyRepository<User>
     {
-        Task<Email> ListEmails(User user);
     }
 }
 

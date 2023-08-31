@@ -3,7 +3,7 @@ namespace VerbTrainerEmail.Domain.Base
 {
     public abstract class BaseEntity
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }
 
@@ -35,7 +35,7 @@ namespace VerbTrainerEmail.Domain.Base
             return a.Equals(b);
         }
 
-        public static bool operator !=(BaseEntity a, BaseEntity b) => !(a == b);
+        public static bool operator !=(BaseEntity? a, BaseEntity? b) => !(a == b);
 
         public override string ToString()
         {

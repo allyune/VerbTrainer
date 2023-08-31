@@ -9,7 +9,7 @@ using VerbTrainer.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-
+using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainer.Controllers
 {
@@ -86,14 +86,16 @@ namespace VerbTrainer.Controllers
         [Authorize]
         public IActionResult GetUserDecks(int id)
         {
-            User? user = _dbContext.Users.Include(u => u.Decks).FirstOrDefault(u => u.Id == id);
+            User? user = _dbContext.Users.FirstOrDefault(u => u.Id == id);
 
             if (user == null)
             {
                 return NotFound("User not found");
             }
 
-            var userDTOs = user.Decks.Select(deck => new DeckDto
+            List<Deck> userDecks = _dbContext.Decks.Where(d => d.UserId == id).ToList();
+
+            var userDTOs = userDecks.Select(deck => new DeckDto
             {
                 Name = deck.Name,
                 Verbs = _dbContext.Verbs

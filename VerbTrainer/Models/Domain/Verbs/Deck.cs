@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainer.Models.Domain
 {
@@ -11,12 +12,10 @@ namespace VerbTrainer.Models.Domain
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        
-        [ForeignKey("Id")]
+        public int UserId { get; set; }
+                                        
         public User User { get; set; }
 
-        public int UserId { get; set; }
-
-        public ICollection<DeckVerb> DeckVerbs { get; set; }
+        public ICollection<DeckVerb>? DeckVerbs { get; set; }
     }
 }

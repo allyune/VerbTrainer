@@ -21,6 +21,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.32.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
+    <PackageReference Include="RabbitMQ.Client.Core.DependencyInjection" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="allverbs" />
@@ -28,6 +30,10 @@
     <None Remove="Models\Domain\" />
     <None Remove="ViewModels\" />
     <None Remove="DTOs\" />
+    <None Remove="Infrastructure\" />
+    <None Remove="Infrastructure\Messaging\" />
+    <None Remove="Infrastructure\Messaging\Producer\" />
+    <None Remove="Infrastructure\Messaging\Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="allverbs" />
@@ -37,5 +43,14 @@
     <Folder Include="Models\Domain\" />
     <Folder Include="ViewModels\" />
     <Folder Include="DTOs\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\Messaging\" />
+    <Folder Include="Infrastructure\Messaging\Producer\" />
+    <Folder Include="Infrastructure\Messaging\Configuration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VerbTrainerModels\SharedModels.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

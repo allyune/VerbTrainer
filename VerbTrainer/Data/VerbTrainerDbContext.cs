@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using VerbTrainer.Models.Domain;
+using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainer.Data
 {
@@ -23,6 +24,11 @@ namespace VerbTrainer.Data
                 .HasForeignKey(dv => dv.DeckId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Deck>()
+                .HasOne(deck => deck.User)
+                .WithMany()
+                .HasForeignKey(deck => deck.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<DeckVerb>()
 				.HasKey(dv => new { dv.DeckId, dv.VerbId });
@@ -33,14 +39,6 @@ namespace VerbTrainer.Data
                 .WithOne(dv => dv.Verb)
                 .HasForeignKey(dv => dv.VerbId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<RevokedAccessToken>()
-                .HasIndex(t => t.Token)
-                .IsUnique();
-
-            modelBuilder.Entity<RevokedRefreshToken>()
-                .HasIndex(t => t.Token)
-                .IsUnique();
         }
 
 		public DbSet<Binyan> Binyanim { get; set; }
@@ -50,8 +48,6 @@ namespace VerbTrainer.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Deck> Decks { get; set; }
         public DbSet<DeckVerb> DeckVerbs { get; set; }
-        public DbSet<RevokedAccessToken> RevokedAccessTokens { get; set; }
-        public DbSet<RevokedRefreshToken> RevokedRefreshTokens { get; set; }
     }
 }
 

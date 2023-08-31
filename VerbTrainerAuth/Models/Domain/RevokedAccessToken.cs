@@ -9,6 +9,6 @@ namespace VerbTrainerAuth.Models.Domain
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Token { get; set; }
+        public required string Token { get; set; }
     }
 }

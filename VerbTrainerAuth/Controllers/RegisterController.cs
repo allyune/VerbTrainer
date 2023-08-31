@@ -7,6 +7,7 @@ using VerbTrainer.DTOs;
 using VerbTrainerAuth.Models.Domain;
 using VerbTrainerAuth.Data;
 using VerbTrainerAuth.Services;
+using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainerAuth.Controllers
 {
@@ -30,6 +31,7 @@ namespace VerbTrainerAuth.Controllers
         {
             string email = data.email;
             string password = data.password;
+            //TODO: SWITCH User model to user entity
             User? checkExists = _dbContext.Users.FirstOrDefault(u => u.Email == email);
             if (checkExists != null)
             {

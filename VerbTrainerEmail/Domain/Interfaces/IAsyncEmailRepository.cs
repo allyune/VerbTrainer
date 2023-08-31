@@ -1,14 +1,12 @@
 ﻿using System;
 using VerbTrainerEmail.Domain.Base;
-using VerbTrainerEmail.Domain.Entities.Email;
-using VerbTrainerEmail.Domain.ValueObjects;
+using VerbTrainerEmail.Infrastructure.Data.Models;
 
 namespace VerbTrainerEmail.Domain.Interfaces
 {
-	public interface IAsyncEmailRepository : IAsyncReadRepository<Email>, IAsyncWriteRepository<Email>
+	public interface IAsyncEmailRepository : IAsyncRepository<Email>
     {
-		Task<EmailStatus> GetEmailStatus(Email email);
-		Task UpdateEmailStatus(Email email, EmailStatus newStatus);
+
 	}
 }
 
