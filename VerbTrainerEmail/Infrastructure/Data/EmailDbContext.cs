@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Design;
 using VerbTrainerEmail.Infrastructure.Data.Models;
-using VerbTrainerSharedModels.Models.User;
 using Email = VerbTrainerEmail.Infrastructure.Data.Models.Email;
 
 namespace VerbTrainerEmail.Infrastructure.Data
@@ -32,7 +31,6 @@ namespace VerbTrainerEmail.Infrastructure.Data
                 .HasForeignKey(a => a.EmailId);
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Email> Emails { get; set; }
     }
 }

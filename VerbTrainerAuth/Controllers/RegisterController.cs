@@ -4,10 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VerbTrainer.DTOs;
-using VerbTrainerAuth.Models.Domain;
-using VerbTrainerAuth.Data;
+using VerbTrainerAuth.Infrastructure.Data;
+using VerbTrainerAuth.Infrastructure.Data.Models;
 using VerbTrainerAuth.Services;
-using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainerAuth.Controllers
 {

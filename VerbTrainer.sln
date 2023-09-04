@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainerAuth", "VerbTrai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainerEmail", "VerbTrainerEmail\VerbTrainerEmail.csproj", "{46A94585-4CB3-4EEE-84A6-3AEA02E3F894}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "VerbTrainerModels\SharedModels.csproj", "{A046B09B-7EC6-433D-90F4-641988C76BBA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainerMessaging", "VerbTrainerMessaging\VerbTrainerMessaging.csproj", "{70852D48-A7CA-45D2-8E3E-D31D0BFDBFF8}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{46A94585-4CB3-4EEE-84A6-3AEA02E3F894}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46A94585-4CB3-4EEE-84A6-3AEA02E3F894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46A94585-4CB3-4EEE-84A6-3AEA02E3F894}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A046B09B-7EC6-433D-90F4-641988C76BBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A046B09B-7EC6-433D-90F4-641988C76BBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A046B09B-7EC6-433D-90F4-641988C76BBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A046B09B-7EC6-433D-90F4-641988C76BBA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{70852D48-A7CA-45D2-8E3E-D31D0BFDBFF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{70852D48-A7CA-45D2-8E3E-D31D0BFDBFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70852D48-A7CA-45D2-8E3E-D31D0BFDBFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU

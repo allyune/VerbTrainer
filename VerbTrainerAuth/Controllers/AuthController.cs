@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using VerbTrainerAuth.Models.Domain;
-using VerbTrainerAuth.Data;
 using VerbTrainerAuth.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +12,8 @@ using VerbTrainerAuth.DTOs;
 using System.Security.Claims;
 using System.Security.Principal;
 using VerbTrainerAuth.AuthHelpers;
-using VerbTrainerSharedModels.Models.User;
+using VerbTrainerAuth.Infrastructure.Data;
+using VerbTrainerAuth.Infrastructure.Data.Models;
 
 namespace VerbTrainerAuth.Controllers
 {

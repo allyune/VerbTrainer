@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using VerbTrainer.DTOs;
-using VerbTrainerAuth.Data;
-using VerbTrainerAuth.Models.Domain;
 using VerbTrainerAuth.Controllers;
 using VerbTrainerAuth.DTOs;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Npgsql;
 using System.Linq.Expressions;
+using VerbTrainerAuth.Infrastructure.Data;
+using VerbTrainerAuth.Infrastructure.Data.Models;
 
 namespace VerbTrainerAuth.Services
 {

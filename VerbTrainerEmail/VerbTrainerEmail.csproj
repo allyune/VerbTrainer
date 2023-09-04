@@ -63,9 +63,6 @@
     <Folder Include="Infrastructure\Messaging\Consumer\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VerbTrainerModels\SharedModels.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
     <ProjectReference Include="..\VerbTrainerMessaging\VerbTrainerMessaging.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>

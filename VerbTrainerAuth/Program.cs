@@ -1,11 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
-using VerbTrainerAuth.Data;
+using VerbTrainerAuth.Infrastructure.Data;
 using VerbTrainerAuth.Services;
 using VerbTrainerAuth.Infrastructure.Messaging.Configuration;
 using VerbTrainerAuth.Infrastructure.Messaging.Producer;
+using VerbTrainerAuth.Domain.Interfaces;
+using VerbTrainerEmail.Infrastructure.Repositories;
+using VerbTrainerAuth.Infrastructure.Data.Repositories;
+using VerbTrainerAuth.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json");
@@ -36,6 +39,9 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerAuthConn
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IAsyncUserRepository, AsyncUserRepository>();
+builder.Services.AddScoped<IAsyncRecoveryTokenRepository, AsyncRecoveryTokenRepository>();
+builder.Services.AddScoped<IRecoveryTokenMapper, RecoveryTokenMapper>();
 builder.Services.AddScoped<IRabbitMqConnectionFactory, RabbitMqConnectionFactory>();
 builder.Services.AddScoped<IMessagingProducer, MessagingProducer>();
 

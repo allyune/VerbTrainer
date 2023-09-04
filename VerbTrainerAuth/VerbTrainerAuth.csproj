@@ -27,20 +27,39 @@
 
   <ItemGroup>
     <None Remove="Services\" />
-    <None Remove="Data\" />
     <None Remove="AuthHelpers\" />
     <None Remove="Infrastructure\" />
+    <None Remove="Infrastructure\Data\" />
+    <None Remove="Domain\" />
+    <None Remove="Domain\Base\" />
+    <None Remove="Infrastructure\Data\Models\" />
+    <None Remove="Infrastructure\Data\Repositories\" />
+    <None Remove="Domain\Interfaces\" />
+    <None Remove="Application\" />
+    <None Remove="Application\User\" />
+    <None Remove="Application\PasswordRecovery\" />
+    <None Remove="Domain\Entities\" />
+    <None Remove="Application\Mapping\" />
+    <None Remove="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="Data\" />
     <Folder Include="AuthHelpers\" />
     <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\Data\" />
+    <Folder Include="Domain\" />
+    <Folder Include="Domain\Base\" />
+    <Folder Include="Infrastructure\Data\Models\" />
+    <Folder Include="Infrastructure\Data\Repositories\" />
+    <Folder Include="Domain\Interfaces\" />
+    <Folder Include="Application\" />
+    <Folder Include="Application\User\" />
+    <Folder Include="Application\PasswordRecovery\" />
+    <Folder Include="Domain\Entities\" />
+    <Folder Include="Application\Mapping\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VerbTrainerModels\SharedModels.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
     <ProjectReference Include="..\VerbTrainerMessaging\VerbTrainerMessaging.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
