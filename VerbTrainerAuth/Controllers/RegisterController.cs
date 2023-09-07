@@ -4,42 +4,48 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VerbTrainer.DTOs;
-using VerbTrainerAuth.Infrastructure.Data;
-using VerbTrainerAuth.Infrastructure.Data.Models;
-using VerbTrainerAuth.Services;
+using VerbTrainerAuth.Application.Exceptions;
+using VerbTrainerAuth.Application.RegisterUser;
 
 namespace VerbTrainerAuth.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class RegisterController : ControllerBase
     {
+        private readonly IRegisterUserHandler _registerHandler;
         private readonly ILogger<RegisterController> _logger;
-        private readonly VerbTrainerAuthDbContext _dbContext;
-        private readonly IPasswordHashService _passwordHashService;
 
-        public RegisterController(ILogger<RegisterController> logger, VerbTrainerAuthDbContext dbContext, IPasswordHashService passwordHashService)
+        public RegisterController(
+            IRegisterUserHandler registerHandler,
+            ILogger<RegisterController> logger)
         {
+            _registerHandler = registerHandler;
             _logger = logger;
-            _dbContext = dbContext;
-            _passwordHashService = passwordHashService;
         }
 
         [HttpPost]
-        public IActionResult RegisterUser([FromBody] RegisterDto data)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterDto data)
         {
             string email = data.email;
             string password = data.password;
-            //TODO: SWITCH User model to user entity
-            User? checkExists = _dbContext.Users.FirstOrDefault(u => u.Email == email);
-            if (checkExists != null)
+            try
             {
-                return BadRequest($"User with email {email} already exists");
+                bool isUserAdded = await _registerHandler.RegisterUser(email, password);
+                return Ok("User added");
             }
-            string passwordHash = _passwordHashService.HashPassword(password, out var saltString);
-            _dbContext.Users.Add(new User { Email = email, Password = passwordHash, Salt = saltString });
-            _dbContext.SaveChanges();
-            return Ok("User added");
+
+            catch (Exception e)
+            {
+                switch (e)
+                {
+                    case UserAlreadyExistsException ex:
+                        return BadRequest("User already exists");
+                    default:
+                        _logger.LogCritical(e.Message);
+                        return BadRequest("Error while registering a user");
+                }
+            }
         }
     }
 }
