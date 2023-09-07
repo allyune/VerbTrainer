@@ -8,6 +8,7 @@ project.lock.json
 
 # Visual Studio Code
 .vscode
+.vs
 
 # User-specific files
 *.suo
@@ -32,3 +33,7 @@ msbuild.wrn
 */appsettings.json
 # Visual Studio 2015
 .vs/
+*/migrations
+appsettings.*
+
+

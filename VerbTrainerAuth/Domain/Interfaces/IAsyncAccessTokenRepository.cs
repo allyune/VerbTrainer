@@ -1,10 +1,10 @@
 ﻿using System;
 using VerbTrainerAuth.Domain.Base;
-using VerbTrainerAuth.Infrastructure.Data.Models;
+using Models = VerbTrainerAuth.Infrastructure.Data.Models;
 
 namespace VerbTrainerAuth.Domain.Interfaces
 {
-	public interface IAsyncAccessTokenRepository : IAsyncRepository<RevokedAccessToken>
+	public interface IAsyncAccessTokenRepository : IAsyncRepository<Models.RevokedAccessToken>
     {
 	}
 }

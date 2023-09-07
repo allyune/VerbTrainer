@@ -47,6 +47,9 @@
     <None Remove="Application\Services\JWT\" />
     <None Remove="Application\Services\User\" />
     <None Remove="Application\Services\Mapping\" />
+    <None Remove="Application\ChangePassword\" />
+    <None Remove="Application\DeleteUser\" />
+    <None Remove="Application\SetUserName\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Infrastructure\" />
@@ -70,6 +73,9 @@
     <Folder Include="Application\Services\JWT\" />
     <Folder Include="Application\Services\User\" />
     <Folder Include="Application\Services\Mapping\" />
+    <Folder Include="Application\ChangePassword\" />
+    <Folder Include="Application\DeleteUser\" />
+    <Folder Include="Application\SetUserName\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VerbTrainerMessaging\VerbTrainerMessaging.csproj">

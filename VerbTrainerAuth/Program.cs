@@ -5,7 +5,6 @@ using VerbTrainerAuth.Infrastructure.Data;
 using VerbTrainerAuth.Infrastructure.Messaging.Configuration;
 using VerbTrainerAuth.Infrastructure.Messaging.Producer;
 using VerbTrainerAuth.Domain.Interfaces;
-using VerbTrainerEmail.Infrastructure.Repositories;
 using VerbTrainerAuth.Infrastructure.Data.Repositories;
 using VerbTrainerAuth.Application.Services.Mapping;
 using VerbTrainerAuth.Application.Services.JWT;
@@ -15,6 +14,7 @@ using VerbTrainerAuth.Application.RefreshUserAccess;
 using VerbTrainerAuth.Application.RegisterUser;
 using VerbTrainerAuth.Application.ResetPassword;
 using Microsoft.IdentityModel.Logging;
+using VerbTrainerEmail.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
