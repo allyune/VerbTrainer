@@ -5,6 +5,7 @@ namespace VerbTrainerAuth.Infrastructure.Data.Models
     public abstract class BaseAuthModel
     {
         public int Id { get; set; }
+
         protected BaseAuthModel()
         {
         }
