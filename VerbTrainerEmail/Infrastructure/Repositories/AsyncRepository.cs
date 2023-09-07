@@ -4,30 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using VerbTrainerEmail.Domain.Base;
 using VerbTrainerEmail.Infrastructure.Data;
 using VerbTrainerEmail.Infrastructure.Data.Models;
-using VerbTrainerSharedModels.Models.User;
-
-namespace VerbTrainerEmail.Infrastructure.Repositories
-{
-    public abstract class AsyncReadOnlyRepository<T> : IAsyncReadOnlyRepository<T> where T : User
-    {
-
-        private readonly DbSet<T> _dbSet;
-
-        public AsyncReadOnlyRepository(EmailDbContext dbContext)
-        {
-            _dbSet = dbContext.Set<T>();
-        }
-
-        Task<T?> IAsyncReadOnlyRepository<T>.GetAsync(int id)
-        {
-            return _dbSet.FirstOrDefaultAsync(e => e.Id == id);
-        }
-
-        Task<List<T>> IAsyncReadOnlyRepository<T>.ListAsync(Expression<Func<T, bool>> expression)
-        {
-            return _dbSet.Where(expression).ToListAsync();
-        }
-    }
 
     public abstract class AsyncRepository<T> : IAsyncRepository<T> where T : BaseEmailSenderModel
     {
@@ -72,5 +48,5 @@ namespace VerbTrainerEmail.Infrastructure.Repositories
             return Task.FromResult(true);
         }
     }
-}
+
 

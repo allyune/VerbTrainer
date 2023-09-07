@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using VerbTrainer.Models.Domain;
-using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainer.Data
 {
@@ -24,12 +23,6 @@ namespace VerbTrainer.Data
                 .HasForeignKey(dv => dv.DeckId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Deck>()
-                .HasOne(deck => deck.User)
-                .WithMany()
-                .HasForeignKey(deck => deck.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             modelBuilder.Entity<DeckVerb>()
 				.HasKey(dv => new { dv.DeckId, dv.VerbId });
 
@@ -45,7 +38,6 @@ namespace VerbTrainer.Data
 		public DbSet<Verb> Verbs { get; set; }
 		public DbSet<Tense> Tenses { get; set; }
 		public DbSet<Conjugation> Conjugations { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Deck> Decks { get; set; }
         public DbSet<DeckVerb> DeckVerbs { get; set; }
     }

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using VerbTrainerEmail.Domain.Interfaces;
 using VerbTrainerEmail.Infrastructure.Data;
 using VerbTrainerEmail.Infrastructure.Data.Models;
-using VerbTrainerEmail.Infrastructure.Repositories;
 
 namespace VerbTrainerEmail.Infrastructure
 {

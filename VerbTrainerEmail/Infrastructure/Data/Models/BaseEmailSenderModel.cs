@@ -1,9 +1,10 @@
 ﻿using System;
+
 namespace VerbTrainerEmail.Infrastructure.Data.Models
 {
-    public abstract class BaseEmailSenderModel
-	{
-        public int Id { get; private set; }
+    public abstract class BaseEmailSenderModel 
+    {
+        public int Id { get; set; }
 		protected BaseEmailSenderModel()
 		{
 		}

@@ -2,7 +2,6 @@
 using System.Xml.Serialization;
 using VerbTrainer.Data;
 using VerbTrainer.Models.Domain;
-using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainer.DbInitializer
 {

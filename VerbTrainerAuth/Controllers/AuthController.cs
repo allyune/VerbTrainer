@@ -3,127 +3,103 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using VerbTrainerAuth.Models.Domain;
-using VerbTrainerAuth.Data;
-using VerbTrainerAuth.Services;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using VerbTrainerAuth.DTOs;
-using System.Security.Claims;
-using System.Security.Principal;
-using VerbTrainerAuth.AuthHelpers;
-using VerbTrainerSharedModels.Models.User;
+using VerbTrainerAuth.Application.Services.JWT;
+using VerbTrainerAuth.Application.UserLogin;
+using VerbTrainerAuth.Application.RefreshUserAccess;
 
 namespace VerbTrainerAuth.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
-        private readonly VerbTrainerAuthDbContext _dbContext;
-        private readonly IPasswordHashService _passwordHashService;
+        private readonly IUserLoginHandler _loginHandler;
+        private readonly IRefreshUserAccessHandler _refreshHandler;
         private readonly IJWTService _jwtService;
         private readonly IConfiguration _configuration;
 
-        public AuthController(ILogger<AuthController> logger, VerbTrainerAuthDbContext dbContext,
-                              IPasswordHashService passwordHashService, IJWTService jWTService,
-                              IConfiguration configuration)
+        public AuthController(
+            ILogger<AuthController> logger,
+            IUserLoginHandler loginHansler,
+            IRefreshUserAccessHandler refreshUserAccessHandler,
+            IJWTService jWTService,
+            IConfiguration configuration)
         {
             _logger = logger;
-            _dbContext = dbContext;
-            _passwordHashService = passwordHashService;
+            _loginHandler = loginHansler;
+            _refreshHandler = refreshUserAccessHandler;
             _jwtService = jWTService;
             _configuration = configuration;
-            //_httpContextAccessor = httpContextAccessor;
         }
 
 
         [HttpPost("login")]
-        public IActionResult LoginUser([FromBody] LoginDto data)
+        public async Task<IActionResult> LoginUser([FromBody] LoginDto data)
         {
             string email = data.email;
             string password = data.password;
-            bool remeberUser = data.rememberUser;
-            //TODO: Switch user model to user entity
-            User? userInfo = _dbContext.Users.FirstOrDefault(u => u.Email == email);
-            if (userInfo == null)
+            string? authHeader = Request.Headers.Authorization;
+            IRequestCookieCollection cookies = Request.Cookies;
+            bool IsLoginSuccessful = await _loginHandler.UserLogin(
+                email, password, authHeader, cookies);
+
+            if (!IsLoginSuccessful)
             {
-                return NotFound("Wrong email or password");
+                return Unauthorized("User or password are invalid");
+            }
+            string accessToken = await _jwtService.IssueAccessToken(new IssueAccessTokenDto(data.email));
+            string refreshToken = await _jwtService.IssueRefreshToken(data);
+            double refreshTokenLifespan = _jwtService.GetRefreshTokenLifespan(data.rememberUser);
+
+            CookieOptions cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                IsEssential = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.Now.AddDays(refreshTokenLifespan),
+                Secure = false
             };
 
-            string savedPasswordHash = userInfo.Password;
-            string savedSalt = userInfo.Salt;
-            bool passwordValid = _passwordHashService.VerifyPasswordHash(password, savedPasswordHash, savedSalt);
-            if (passwordValid)
+            if (Request.IsHttps)
             {
-                //rovoke tokens if exist
-                string? authHeader = Request.Headers.Authorization;
-                _ = Request.Cookies.TryGetValue("RefreshToken", out var oldRefreshToken);
-
-                if (authHeader != null)
-                {
-                    string oldAccessToken = authHeader.Substring("Bearer ".Length);
-                    _jwtService.RevokeAccessToken(oldAccessToken);
-                }
-
-                if (oldRefreshToken != null)
-                {
-                    _jwtService.RevokeRefreshToken(oldRefreshToken);
-                }
-
-                string accessToken = _jwtService.IssueAccessToken(new IssueAccessTokenDto { Email = data.email});
-                string refreshToken = _jwtService.IssueRefreshToken(data);
-                double refreshTokenLifespan = _jwtService.GetRefreshTokenLifespan(data.rememberUser);
-
-                CookieOptions cookieOptions = new CookieOptions
-                {
-                    HttpOnly = true,
-                    IsEssential = true,
-                    SameSite = SameSiteMode.None,
-                    Expires = DateTime.Now.AddDays(refreshTokenLifespan),
-                    Secure = false
-            };
-
-                if (Request.IsHttps)
-                {
-                    cookieOptions.Secure = true;
-                }
-
-                Response.Cookies.Append("RefreshToken", refreshToken, cookieOptions);
-                return Ok(accessToken);
+                cookieOptions.Secure = true;
             }
 
-            return NotFound("Wrong email or password");
+            Response.Cookies.Append("RefreshToken", refreshToken, cookieOptions);
+            return Ok(accessToken);
         }
+            
 
         [HttpPost("refresh")]
-        public IActionResult RefreshToken()
+        public async Task<IActionResult> RefreshToken()
         {
-            string? oldAccessToken = JwtHelpers.GetAccessTokenFromHeader(Request.Headers);
-            if (oldAccessToken != null && Request.Cookies.TryGetValue("RefreshToken", out string refreshToken))
+            string? authHeader = Request.Headers.Authorization;
+            if (authHeader is null)
             {
-                if (!_jwtService.IsRefreshTokenBlacklisted(refreshToken) && _jwtService.ValidateToken(refreshToken))
+                return BadRequest("Authorization header is not provided");
+            }
+
+            if (authHeader.StartsWith("Bearer "))
+            {
+                string oldAccessToken = authHeader.Substring("Bearer ".Length);
+
+                if (oldAccessToken != null && Request.Cookies.TryGetValue("RefreshToken", out string? refreshToken))
                 {
-                    IEnumerable<Claim> tokenClaims = _jwtService.GetTokenPrincipal(oldAccessToken);
-                    string emailClaimValue = tokenClaims.SingleOrDefault(claim => claim.Type == ClaimTypes.Email)?.Value;
-                    string newAccessToken = _jwtService.IssueAccessToken(new IssueAccessTokenDto { Email = emailClaimValue });
-                    bool oldTokenRevoked = _jwtService.RevokeAccessToken(oldAccessToken);
-                    if (!oldTokenRevoked && !_jwtService.IsTokenExpired(oldAccessToken))
+                    try
                     {
-                        return Ok(oldAccessToken);
-                    }
-                    else if (!oldTokenRevoked)
-                    {
+                        string newAccessToken = await _refreshHandler.IssueNewAccessToken(refreshToken, oldAccessToken);
                         return Ok(newAccessToken);
                     }
-                    return Ok(newAccessToken);
+                    catch (Exception e)
+                    {
+                        _logger.LogError("Could not validate refresh token " + e.Message);
+                        await _jwtService.RevokeRefreshToken(refreshToken);
+                        await _jwtService.RevokeAccessToken(oldAccessToken);
+                        return Unauthorized("Refresh token not valid");
+                    }
                 }
-                _jwtService.RevokeRefreshToken(refreshToken);
-                _jwtService.RevokeAccessToken(oldAccessToken);
-                return Unauthorized("Refresh token not valid");
             }
             return BadRequest("One of tokens is not provided");
 

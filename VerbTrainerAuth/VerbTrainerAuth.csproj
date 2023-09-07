@@ -26,21 +26,58 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Services\" />
-    <None Remove="Data\" />
-    <None Remove="AuthHelpers\" />
     <None Remove="Infrastructure\" />
+    <None Remove="Infrastructure\Data\" />
+    <None Remove="Domain\" />
+    <None Remove="Domain\Base\" />
+    <None Remove="Infrastructure\Data\Models\" />
+    <None Remove="Infrastructure\Data\Repositories\" />
+    <None Remove="Domain\Interfaces\" />
+    <None Remove="Application\" />
+    <None Remove="Domain\Entities\" />
+    <None Remove="Migrations\" />
+    <None Remove="Domain\ValueObjects\" />
+    <None Remove="Domain\Exceptions\" />
+    <None Remove="Application\UserLogin\" />
+    <None Remove="Application\RefreshUserAccess\" />
+    <None Remove="Application\RegisterUser\" />
+    <None Remove="Application\Exceptions\" />
+    <None Remove="Application\ResetPassword\" />
+    <None Remove="Application\Services\" />
+    <None Remove="Application\Services\JWT\" />
+    <None Remove="Application\Services\User\" />
+    <None Remove="Application\Services\Mapping\" />
+    <None Remove="Application\ChangePassword\" />
+    <None Remove="Application\DeleteUser\" />
+    <None Remove="Application\SetUserName\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Data\" />
-    <Folder Include="AuthHelpers\" />
     <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\Data\" />
+    <Folder Include="Domain\" />
+    <Folder Include="Domain\Base\" />
+    <Folder Include="Infrastructure\Data\Models\" />
+    <Folder Include="Infrastructure\Data\Repositories\" />
+    <Folder Include="Domain\Interfaces\" />
+    <Folder Include="Application\" />
+    <Folder Include="Domain\Entities\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Domain\ValueObjects\" />
+    <Folder Include="Domain\Exceptions\" />
+    <Folder Include="Application\UserLogin\" />
+    <Folder Include="Application\RefreshUserAccess\" />
+    <Folder Include="Application\RegisterUser\" />
+    <Folder Include="Application\Exceptions\" />
+    <Folder Include="Application\ResetPassword\" />
+    <Folder Include="Application\Services\" />
+    <Folder Include="Application\Services\JWT\" />
+    <Folder Include="Application\Services\User\" />
+    <Folder Include="Application\Services\Mapping\" />
+    <Folder Include="Application\ChangePassword\" />
+    <Folder Include="Application\DeleteUser\" />
+    <Folder Include="Application\SetUserName\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VerbTrainerModels\SharedModels.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
     <ProjectReference Include="..\VerbTrainerMessaging\VerbTrainerMessaging.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>

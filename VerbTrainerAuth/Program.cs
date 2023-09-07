@@ -1,13 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
-using VerbTrainerAuth.Data;
-using VerbTrainerAuth.Services;
+using VerbTrainerAuth.Infrastructure.Data;
 using VerbTrainerAuth.Infrastructure.Messaging.Configuration;
 using VerbTrainerAuth.Infrastructure.Messaging.Producer;
+using VerbTrainerAuth.Domain.Interfaces;
+using VerbTrainerAuth.Infrastructure.Data.Repositories;
+using VerbTrainerAuth.Application.Services.Mapping;
+using VerbTrainerAuth.Application.Services.JWT;
+using VerbTrainerAuth.Application.Services.User;
+using VerbTrainerAuth.Application.UserLogin;
+using VerbTrainerAuth.Application.RefreshUserAccess;
+using VerbTrainerAuth.Application.RegisterUser;
+using VerbTrainerAuth.Application.ResetPassword;
+using Microsoft.IdentityModel.Logging;
+using VerbTrainerEmail.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+IdentityModelEventSource.ShowPII = true;
+
 builder.Configuration.AddJsonFile("appsettings.json");
 
 string validAudience = builder.Configuration["JwtSettings:Audience"];
@@ -33,16 +45,29 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddDbContext<VerbTrainerAuthDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerAuthConnectionString")));
-builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
+builder.Services.AddScoped<IAsyncUserRepository, AsyncUserRepository>();
+builder.Services.AddScoped<IAsyncRecoveryTokenRepository, AsyncRecoveryTokenRepository>();
+builder.Services.AddScoped<IAsyncAccessTokenRepository, AsyncAccessTokenRepository>();
+builder.Services.AddScoped<IAsyncRefreshTokenRepository, AsyncRefreshTokenRepository>();
 builder.Services.AddScoped<IJWTService, JWTService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IRecoveryTokenMapper, RecoveryTokenMapper>();
+builder.Services.AddScoped<IUserMapper, UserMapper>();
 builder.Services.AddScoped<IRabbitMqConnectionFactory, RabbitMqConnectionFactory>();
 builder.Services.AddScoped<IMessagingProducer, MessagingProducer>();
+builder.Services.AddScoped<IUserLoginHandler, UserLoginHandler>();
+builder.Services.AddScoped<IResetPasswordHandler, ResetPasswordHandler>();
+builder.Services.AddScoped<IRegisterUserHandler, RegisterUserHandler>();
+builder.Services.AddScoped<IRefreshUserAccessHandler, RefreshUserAccessHandler>();
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 
 var app = builder.Build();
 
