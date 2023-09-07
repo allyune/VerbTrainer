@@ -1,15 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VerbTrainer.Data;
 using VerbTrainer.Models;
 using VerbTrainer.DTOs;
 using VerbTrainer.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using VerbTrainerSharedModels.Models.User;
 
 namespace VerbTrainer.Controllers
 {
@@ -82,39 +77,41 @@ namespace VerbTrainer.Controllers
             }
         }
 
-        [HttpGet("user/{id}")]
-        [Authorize]
-        public IActionResult GetUserDecks(int id)
-        {
-            User? user = _dbContext.Users.FirstOrDefault(u => u.Id == id);
+        // TODO: User-related logic to be moved to Auth/User service
 
-            if (user == null)
-            {
-                return NotFound("User not found");
-            }
+        //[HttpGet("user/{id}")]
+        //[Authorize]
+        //public IActionResult GetUserDecks(int id)
+        //{
+        //    User? user = _dbContext.Users.FirstOrDefault(u => u.Id == id);
 
-            List<Deck> userDecks = _dbContext.Decks.Where(d => d.UserId == id).ToList();
+        //    if (user == null)
+        //    {
+        //        return NotFound("User not found");
+        //    }
 
-            var userDTOs = userDecks.Select(deck => new DeckDto
-            {
-                Name = deck.Name,
-                Verbs = _dbContext.Verbs
-                        .Where(v => _dbContext.DeckVerbs.Any(dw => dw.DeckId == deck.Id && dw.VerbId == v.Id))
-                        .Include(verb => verb.Conjugations)
-                            .ThenInclude(conjugation => conjugation.Tense)
-                        .Select(verb => new VerbDto
-                        {
-                            Id = verb.Id,
-                            Name = verb.Name,
-                            Meaning = verb.Meaning,
-                            Binyan = verb.Binyan,
-                            Root = verb.Root,
-                            Conjugations = verb.Conjugations.ToList()
-                        })
-                        .ToList()
-            });
-            return Json(userDTOs);
-        }
+        //    List<Deck> userDecks = _dbContext.Decks.Where(d => d.UserId == id).ToList();
+
+        //    var userDTOs = userDecks.Select(deck => new DeckDto
+        //    {
+        //        Name = deck.Name,
+        //        Verbs = _dbContext.Verbs
+        //                .Where(v => _dbContext.DeckVerbs.Any(dw => dw.DeckId == deck.Id && dw.VerbId == v.Id))
+        //                .Include(verb => verb.Conjugations)
+        //                    .ThenInclude(conjugation => conjugation.Tense)
+        //                .Select(verb => new VerbDto
+        //                {
+        //                    Id = verb.Id,
+        //                    Name = verb.Name,
+        //                    Meaning = verb.Meaning,
+        //                    Binyan = verb.Binyan,
+        //                    Root = verb.Root,
+        //                    Conjugations = verb.Conjugations.ToList()
+        //                })
+        //                .ToList()
+        //    });
+        //    return Json(userDTOs);
+        //}
 
 
         [HttpPost("verb")]

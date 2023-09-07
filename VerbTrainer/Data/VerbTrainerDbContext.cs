@@ -23,12 +23,6 @@ namespace VerbTrainer.Data
                 .HasForeignKey(dv => dv.DeckId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Deck>()
-                .HasOne(deck => deck.User)
-                .WithMany()
-                .HasForeignKey(deck => deck.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             modelBuilder.Entity<DeckVerb>()
 				.HasKey(dv => new { dv.DeckId, dv.VerbId });
 
