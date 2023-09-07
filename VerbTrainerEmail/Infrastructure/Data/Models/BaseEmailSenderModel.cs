@@ -1,9 +1,8 @@
 ﻿using System;
-using SharedModels;
 
 namespace VerbTrainerEmail.Infrastructure.Data.Models
 {
-    public abstract class BaseEmailSenderModel : ICommonModelBase
+    public abstract class BaseEmailSenderModel 
     {
         public int Id { get; set; }
 		protected BaseEmailSenderModel()

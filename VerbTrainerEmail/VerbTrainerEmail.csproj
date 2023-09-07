@@ -22,6 +22,8 @@
     </PackageReference>
     <PackageReference Include="RabbitMQ.Client.Core.DependencyInjection" Version="5.0.0" />
     <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
+    <PackageReference Include="RazorEngine" Version="3.10.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,12 +37,12 @@
     <None Remove="Domain\Interfaces\" />
     <None Remove="Infrastructure\Data\" />
     <None Remove="Infrastructure\Repositories\" />
-    <None Remove="Application\User\" />
-    <None Remove="Application\Email\" />
     <None Remove="Controllers\" />
     <None Remove="Infrastructure\Data\Models\" />
     <None Remove="Infrastructure\Messaging\" />
     <None Remove="Infrastructure\Messaging\Consumer\" />
+    <None Remove="Application\SendEmail\" />
+    <None Remove="Application\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
@@ -54,13 +56,13 @@
     <Folder Include="Domain\Interfaces\" />
     <Folder Include="Infrastructure\Data\" />
     <Folder Include="Infrastructure\Repositories\" />
-    <Folder Include="Application\User\" />
-    <Folder Include="Application\Email\" />
     <Folder Include="Controllers\" />
     <Folder Include="Infrastructure\Data\Models\" />
     <Folder Include="Infrastructure\Messaging\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Infrastructure\Messaging\Consumer\" />
+    <Folder Include="Application\SendEmail\" />
+    <Folder Include="Application\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VerbTrainerMessaging\VerbTrainerMessaging.csproj">
