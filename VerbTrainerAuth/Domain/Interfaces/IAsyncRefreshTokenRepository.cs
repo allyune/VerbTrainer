@@ -4,7 +4,7 @@ using VerbTrainerAuth.Infrastructure.Data.Models;
 
 namespace VerbTrainerAuth.Domain.Interfaces
 {
-    public interface IAsyncrefreshTokenRepository : IAsyncRepository<RevokedAccessToken>
+    public interface IAsyncRefreshTokenRepository : IAsyncRepository<RevokedRefreshToken>
     {
     }
 }

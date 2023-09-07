@@ -8,6 +8,8 @@ namespace VerbTrainerAuth.Domain.Base
     {
         Task<T?> GetAsync(Expression<Func<T, bool>> expression);
 
+        Task<bool> CheckExists(Expression<Func<T, bool>> expression);
+
         Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
 
         Task AddAsync(T entity);
