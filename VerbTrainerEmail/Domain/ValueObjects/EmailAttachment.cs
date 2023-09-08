@@ -4,7 +4,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace VerbTrainerEmail.Domain.ValueObjects
 {
-    public class EmailAttachment : ValueObject
+    public class EmailAttachment : BaseValueObject
     {
         public string FileName { get; private set; }
         public string MimeType { get; private set; }

@@ -4,8 +4,9 @@ using VerbTrainerEmail.Domain.ValueObjects;
 
 namespace VerbTrainerEmail.Domain.Entities.User
 {
-	public class User : BaseEntity
+	public class User
 	{
+		public int Id { get; private set; }
 		public string Email { get; private set; }
 		public string? FirstName { get; private set; }
         public string? LastName { get; private set; }
@@ -15,6 +16,7 @@ namespace VerbTrainerEmail.Domain.Entities.User
 		private User(int id, string email, string firstName,
 					 string lastName, UserStatus status, DateTime? lastLogin)
 		{
+			Id = id;
 			Email = email;
 			FirstName = firstName;
 			LastName = lastName;

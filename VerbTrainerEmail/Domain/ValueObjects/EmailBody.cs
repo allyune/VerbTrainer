@@ -3,7 +3,7 @@ using VerbTrainerEmail.Domain.Base;
 
 namespace VerbTrainerEmail.Domain.ValueObjects
 {
-    public class EmailBody : ValueObject
+    public class EmailBody : BaseValueObject
     {
         public string Text { get; private set; }
 

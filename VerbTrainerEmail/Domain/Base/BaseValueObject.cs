@@ -1,7 +1,7 @@
 ﻿using System;
 namespace VerbTrainerEmail.Domain.Base
 {
-    public abstract class ValueObject
+    public abstract class BaseValueObject
     {
         // Compare ValueObject by values of the properties 
         public override bool Equals(object obj)
@@ -11,7 +11,7 @@ namespace VerbTrainerEmail.Domain.Base
                 return false;
             }
 
-            ValueObject other = (ValueObject)obj;
+            BaseValueObject other = (BaseValueObject)obj;
             return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
         }
 

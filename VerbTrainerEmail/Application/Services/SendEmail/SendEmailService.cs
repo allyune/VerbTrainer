@@ -5,20 +5,47 @@ using VerbTrainerEmail.Domain.Entities.User;
 using VerbTrainerEmail.Domain.ValueObjects;
 using RazorEngine;
 using Microsoft.Extensions.Hosting.Internal;
+using VerbTrainerEmail.Infrastructure.Data.Models;
+using System;
 
-//TODO: Database table where each email request will be added immediately, and when email is sent -> marked sent
-namespace VerbTrainerEmail.Application.SendEmail
+//TODO: Database table where each email request will be added immediately,
+//and when email is sent -> marked sent
+namespace VerbTrainerEmail.Application.Services.SendEmail
 {
-    public abstract class SendEmailHandler<T> where T : EmailEntity
+    public abstract class SendEmailService<T> : ISendEmailService<T> where T : EmailEntity, new()
     {
-        // Abstract methods must be implemented in the deriving classes
-        protected abstract T CreateEmailEntity(
-            Dictionary<string, object> emailData,
-            User userEntity);
 
-        protected abstract Dictionary<string, object>
-            CreateEmailModel(T emailEntity);
-          
+        public abstract
+            Dictionary<string, object> CreateEmailModel(T emailEntity);
+
+
+        public T CreateEmailEntity(
+            Dictionary<string, object> emailData,
+            User userEntity)
+        {
+            T emailEntity = EmailEntity.CreateNew<T>("TempFrom", userEntity.Id, userEntity.Email, (EmailStatus)emailData["Status"]);
+            return emailEntity;
+        }
+
+        public Email CreateEmailDbModel(T emailEntity, string emailBody)
+        {
+            EmailType emailType;
+
+            if (!Enum.TryParse(nameof(T), out emailType))
+            {
+                throw new ApplicationException($"Email type {nameof(T)} not defined");
+            }
+
+            Email model = Email.CreateNew(
+                emailType,
+                emailEntity.From,
+                emailEntity.ToUserId,
+                emailEntity.Subject.Value,
+                emailBody,
+                (int)emailEntity.Status);
+
+            return model;
+        }
 
         public T ParseJsonToEntity(string json)
         {
