@@ -17,10 +17,6 @@ namespace VerbTrainerEmail.Application.Services.SendEmail
     public abstract class SendEmailService<T> : ISendEmailService<T> where T : EmailEntity, new()
     {
 
-        public abstract IEmailTemplateModel CreateEmailModel(
-            T emailEntity,
-            string passwordResetLink);
-
         public abstract T ParseJsonToEntity(string json);
 
         public T CreateEmailEntity(UserEntity userEntity)
@@ -35,13 +31,21 @@ namespace VerbTrainerEmail.Application.Services.SendEmail
             return emailEntity;
         }
 
-        public Email CreateEmailDbModel(T emailEntity, string emailBody)
+        public Email CreateEmailDbModel(T emailEntity)
         {
             EmailType emailType;
             string entityType = emailEntity.GetType().Name;
+            string? emailBody = emailEntity.Body?.Text;
             if (!Enum.TryParse(entityType, out emailType))
             {
-                throw new ApplicationException($"Email type {entityType} not defined");
+                throw new ApplicationException(
+                    $"Email type {entityType} not defined");
+            }
+
+            if (string.IsNullOrEmpty(emailBody))
+            {
+                throw new ArgumentException(
+                    $"Email entity does not contain email body");
             }
 
             Email model = Email.CreateNew(
@@ -49,17 +53,19 @@ namespace VerbTrainerEmail.Application.Services.SendEmail
                 emailEntity.From,
                 emailEntity.ToUserId,
                 emailEntity.Subject.Value,
-                emailBody,
+                emailEntity.Body.Text,
                 (int)emailEntity.Status);
 
             return model;
         }
 
         public async Task<string> RenderEmailTemplate(
-            T emailEntity, IEmailTemplateModel model, string? templateKey = null)
+            string templateFilePath,
+            IEmailTemplateModel model,
+            string? templateKey = null)
         {
-            string templateFilePath = emailEntity.Template;
             string template = File.ReadAllText(templateFilePath);
+
             if (string.IsNullOrEmpty(templateKey))
             {
                 templateKey = Guid.NewGuid().ToString();

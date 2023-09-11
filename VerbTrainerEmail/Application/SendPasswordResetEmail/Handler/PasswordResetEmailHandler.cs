@@ -50,7 +50,6 @@ namespace VerbTrainerEmail.Application.SendPasswordResetEmail.Handler
         //TODO: handle attachments
         public async Task SendPasswordResetEmail(string json)
 		{
-            Console.WriteLine("Started email handling");
 			PasswordResetEmail emailEntity =
                 _emailSender.ParseJsonToEntity(json);
 
@@ -60,12 +59,13 @@ namespace VerbTrainerEmail.Application.SendPasswordResetEmail.Handler
 				emailEntity.ToUserFirstName, resetLink);
 
             string emailBody = await _emailSender
-                .RenderEmailTemplate(emailEntity, model);
+                .RenderEmailTemplate(emailEntity.Template, model);
 
             emailEntity.SetStatus(EmailStatus.Sent);
+            emailEntity.SetBody(emailBody);
 
             Email emailModel = _emailSender
-                .CreateEmailDbModel(emailEntity, emailBody);
+                .CreateEmailDbModel(emailEntity);
 
             await _emailRepository.AddAsync(emailModel);
             await _emailRepository.SaveChangesAsync();

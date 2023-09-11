@@ -13,14 +13,6 @@ namespace VerbTrainerEmail.Application.SendPasswordResetEmail
     public class SendPasswordResetEmail :
         SendEmailService<PasswordResetEmail>, ISendPasswordResetEmail
     {
-        public override IEmailTemplateModel CreateEmailModel(
-            PasswordResetEmail emailEntity,
-            string passwordResetLink)
-        {
-            return PasswordResetModel.CreateNew(
-                emailEntity.ToUserFirstName, passwordResetLink);
-        }
-
         public override PasswordResetEmail ParseJsonToEntity(string json)
         {
             try

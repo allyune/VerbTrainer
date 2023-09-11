@@ -78,5 +78,10 @@ namespace VerbTrainerEmail.Domain.Entities.Email
 
         }
 
+        public void SetBody(string body)
+        {
+            Body = EmailBody.Create(body);
+        }
+
     }
 }

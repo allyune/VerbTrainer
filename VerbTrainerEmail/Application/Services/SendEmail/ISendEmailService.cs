@@ -12,18 +12,13 @@ namespace VerbTrainerEmail.Application.Services.SendEmail
 
         T CreateEmailEntity(UserEntity userEntity);
 
-        abstract IEmailTemplateModel CreateEmailModel(
-            T emailEntity,
-            string passwordResetLink);
-
         Task <string> RenderEmailTemplate(
-            T emailEntity,
+            string templateFilePath,
             IEmailTemplateModel model,
             string? templatekey = null);
 
         Email CreateEmailDbModel(
-            T emailEntity,
-            string emailBody);
+            T emailEntity);
 
     }
 }
