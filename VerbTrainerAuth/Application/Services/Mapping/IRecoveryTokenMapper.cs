@@ -9,7 +9,8 @@ namespace VerbTrainerAuth.Application.Services.Mapping
 	{
 		public RecoveryToken EntityToModel(RecoveryTokenEntity entity);
 		public RecoveryTokenEntity ModelToEntity(RecoveryToken model);
-		public PasswordRecoveryRequestDto EntityToDto(RecoveryTokenEntity entity);
+		public PasswordResetRequestDto EntityToDto(
+			UserEntity user, RecoveryTokenEntity entity);
     }
 }
 

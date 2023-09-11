@@ -7,6 +7,7 @@ using VerbTrainerEmail.Infrastructure.Messaging.Configuration;
 using VerbTrainerMessaging;
 using RabbitMQ.Client.Events;
 using VerbTrainerEmail.Infrastructure.Messaging.Consumer;
+using VerbTrainerEmail.Application.SendPasswordResetEmail.Handler;
 
 namespace VerbTrainer.Infrastructure.Messaging.Consumer
 {
@@ -14,14 +15,19 @@ namespace VerbTrainer.Infrastructure.Messaging.Consumer
     {
         private readonly IRabbitMqConnectionFactory _factoryBuilder;
         private readonly IConfiguration _configuration;
+        private readonly IPasswordResetEmailHandler _resetEmail;
 
-        public MessagingConsumer(IRabbitMqConnectionFactory factory, IConfiguration configuration)
+        public MessagingConsumer(
+            IRabbitMqConnectionFactory factory,
+            IConfiguration configuration,
+            IPasswordResetEmailHandler resetEmail)
         {
             _factoryBuilder = factory;
             _configuration = configuration;
+            _resetEmail = resetEmail;
         }
 
-        public void StartConsumingMessages()
+        public async Task StartConsumingMessages()
         {
             Console.WriteLine("LISTENING TO MESSAGES");
             var factory = _factoryBuilder.CreateConnectionFactory();
@@ -30,12 +36,13 @@ namespace VerbTrainer.Infrastructure.Messaging.Consumer
 
             string exchangeName = CentralExchange.SetupExchange(channel);
 
-            foreach (var queueSettings in _configuration.GetSection("Queues").GetChildren())
+            foreach (var queueSettings in _configuration
+                                          .GetSection("Queues")
+                                          .GetChildren())
             {
                 var queueName = queueSettings["Name"];
                 var routingKeys = queueSettings.GetSection("RoutingKeys").Get<string[]>();
 
-                Console.WriteLine(queueName);
                 channel.QueueDeclare(
                     queue: queueName,
                     durable: bool.Parse(queueSettings["Durable"]),
@@ -56,23 +63,29 @@ namespace VerbTrainer.Infrastructure.Messaging.Consumer
             var consumer = new EventingBasicConsumer(channel);
 
             //function should be async
-            consumer.Received += (model, eventArgs) =>
+            consumer.Received += async (model, eventArgs) =>
             {
                 try
                 {
                     var body = eventArgs.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
                     Console.WriteLine($"Message received: {message}");
-                    Console.Out.Flush();
-                    channel.BasicAck(deliveryTag: eventArgs.DeliveryTag, multiple: false);
+                    await _resetEmail.SendPasswordResetEmail(message);
+                    channel.BasicAck(
+                        deliveryTag: eventArgs.DeliveryTag,
+                        multiple: false);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exception occurred while processing message: {ex}");
+                    Console.WriteLine(
+                        $"Exception occurred while processing message: {ex}");
                 }
             };
 
-            channel.BasicConsume(queue: "password_reminder_queue", autoAck: true, consumer: consumer);
+            channel.BasicConsume(
+                queue: "password_reminder_queue",
+                autoAck: true,
+                consumer: consumer);
         }
 
     }

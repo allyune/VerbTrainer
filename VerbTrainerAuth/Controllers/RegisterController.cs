@@ -29,9 +29,12 @@ namespace VerbTrainerAuth.Controllers
         {
             string email = data.email;
             string password = data.password;
+            string firstName = data.firstName;
+            Console.WriteLine();
             try
             {
-                bool isUserAdded = await _registerHandler.RegisterUser(email, password);
+                bool isUserAdded = await _registerHandler.RegisterUser(
+                    email, password, firstName);
                 return Ok("User added");
             }
 

@@ -10,6 +10,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
+  <PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
@@ -22,8 +23,8 @@
     </PackageReference>
     <PackageReference Include="RabbitMQ.Client.Core.DependencyInjection" Version="5.0.0" />
     <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
-    <PackageReference Include="RazorEngine" Version="3.10.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RazorLight" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,8 +42,14 @@
     <None Remove="Infrastructure\Data\Models\" />
     <None Remove="Infrastructure\Messaging\" />
     <None Remove="Infrastructure\Messaging\Consumer\" />
-    <None Remove="Application\SendEmail\" />
-    <None Remove="Application\Templates\" />
+    <None Remove="Domain\Templates\" />
+    <None Remove="Application\Services\" />
+    <None Remove="Application\Services\SendEmail\" />
+    <None Remove="Domain\EmailTemplateModels\" />
+    <None Remove="Application\Contracts\" />
+    <None Remove="Application\Contracts\DTOs\" />
+    <None Remove="Application\SendPasswordResetEmail\" />
+    <None Remove="Application\Contracts\Mapper\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
@@ -61,12 +68,21 @@
     <Folder Include="Infrastructure\Messaging\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Infrastructure\Messaging\Consumer\" />
-    <Folder Include="Application\SendEmail\" />
-    <Folder Include="Application\Templates\" />
+    <Folder Include="Domain\Templates\" />
+    <Folder Include="Application\Services\" />
+    <Folder Include="Application\Services\SendEmail\" />
+    <Folder Include="Domain\EmailTemplateModels\" />
+    <Folder Include="Application\Contracts\" />
+    <Folder Include="Application\Contracts\DTOs\" />
+    <Folder Include="Application\SendPasswordResetEmail\" />
+    <Folder Include="Application\Contracts\Mapper\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VerbTrainerMessaging\VerbTrainerMessaging.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Domain\Templates\ResetPasswordEmailTemplate.cshtml" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ namespace VerbTrainerAuth.Infrastructure.Data.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public new int Id { get; set; }
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
         public string? LastName { get; set; }
 
         public int StatusCode { get; set; }
@@ -22,7 +22,7 @@ namespace VerbTrainerAuth.Infrastructure.Data.Models
         public DateTime? LastLogin { get; set; }
         //public ICollection<Deck>? Decks { get; set; }
 
-        private User(string? firstName,
+        private User(string firstName,
                      string? lastName,
                      int statusCode,
                      string email,
@@ -44,7 +44,7 @@ namespace VerbTrainerAuth.Infrastructure.Data.Models
                                      string password,
                                      string salt,
                                      DateTime? lastLogin,
-                                     string? firstName = null,
+                                     string firstName,
                                      string? lastName = null)
         {
             int statusCode = (int)status;

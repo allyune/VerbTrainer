@@ -19,7 +19,8 @@ namespace VerbTrainerAuth.Application.RegisterUser
             _logger = logger;
         }
 
-		public async Task<bool> RegisterUser(string email, string password)
+		public async Task<bool> RegisterUser(
+            string email, string password, string firstName)
 		{
 
             bool userExists = await _userService.CheckUserExists(email);
@@ -29,7 +30,7 @@ namespace VerbTrainerAuth.Application.RegisterUser
                 throw new UserAlreadyExistsException($"User with email {email} already exists");
             }
 
-            UserEntity user = UserEntity.CreateNew(email, password);
+            UserEntity user = UserEntity.CreateNew(0, email, password, firstName);
             int saved = await _userService.AddUser(user);
             if (saved > 0)
             {

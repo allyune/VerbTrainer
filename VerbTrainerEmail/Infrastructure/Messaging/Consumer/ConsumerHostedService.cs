@@ -2,6 +2,7 @@
 using System.Threading.Channels;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using VerbTrainerEmail.Application.SendPasswordResetEmail.Handler;
 using VerbTrainerEmail.Infrastructure.Messaging.Configuration;
 using VerbTrainerMessaging;
 
@@ -9,15 +10,21 @@ public class ConsumerHostedService : BackgroundService
 {
     private readonly IRabbitMqConnectionFactory _factoryBuilder;
     private readonly IConfiguration _configuration;
-    private readonly ILogger _logger;
+    private readonly ILogger<ConsumerHostedService> _logger;
+    private readonly IServiceProvider _serviceProvider;
     private IConnection _connection;
     private IModel _channel;
 
-    public ConsumerHostedService(ILoggerFactory loggerFactory, IConfiguration configuration, IRabbitMqConnectionFactory connectionFactory)
+    public ConsumerHostedService(
+        ILogger<ConsumerHostedService> logger,
+        IConfiguration configuration,
+        IServiceProvider serviceProvider,
+        IRabbitMqConnectionFactory connectionFactory)
     {
-        _logger = loggerFactory.CreateLogger<ConsumerHostedService>();
+        _logger = logger;
         _factoryBuilder = connectionFactory;
         _configuration = configuration;
+        _serviceProvider = serviceProvider;
         InitRabbitMQ();
     }
 
@@ -64,12 +71,17 @@ public class ConsumerHostedService : BackgroundService
         stoppingToken.ThrowIfCancellationRequested();
 
         var consumer = new EventingBasicConsumer(_channel);
-        consumer.Received += (ch, ea) =>
+        consumer.Received += async (ch, ea) =>
         {
             var body = ea.Body.ToArray();
-            var content = System.Text.Encoding.UTF8.GetString(body);
-            Console.WriteLine("MESSAGE RECEIVED");
-            HandleMessage(content);
+            var message = System.Text.Encoding.UTF8.GetString(body);
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<IPasswordResetEmailHandler>();
+                await context.SendPasswordResetEmail(message);
+            }
+
+   
             _channel.BasicAck(ea.DeliveryTag, false);
         };
 
@@ -80,11 +92,6 @@ public class ConsumerHostedService : BackgroundService
 
         _channel.BasicConsume(queue: "password_reminder_queue", autoAck: false, consumer: consumer);
         return Task.CompletedTask;
-    }
-
-    private void HandleMessage(string content)
-    {
-        Console.WriteLine(content);
     }
 
     private void OnConsumerConsumerCancelled(object sender, ConsumerEventArgs e) { }

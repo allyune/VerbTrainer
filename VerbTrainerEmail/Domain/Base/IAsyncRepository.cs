@@ -11,11 +11,11 @@ namespace VerbTrainerEmail.Domain.Base
 
         Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
 
-        Task AddAsync(T entity);
+        Task AddAsync(T model);
 
-        Task<T> UpdateAsync(T entity);
+        Task<T> UpdateAsync(T model);
 
-        Task<bool> DeleteAsync(T entity);
+        Task<bool> DeleteAsync(T model);
 
         Task<int> SaveChangesAsync();
     }

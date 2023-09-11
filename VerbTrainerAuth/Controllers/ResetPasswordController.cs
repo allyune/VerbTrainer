@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using VerbTrainerAuth.Application.ResetPassword;
+using VerbTrainerAuth.DTOs;
 
 namespace VerbTrainerAuth.Controllers
 {
@@ -20,8 +21,9 @@ namespace VerbTrainerAuth.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ResetPassword([FromBody] string email)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto data)
         {
+            string email = data.email;
             try
             {
                await _passwordResetHandler.ResetPassword(email);

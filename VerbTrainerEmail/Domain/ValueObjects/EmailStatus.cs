@@ -3,9 +3,9 @@ namespace VerbTrainerEmail.Domain.ValueObjects
 {
 	public enum EmailStatus
     {
-        Draft,
-        Scheduled,
-        Sent
+        Draft = 1,
+        Scheduled = 2,
+        Sent = 3
     }
 }
 

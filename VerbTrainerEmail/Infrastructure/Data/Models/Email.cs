@@ -34,10 +34,10 @@ namespace VerbTrainerEmail.Infrastructure.Data.Models
         }
 
         public static Email CreateNew(EmailType type, string from, int toUserId,
-                                      EmailSubject subject, EmailBody body, EmailStatus status)
+                                      string subject, string body, int status)
         {
             return new Email((int)type, from, toUserId,
-                             subject.Value, body.Text, (int)status);
+                             subject, body, status);
         }
     }
 }

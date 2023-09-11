@@ -36,7 +36,9 @@ namespace VerbTrainer.Infrastructure.Messaging.Producer
                 );
             }
 
+            Console.WriteLine(message);
             var json = JsonConvert.SerializeObject(message);
+            Console.WriteLine(json);
             var body = Encoding.UTF8.GetBytes(json);
 
             channel.BasicPublish(exchange: exchangeConfig["Name"], routingKey: rountingKey, body: body);

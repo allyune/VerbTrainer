@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VerbTrainer.Infrastructure.Messaging.Consumer;
+using VerbTrainerEmail.Application.SendPasswordResetEmail;
+using VerbTrainerEmail.Application.SendPasswordResetEmail.Handler;
+using VerbTrainerEmail.Application.Services.SendEmail;
 using VerbTrainerEmail.Domain.Interfaces;
 using VerbTrainerEmail.Infrastructure;
 using VerbTrainerEmail.Infrastructure.Data;
@@ -18,6 +21,8 @@ builder.Services.AddDbContext<EmailDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerAuthConnectionString")));
 
 builder.Services.AddScoped<IAsyncEmailRepository, AsyncEmailRepository>();
+builder.Services.AddScoped<ISendPasswordResetEmail, SendPasswordResetEmail>();
+builder.Services.AddScoped<IPasswordResetEmailHandler, PasswordResetEmailHandler>();
 builder.Services.AddTransient<IRabbitMqConnectionFactory, RabbitMqConnectionFactory>();
 builder.Services.AddHostedService<ConsumerHostedService>();
 

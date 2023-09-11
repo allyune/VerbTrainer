@@ -3,22 +3,11 @@ namespace VerbTrainerEmail.Domain.ValueObjects
 {
 	public enum EmailType
 	{
-		RegistrationConfirmation,
-		PasswordRecovery,
-		StreakReminder,
-		Invoice,
-		StatusChange
+		RegistrationConfirmationEmail = 1,
+        PasswordResetEmail = 2,
+		StreakReminder = 3,
+		Invoice = 4,
+		StatusChange = 5
 	}
-    public enum TransientEmailType
-    {
-        RegistrationConfirmation,
-        PasswordRecovery,
-        StreakReminder
-    }
-    public enum PersistentEmailType
-    {
-        Invoice,
-        StatusChange
-    }
 }
 

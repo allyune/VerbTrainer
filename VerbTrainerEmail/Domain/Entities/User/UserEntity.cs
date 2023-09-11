@@ -2,19 +2,19 @@
 using VerbTrainerEmail.Domain.Base;
 using VerbTrainerEmail.Domain.ValueObjects;
 
-namespace VerbTrainerEmail.Domain.Entities.User
+namespace VerbTrainerEmail.Domain.Entities.UserEntity
 {
-	public class User
+	public class UserEntity
 	{
 		public int Id { get; private set; }
 		public string Email { get; private set; }
-		public string? FirstName { get; private set; }
+		public string FirstName { get; private set; }
         public string? LastName { get; private set; }
 		public UserStatus Status { get; private set; }
 		public DateTime? LastLogin { get; private set; }
 
-		private User(int id, string email, string firstName,
-					 string lastName, UserStatus status, DateTime? lastLogin)
+		private UserEntity(int id, string email, string firstName,
+					 string? lastName, UserStatus status, DateTime? lastLogin)
 		{
 			Id = id;
 			Email = email;
@@ -24,10 +24,10 @@ namespace VerbTrainerEmail.Domain.Entities.User
 			LastLogin = lastLogin;
         }
 
-		public static User CreateNew(int id, string email, string firstName,
-                     string lastName, UserStatus status, DateTime? lastLogin = null)
+		public static UserEntity CreateNew(int id, string email, string firstName,
+			UserStatus status, DateTime? lastLogin = null, string? lastName = null)
 		{
-			return new User(id, email, firstName, lastName, status, lastLogin);
+			return new UserEntity(id, email, firstName, lastName, status, lastLogin);
 		}
     }
 }

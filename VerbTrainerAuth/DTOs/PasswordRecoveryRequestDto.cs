@@ -1,20 +1,53 @@
 ﻿using System;
+using VerbTrainerAuth.Domain.Entities;
+
 namespace VerbTrainerAuth.DTOs
 {
-	public class PasswordRecoveryRequestDto
+	public class PasswordResetRequestDto
 	{
-        public int? UserId { get; private set; }
-        public string RecoveryToken { get; private set; }
+        public int UserId { get; private set; }
+        public string Email { get; private set; }
+        public string FirstName { get; private set; }
+        public int Status { get; private set; }
+        public DateTime? LastLogin { get; private set; }
+        public string? LastName { get; private set; }
+        public string ResetLink { get; private set; }
 
-        private PasswordRecoveryRequestDto(int? userId, string token)
+        private PasswordResetRequestDto(
+            int userId,
+            string email,
+            string firstName,
+            string? lastName,
+            int status,
+            DateTime? lastLogin,
+            string resetLink)
         {
             UserId = userId;
-            RecoveryToken = token;
+            Email = email;
+            FirstName = firstName;
+            LastName = lastName;
+            Status = status;
+            LastLogin = lastLogin;
+            ResetLink = resetLink;
         }
 
-        public static PasswordRecoveryRequestDto CreateNew(int? userId, string token)
+        public static PasswordResetRequestDto CreateNew(
+            int userId,
+            string email,
+            string firstName,
+            int status,
+            DateTime? lastLogin,
+            string resetLink,
+            string? lastName = null)
         {
-            return new PasswordRecoveryRequestDto(userId, token);
+            return new PasswordResetRequestDto(
+                userId,
+                email,
+                firstName,
+                lastName,
+                status,
+                lastLogin,
+                resetLink);
         }
     }
 }

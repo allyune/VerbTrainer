@@ -4,7 +4,7 @@ using VerbTrainerAuth.Domain.Base;
 
 namespace VerbTrainerAuth.Domain.Entities
 {
-	public class RecoveryTokenEntity : BaseEntity
+	public class RecoveryTokenEntity
 	{
         public string Token { get; private set; }
         public int? UserId { get; private set; }

@@ -55,7 +55,7 @@ namespace VerbTrainerAuth.Application.ResetPassword
             RecoveryTokenEntity token = RecoveryTokenEntity.CreateNew(user.Id);
             await SaveRecoveryToken(token);
 
-            SendPasswordResetEmail(_recoveryTokenMapper.EntityToDto(token));
+            SendPasswordResetEmail(_recoveryTokenMapper.EntityToDto(user, token));
 
         }
 
@@ -80,11 +80,10 @@ namespace VerbTrainerAuth.Application.ResetPassword
             await _recoveryTokenRepository.SaveChangesAsync();
         }
 
-        private void SendPasswordResetEmail(PasswordRecoveryRequestDto requestDto)
+        private void SendPasswordResetEmail(PasswordResetRequestDto requestDto)
         {
             //TODO: exception handling? wait for acknowledgment/message sent response
-            var json = JsonSerializer.Serialize(requestDto);
-            _messagingProducer.SendMessage(json, "password_reminder");
+            _messagingProducer.SendMessage(requestDto, "password_reminder");
         }
 
         private async Task<RecoveryTokenEntity?> GetActiveTokenByUserId(int? userId)

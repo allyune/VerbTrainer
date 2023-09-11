@@ -68,6 +68,7 @@ namespace VerbTrainerAuth.Domain.ValueObjects
         // used when creating new users.
 		public static Password CreateNew(string passwordRawString)
 		{
+            Console.WriteLine(passwordRawString);
             bool passwordValid = IsPasswordFormatValid(passwordRawString);
             if (!passwordValid)
             {

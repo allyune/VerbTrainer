@@ -15,9 +15,19 @@ namespace VerbTrainerAuth.Application.Services.Mapping
                                          entity.Used);
         }
 
-        public PasswordRecoveryRequestDto EntityToDto(RecoveryTokenEntity entity)
+        public PasswordResetRequestDto EntityToDto(
+            UserEntity user, RecoveryTokenEntity entity)
         {
-            return PasswordRecoveryRequestDto.CreateNew(entity.UserId, entity.Token);
+            string link = "http://www.site.com/" + entity.Token;
+            return PasswordResetRequestDto.CreateNew(
+                user.Id,
+                user.Email.EmailAddress,
+                user.FirstName,
+                (int)user.Status,
+                user.LastLogin,
+                link,
+                user.LastName
+                );
         }
 
         public RecoveryTokenEntity ModelToEntity(RecoveryToken model)

@@ -4,7 +4,7 @@ namespace VerbTrainerEmail.Infrastructure.Messaging.Consumer
 {
 	public interface IMessagingConsumer
 	{
-		public void StartConsumingMessages();
+		public Task StartConsumingMessages();
 
     }
 }

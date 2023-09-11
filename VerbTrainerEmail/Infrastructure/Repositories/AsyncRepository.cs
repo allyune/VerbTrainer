@@ -26,15 +26,15 @@ using VerbTrainerEmail.Infrastructure.Data.Models;
             return _dbSet.Where(expression).ToListAsync();
         }
 
-        async Task IAsyncRepository<T>.AddAsync(T entity)
+        async Task IAsyncRepository<T>.AddAsync(T model)
         {
-            await _dbSet.AddAsync(entity);
+            await _dbSet.AddAsync(model);
         }
 
-        Task<T> IAsyncRepository<T>.UpdateAsync(T entity)
+        Task<T> IAsyncRepository<T>.UpdateAsync(T model)
         {
-            _dbSet.Update(entity);
-            return Task.FromResult(entity);
+            _dbSet.Update(model);
+            return Task.FromResult(model);
         }
 
         async Task<int> IAsyncRepository<T>.SaveChangesAsync()
@@ -42,9 +42,9 @@ using VerbTrainerEmail.Infrastructure.Data.Models;
             return await _dbContext.SaveChangesAsync();
         }
 
-        Task<bool> IAsyncRepository<T>.DeleteAsync(T entity)
+        Task<bool> IAsyncRepository<T>.DeleteAsync(T model)
         {
-            _dbSet.Remove(entity);
+            _dbSet.Remove(model);
             return Task.FromResult(true);
         }
     }

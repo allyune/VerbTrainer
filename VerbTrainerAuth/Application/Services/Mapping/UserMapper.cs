@@ -21,7 +21,14 @@ namespace VerbTrainerAuth.Application.Services.Mapping
 
         public Models.User EntityToModel(UserEntity entity)
         {
-            return Models.User.CreateNew(entity.Email.EmailAddress, entity.Status, entity.Password.HashValue, entity.Password.Salt, entity.LastLogin);
+            return Models.User.CreateNew(
+                entity.Email.EmailAddress,
+                entity.Status,
+                entity.Password.HashValue,
+                entity.Password.Salt,
+                entity.LastLogin,
+                entity.FirstName,
+                entity.LastName);
         }
     }
 }
