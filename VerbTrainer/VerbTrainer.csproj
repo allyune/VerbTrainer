@@ -36,7 +36,7 @@
     <None Remove="Infrastructure\Messaging\Configuration\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="allverbs-hebrew" />
+    <EmbeddedResource Include="allverbs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
