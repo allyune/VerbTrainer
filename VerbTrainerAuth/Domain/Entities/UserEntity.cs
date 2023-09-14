@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using System.Text.RegularExpressions;
-using VerbTrainerAuth.Domain.Base;
-using VerbTrainerAuth.Domain.ValueObjects;
-using VerbTrainerAuth.Domain.Exceptions;
+using VerbTrainerUser.Domain.Base;
+using VerbTrainerUser.Domain.ValueObjects;
+using VerbTrainerUser.Domain.Exceptions;
 
-namespace VerbTrainerAuth.Domain.Entities
+namespace VerbTrainerUser.Domain.Entities
 {
     public class UserEntity : BaseEntity
     {

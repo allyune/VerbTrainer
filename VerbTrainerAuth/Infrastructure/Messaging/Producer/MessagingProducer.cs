@@ -3,10 +3,10 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using VerbTrainerAuth.Infrastructure.Messaging.Configuration;
+using VerbTrainerUser.Infrastructure.Messaging.Configuration;
 using VerbTrainerMessaging;
 
-namespace VerbTrainerAuth.Infrastructure.Messaging.Producer
+namespace VerbTrainerUser.Infrastructure.Messaging.Producer
 {
     public class MessagingProducer : IMessagingProducer
     {

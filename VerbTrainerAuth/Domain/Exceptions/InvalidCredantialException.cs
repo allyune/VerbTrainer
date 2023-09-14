@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerAuth.Domain.Exceptions
+namespace VerbTrainerUser.Domain.Exceptions
 {
     public class InvalidCredentialsException : Exception
     {

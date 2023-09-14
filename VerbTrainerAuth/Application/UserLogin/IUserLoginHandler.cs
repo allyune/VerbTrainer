@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerAuth.Application.UserLogin
+namespace VerbTrainerUser.Application.UserLogin
 {
 	public interface IUserLoginHandler
 	{

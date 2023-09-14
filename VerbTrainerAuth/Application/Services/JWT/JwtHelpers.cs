@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerAuth.Application.Services.JWT
+namespace VerbTrainerUser.Application.Services.JWT
 {
 	public class JwtHelpers
 	{

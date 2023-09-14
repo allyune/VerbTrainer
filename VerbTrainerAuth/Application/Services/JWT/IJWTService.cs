@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Security.Claims;
-using VerbTrainerAuth.DTOs;
+using VerbTrainerUser.DTOs;
 
-namespace VerbTrainerAuth.Application.Services.JWT
+namespace VerbTrainerUser.Application.Services.JWT
 {
 	public interface IJWTService
 	{

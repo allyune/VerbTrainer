@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VerbTrainer.DTOs;
-using VerbTrainerAuth.Application.Exceptions;
-using VerbTrainerAuth.Application.RegisterUser;
+using VerbTrainerUser.Application.Exceptions;
+using VerbTrainerUser.Application.UserRegister;
 
-namespace VerbTrainerAuth.Controllers
+namespace VerbTrainerUser.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

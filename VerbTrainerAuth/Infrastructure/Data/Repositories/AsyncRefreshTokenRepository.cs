@@ -1,8 +1,8 @@
 ﻿using System;
-using VerbTrainerAuth.Domain.Interfaces;
-using VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Domain.Interfaces;
+using VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Infrastructure.Data.Repositories
+namespace VerbTrainerUser.Infrastructure.Data.Repositories
 {
     public class AsyncRefreshTokenRepository : AsyncRepository<RevokedRefreshToken>, IAsyncRefreshTokenRepository
 

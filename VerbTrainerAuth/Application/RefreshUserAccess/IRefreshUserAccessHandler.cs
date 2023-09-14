@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerAuth.Application.RefreshUserAccess
+namespace VerbTrainerUser.Application.RefreshUserAccess
 {
 	public interface IRefreshUserAccessHandler
 	{

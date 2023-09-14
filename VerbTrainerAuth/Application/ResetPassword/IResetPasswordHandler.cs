@@ -1,9 +1,9 @@
 ﻿using System;
-using VerbTrainerAuth.Domain.Entities;
-using VerbTrainerAuth.DTOs;
-using Models = VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Domain.Entities;
+using VerbTrainerUser.DTOs;
+using Models = VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Application.ResetPassword
+namespace VerbTrainerUser.Application.ResetPassword
 {
 	public interface IResetPasswordHandler
 	{

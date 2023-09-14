@@ -5,7 +5,7 @@ VisualStudioVersion = 25.0.1706.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainer", "VerbTrainer\VerbTrainer.csproj", "{5EF04FF4-305C-45B3-99E7-1ED6D52D6640}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainerAuth", "VerbTrainerAuth\VerbTrainerAuth.csproj", "{7BB523AB-6826-4E69-9B2E-678B4F914E23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainerUser", "VerbTrainerAuth\VerbTrainerUser.csproj", "{7BB523AB-6826-4E69-9B2E-678B4F914E23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainerEmail", "VerbTrainerEmail\VerbTrainerEmail.csproj", "{46A94585-4CB3-4EEE-84A6-3AEA02E3F894}"
 EndProject

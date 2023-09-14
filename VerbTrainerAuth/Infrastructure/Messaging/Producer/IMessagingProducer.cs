@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerAuth.Infrastructure.Messaging.Producer
+namespace VerbTrainerUser.Infrastructure.Messaging.Producer
 {
 	public interface IMessagingProducer
 	{

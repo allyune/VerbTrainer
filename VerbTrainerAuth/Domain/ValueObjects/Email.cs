@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using VerbTrainerAuth.Domain.Base;
-using VerbTrainerAuth.Domain.Exceptions;
+using VerbTrainerUser.Domain.Base;
+using VerbTrainerUser.Domain.Exceptions;
 
-namespace VerbTrainerAuth.Domain.ValueObjects
+namespace VerbTrainerUser.Domain.ValueObjects
 {
 	public class Email : BaseValueObject
 	{

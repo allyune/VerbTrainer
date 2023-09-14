@@ -1,8 +1,8 @@
 ﻿using System;
-using VerbTrainerAuth.Domain.Base;
-using VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Domain.Base;
+using VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Domain.Interfaces
+namespace VerbTrainerUser.Domain.Interfaces
 {
     public interface IAsyncUserRepository : IAsyncRepository<User>
     {

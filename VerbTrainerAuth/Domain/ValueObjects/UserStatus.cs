@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerAuth.Domain.ValueObjects
+namespace VerbTrainerUser.Domain.ValueObjects
 {
     public enum UserStatus
     {

@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Design;
-using VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Infrastructure.Data.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
 
-namespace VerbTrainerAuth.Infrastructure.Data
+namespace VerbTrainerUser.Infrastructure.Data
 {
 	public class VerbTrainerAuthDbContext : DbContext
 	{

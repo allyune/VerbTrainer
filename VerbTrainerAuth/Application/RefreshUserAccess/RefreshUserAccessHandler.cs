@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Security.Principal;
-using VerbTrainerAuth.Application.Services.JWT;
-using VerbTrainerAuth.DTOs;
+using VerbTrainerUser.Application.Services.JWT;
+using VerbTrainerUser.DTOs;
 
-namespace VerbTrainerAuth.Application.RefreshUserAccess
+namespace VerbTrainerUser.Application.RefreshUserAccess
 {
     public class RefreshUserAccessHandler : IRefreshUserAccessHandler
     {

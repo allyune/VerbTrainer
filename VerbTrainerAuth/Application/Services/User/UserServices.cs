@@ -1,10 +1,10 @@
 ﻿using System;
-using VerbTrainerAuth.Application.Services.Mapping;
-using VerbTrainerAuth.Domain.Entities;
-using VerbTrainerAuth.Domain.Interfaces;
-using Models = VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Application.Services.Mapping;
+using VerbTrainerUser.Domain.Entities;
+using VerbTrainerUser.Domain.Interfaces;
+using Models = VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Application.Services.User
+namespace VerbTrainerUser.Application.Services.User
 {
 	public class UserService : IUserService
 	{

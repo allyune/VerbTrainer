@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerUser.Application.RegisterUser
+namespace VerbTrainerUser.Application.UserRegister
 {
 	public interface IRegisterUserHandler
 	{

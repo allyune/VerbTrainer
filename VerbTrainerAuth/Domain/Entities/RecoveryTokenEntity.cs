@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Security.Cryptography;
-using VerbTrainerAuth.Domain.Base;
+using VerbTrainerUser.Domain.Base;
 
-namespace VerbTrainerAuth.Domain.Entities
+namespace VerbTrainerUser.Domain.Entities
 {
 	public class RecoveryTokenEntity
 	{

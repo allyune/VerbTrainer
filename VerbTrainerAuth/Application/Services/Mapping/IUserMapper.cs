@@ -1,8 +1,8 @@
 ﻿using System;
-using VerbTrainerAuth.Domain.Entities;
-using Models = VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Domain.Entities;
+using Models = VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Application.Services.Mapping
+namespace VerbTrainerUser.Application.Services.Mapping
 {
 	public interface IUserMapper
 	{

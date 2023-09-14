@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
-using VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Domain.Base
+namespace VerbTrainerUser.Domain.Base
 { 
     public interface IAsyncRepository<T> where T : BaseAuthModel
     {

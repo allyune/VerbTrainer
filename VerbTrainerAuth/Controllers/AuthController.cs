@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using VerbTrainerAuth.DTOs;
-using VerbTrainerAuth.Application.Services.JWT;
-using VerbTrainerAuth.Application.UserLogin;
-using VerbTrainerAuth.Application.RefreshUserAccess;
+using VerbTrainerUser.DTOs;
+using VerbTrainerUser.Application.Services.JWT;
+using VerbTrainerUser.Application.UserLogin;
+using VerbTrainerUser.Application.RefreshUserAccess;
 
-namespace VerbTrainerAuth.Controllers
+namespace VerbTrainerUser.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

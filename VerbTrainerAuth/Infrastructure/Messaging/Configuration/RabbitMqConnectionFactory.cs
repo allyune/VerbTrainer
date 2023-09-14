@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 
-namespace VerbTrainerAuth.Infrastructure.Messaging.Configuration
+namespace VerbTrainerUser.Infrastructure.Messaging.Configuration
 {
     public class RabbitMqConnectionFactory : IRabbitMqConnectionFactory
     {

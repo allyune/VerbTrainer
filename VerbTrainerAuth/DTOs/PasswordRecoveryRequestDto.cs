@@ -1,7 +1,7 @@
 ﻿using System;
-using VerbTrainerAuth.Domain.Entities;
+using VerbTrainerUser.Domain.Entities;
 
-namespace VerbTrainerAuth.DTOs
+namespace VerbTrainerUser.DTOs
 {
 	public class PasswordResetRequestDto
 	{

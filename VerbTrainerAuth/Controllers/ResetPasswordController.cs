@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using VerbTrainerAuth.Application.ResetPassword;
-using VerbTrainerAuth.DTOs;
+using VerbTrainerUser.Application.ResetPassword;
+using VerbTrainerUser.DTOs;
 
-namespace VerbTrainerAuth.Controllers
+namespace VerbTrainerUser.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

@@ -1,7 +1,7 @@
 ﻿using System;
-using VerbTrainerAuth.Domain.Entities;
+using VerbTrainerUser.Domain.Entities;
 
-namespace VerbTrainerAuth.Application.Services.User
+namespace VerbTrainerUser.Application.Services.User
 {
 	public interface IUserService
 	{

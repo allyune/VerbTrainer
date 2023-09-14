@@ -1,7 +1,7 @@
 ﻿using System;
 using RabbitMQ.Client;
 
-namespace VerbTrainerAuth.Infrastructure.Messaging.Configuration
+namespace VerbTrainerUser.Infrastructure.Messaging.Configuration
 {
 	public interface IRabbitMqConnectionFactory
 	{

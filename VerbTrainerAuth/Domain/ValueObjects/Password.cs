@@ -5,10 +5,10 @@ using System.Reflection.Emit;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using VerbTrainerAuth.Domain.Base;
-using VerbTrainerAuth.Domain.Exceptions;
+using VerbTrainerUser.Domain.Base;
+using VerbTrainerUser.Domain.Exceptions;
 
-namespace VerbTrainerAuth.Domain.ValueObjects
+namespace VerbTrainerUser.Domain.ValueObjects
 {
 	public class Password : BaseValueObject
 	{

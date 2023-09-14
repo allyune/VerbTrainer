@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ValueObjects = VerbTrainerAuth.Domain.ValueObjects;
+using ValueObjects = VerbTrainerUser.Domain.ValueObjects;
 
-namespace VerbTrainerAuth.Infrastructure.Data.Models
+namespace VerbTrainerUser.Infrastructure.Data.Models
 {
     public class User : BaseAuthModel
     {

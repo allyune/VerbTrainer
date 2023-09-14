@@ -1,9 +1,9 @@
 ﻿using System;
-using VerbTrainerAuth.Domain.Entities;
-using VerbTrainerAuth.Domain.ValueObjects;
-using Models = VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Domain.Entities;
+using VerbTrainerUser.Domain.ValueObjects;
+using Models = VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Application.Services.Mapping
+namespace VerbTrainerUser.Application.Services.Mapping
 {
 	public class UserMapper :IUserMapper
 	{

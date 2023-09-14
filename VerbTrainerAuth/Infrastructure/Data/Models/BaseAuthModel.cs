@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VerbTrainerAuth.Infrastructure.Data.Models
+namespace VerbTrainerUser.Infrastructure.Data.Models
 {
     public abstract class BaseAuthModel
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerAuth.DTOs
+namespace VerbTrainerUser.DTOs
 {
 	public class ResetPasswordDto
 	{

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerAuth.Domain.Base
+namespace VerbTrainerUser.Domain.Base
 {
     public abstract class BaseValueObject
     {

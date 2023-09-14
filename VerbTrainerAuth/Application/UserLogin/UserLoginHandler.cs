@@ -1,10 +1,10 @@
 ﻿using System;
-using VerbTrainerAuth.Application.Services.JWT;
-using VerbTrainerAuth.Application.Services.User;
-using VerbTrainerAuth.Domain.Entities;
-using VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Application.Services.JWT;
+using VerbTrainerUser.Application.Services.User;
+using VerbTrainerUser.Domain.Entities;
+using VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Application.UserLogin
+namespace VerbTrainerUser.Application.UserLogin
 {
     internal sealed class UserLoginHandler : IUserLoginHandler
     {

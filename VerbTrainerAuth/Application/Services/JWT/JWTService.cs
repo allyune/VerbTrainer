@@ -1,17 +1,17 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using VerbTrainerAuth.DTOs;
+using VerbTrainerUser.DTOs;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Npgsql;
-using Models = VerbTrainerAuth.Infrastructure.Data.Models;
-using VerbTrainerAuth.Domain.Interfaces;
-using VerbTrainerAuth.Application.Exceptions;
-using VerbTrainerAuth.Infrastructure.Data.Models;
+using Models = VerbTrainerUser.Infrastructure.Data.Models;
+using VerbTrainerUser.Domain.Interfaces;
+using VerbTrainerUser.Application.Exceptions;
+using VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Application.Services.JWT
+namespace VerbTrainerUser.Application.Services.JWT
 {
 	public class JWTService : IJWTService
 	{

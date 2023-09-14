@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using VerbTrainerAuth.Domain.Base;
-using VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Domain.Base;
+using VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Infrastructure.Data.Repositories
+namespace VerbTrainerUser.Infrastructure.Data.Repositories
 {
     public abstract class AsyncRepository<T> : IAsyncRepository<T> where T : BaseAuthModel
     {

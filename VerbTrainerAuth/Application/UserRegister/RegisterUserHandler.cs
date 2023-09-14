@@ -3,7 +3,7 @@ using VerbTrainerUser.Application.Exceptions;
 using VerbTrainerUser.Application.Services.User;
 using VerbTrainerUser.Domain.Entities;
 
-namespace VerbTrainerUser.Application.RegisterUser
+namespace VerbTrainerUser.Application.UserRegister
 {
 	public class RegisterUserHandler : IRegisterUserHandler
     {

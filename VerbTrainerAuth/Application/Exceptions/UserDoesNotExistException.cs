@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerAuth.Application.Exceptions
+namespace VerbTrainerUser.Application.Exceptions
 {
 	public class UserDoesNotExistException : Exception
     {

@@ -1,8 +1,8 @@
 ﻿using System;
-using VerbTrainerAuth.Domain.Interfaces;
-using VerbTrainerAuth.Infrastructure.Data.Repositories;
-using VerbTrainerAuth.Infrastructure.Data;
-using VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Domain.Interfaces;
+using VerbTrainerUser.Infrastructure.Data.Repositories;
+using VerbTrainerUser.Infrastructure.Data;
+using VerbTrainerUser.Infrastructure.Data.Models;
 
 namespace VerbTrainerEmail.Infrastructure.Repositories
 {

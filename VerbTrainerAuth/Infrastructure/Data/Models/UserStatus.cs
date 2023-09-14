@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainerAuth.Infrastructure.Data.Models
+namespace VerbTrainerUser.Infrastructure.Data.Models
 {
 	public class UserStatus : BaseAuthModel
 	{
