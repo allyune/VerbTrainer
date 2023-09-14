@@ -1,9 +1,9 @@
 ﻿using System;
-using VerbTrainerAuth.Domain.Entities;
-using VerbTrainerAuth.DTOs;
-using VerbTrainerAuth.Infrastructure.Data.Models;
+using VerbTrainerUser.Domain.Entities;
+using VerbTrainerUser.DTOs;
+using VerbTrainerUser.Infrastructure.Data.Models;
 
-namespace VerbTrainerAuth.Application.Services.Mapping
+namespace VerbTrainerUser.Application.Services.Mapping
 {
 	public class RecoveryTokenMapper : IRecoveryTokenMapper
 	{

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text.Json;
-using VerbTrainerAuth.Application.Exceptions;
-using VerbTrainerAuth.Application.Services.Mapping;
-using VerbTrainerAuth.Application.Services.User;
-using VerbTrainerAuth.Domain.Entities;
-using VerbTrainerAuth.Domain.Interfaces;
-using VerbTrainerAuth.DTOs;
-using VerbTrainerAuth.Infrastructure.Data.Models;
-using VerbTrainerAuth.Infrastructure.Messaging.Producer;
+using VerbTrainerUser.Application.Exceptions;
+using VerbTrainerUser.Application.Services.Mapping;
+using VerbTrainerUser.Application.Services.User;
+using VerbTrainerUser.Domain.Entities;
+using VerbTrainerUser.Domain.Interfaces;
+using VerbTrainerUser.DTOs;
+using VerbTrainerUser.Infrastructure.Data.Models;
+using VerbTrainerUser.Infrastructure.Messaging.Producer;
 
-namespace VerbTrainerAuth.Application.ResetPassword
+namespace VerbTrainerUser.Application.ResetPassword
 {
 	public class ResetPasswordHandler : IResetPasswordHandler
     {
