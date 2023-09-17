@@ -18,9 +18,9 @@ namespace VerbTrainer.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        Task<T?> IAsyncReadonlyRepository<T>.GetAsync(int id)
+        Task<T?> IAsyncReadonlyRepository<T>.GetAsync(Expression<Func<T, bool>> expression)
         {
-            return _dbSet.FirstOrDefaultAsync(e => e.Id == id);
+            return _dbSet.FirstOrDefaultAsync(expression);
         }
 
         Task<List<T>> IAsyncReadonlyRepository<T>.ListAsync(Expression<Func<T, bool>> expression)
