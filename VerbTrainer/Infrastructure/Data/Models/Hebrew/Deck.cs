@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VerbTrainer.Infrastructure.Data.Models.Hebrew
 {
-    public class Deck
+    public class Deck : BaseVerbTrainerModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

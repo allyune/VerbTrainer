@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VerbTrainer.Infrastructure.Data.Models.Hebrew
 {
-	public class Verb
-	{
-		public int Id { get; set; }
+	public class Verb : BaseVerbTrainerModel
+    {
 		public string Name { get; set; }
 		public string Root { get; set; }
 		public string Meaning { get; set; }

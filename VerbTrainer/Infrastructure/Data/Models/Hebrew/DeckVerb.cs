@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VerbTrainer.Infrastructure.Data.Models.Hebrew
 {
-	public class DeckVerb
-	{
+	public class DeckVerb : BaseVerbTrainerModel
+    {
         public int DeckId { get; set; }
         public Deck Deck { get; set; }
 
