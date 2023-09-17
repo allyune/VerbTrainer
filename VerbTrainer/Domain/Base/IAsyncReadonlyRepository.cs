@@ -6,7 +6,7 @@ namespace VerbTrainer.Domain.Base
 {
 	public interface IAsyncReadonlyRepository<T> where T : BaseVerbTrainerModel
     {
-        Task<T?> GetAsync(int id);
+        Task<T?> GetAsync(Expression<Func<T, bool>> expression);
         Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
     }
 }
