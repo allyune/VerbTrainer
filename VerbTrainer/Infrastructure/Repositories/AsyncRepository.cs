@@ -7,25 +7,17 @@ using VerbTrainer.Infrastructure.Data.Models;
 
 namespace VerbTrainer.Infrastructure.Repositories
 {
-    public abstract class AsyncRepository<T> : IAsyncRepository<T> where T : BaseVerbTrainerModel
+    public abstract class AsyncRepository<T> : AsyncReadonlyRepository<T>,
+        IAsyncRepository<T> where T : BaseVerbTrainerModel
     {
         private readonly DbSet<T> _dbSet;
         private readonly VerbTrainerDbContext _dbContext;
 
         public AsyncRepository(VerbTrainerDbContext dbContext)
+            : base(dbContext)
         {
             _dbSet = dbContext.Set<T>();
             _dbContext = dbContext;
-        }
-
-        Task<T?> IAsyncRepository<T>.GetAsync(int id)
-        {
-            return _dbSet.FirstOrDefaultAsync(e => e.Id == id);
-        }
-
-        Task<List<T>> IAsyncRepository<T>.ListAsync(Expression<Func<T, bool>> expression)
-        {
-            return _dbSet.Where(expression).ToListAsync();
         }
 
         async Task IAsyncRepository<T>.AddAsync(T model)

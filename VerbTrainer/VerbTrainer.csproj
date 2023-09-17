@@ -40,6 +40,12 @@
     <None Remove="Domain\" />
     <None Remove="Domain\Base\" />
     <None Remove="Domain\Interfaces\" />
+    <None Remove="Application\" />
+    <None Remove="Application\LoadUserDecks\" />
+    <None Remove="Application\LoadDeck\" />
+    <None Remove="Application\LoadConjugations\" />
+    <None Remove="Application\CreateDeck\" />
+    <None Remove="Application\DeleteDeck\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="allverbs" />
@@ -60,5 +66,11 @@
     <Folder Include="Domain\" />
     <Folder Include="Domain\Base\" />
     <Folder Include="Domain\Interfaces\" />
+    <Folder Include="Application\" />
+    <Folder Include="Application\LoadUserDecks\" />
+    <Folder Include="Application\LoadDeck\" />
+    <Folder Include="Application\LoadConjugations\" />
+    <Folder Include="Application\CreateDeck\" />
+    <Folder Include="Application\DeleteDeck\" />
   </ItemGroup>
 </Project>
