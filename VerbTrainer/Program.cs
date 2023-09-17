@@ -7,6 +7,9 @@ using RabbitMQ.Client;
 using VerbTrainer.Infrastructure.Messaging.Configuration;
 using VerbTrainer.Infrastructure.Messaging.Producer;
 using VerbTrainer.Infrastructure.Data;
+using VerbTrainer.Domain.Interfaces;
+using VerbTrainer.Infrastructure.Repositories;
+using VerbTrainer.Application.CreateDeck;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Configuration.AddJsonFile("appsettings.json");
@@ -36,6 +39,8 @@ builder.Services.AddDbContext<VerbTrainerDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerConnectionString")));
 builder.Services.AddScoped<IRabbitMqConnectionFactory, RabbitMqConnectionFactory>();
 builder.Services.AddScoped<IMessagingProducer, MessagingProducer>();
+builder.Services.AddScoped<IDeckRepository, DeckRepository>();
+builder.Services.AddScoped<ICreateDeckHandler, CreateDeckHandler>();
 
 var app = builder.Build();
 
