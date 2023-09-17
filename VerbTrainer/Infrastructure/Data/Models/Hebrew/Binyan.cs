@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VerbTrainer.Models.Domain
+namespace VerbTrainer.Infrastructure.Data.Models.Hebrew
 {
     public class Binyan
     {

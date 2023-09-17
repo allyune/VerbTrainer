@@ -1,5 +1,5 @@
 ﻿using System;
-using VerbTrainer.Models.Domain;
+using VerbTrainer.Infrastructure.Data.Models.Hebrew;
 
 namespace VerbTrainer.DTOs
 {

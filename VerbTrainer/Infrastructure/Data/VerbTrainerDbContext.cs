@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using VerbTrainer.Models.Domain;
+using VerbTrainer.Infrastructure.Data.Models.Hebrew;
 
-namespace VerbTrainer.Data
+namespace VerbTrainer.Infrastructure.Data
 {
 	public class VerbTrainerDbContext : DbContext
 	{

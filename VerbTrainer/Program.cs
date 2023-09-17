@@ -1,12 +1,12 @@
-﻿using VerbTrainer.Data;
-using Microsoft.EntityFrameworkCore;
-using VerbTrainer.DbInitializer;
+﻿using Microsoft.EntityFrameworkCore;
+using VerbTrainer.Infrastructure.DbInitializer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using VerbTrainer.Infrastructure.Messaging.Configuration;
 using VerbTrainer.Infrastructure.Messaging.Producer;
+using VerbTrainer.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Configuration.AddJsonFile("appsettings.json");

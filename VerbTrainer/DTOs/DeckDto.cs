@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using VerbTrainer.Models.Domain;
+using VerbTrainer.Infrastructure.Data.Models.Hebrew;
 
 namespace VerbTrainer.DTOs
 {

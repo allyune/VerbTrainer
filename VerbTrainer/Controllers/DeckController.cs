@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using VerbTrainer.Data;
 using VerbTrainer.Models;
 using VerbTrainer.DTOs;
-using VerbTrainer.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
+using VerbTrainer.Infrastructure.Data;
+using VerbTrainer.Infrastructure.Data.Models.Hebrew;
 
 namespace VerbTrainer.Controllers
 {

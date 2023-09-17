@@ -2,11 +2,11 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using VerbTrainer.Data;
 using VerbTrainer.Models;
 using HebrewVerbs;
 using VerbTrainer.ViewModels;
 using Newtonsoft.Json;
+using VerbTrainer.Infrastructure.Data;
 
 namespace VerbTrainer.Controllers;
 
