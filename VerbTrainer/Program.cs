@@ -10,6 +10,7 @@ using VerbTrainer.Infrastructure.Data;
 using VerbTrainer.Domain.Interfaces;
 using VerbTrainer.Infrastructure.Repositories;
 using VerbTrainer.Application.CreateDeck;
+using VerbTrainer.Application.LoadDeck;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Configuration.AddJsonFile("appsettings.json");
@@ -41,6 +42,7 @@ builder.Services.AddScoped<IRabbitMqConnectionFactory, RabbitMqConnectionFactory
 builder.Services.AddScoped<IMessagingProducer, MessagingProducer>();
 builder.Services.AddScoped<IDeckRepository, DeckRepository>();
 builder.Services.AddScoped<ICreateDeckHandler, CreateDeckHandler>();
+builder.Services.AddScoped<ILoadDeckHandler, LoadDeckHandler>();
 
 var app = builder.Build();
 
