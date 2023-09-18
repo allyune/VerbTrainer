@@ -1,12 +1,18 @@
-﻿using VerbTrainer.Data;
-using Microsoft.EntityFrameworkCore;
-using VerbTrainer.DbInitializer;
+﻿using Microsoft.EntityFrameworkCore;
+using VerbTrainer.Infrastructure.DbInitializer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using VerbTrainer.Infrastructure.Messaging.Configuration;
 using VerbTrainer.Infrastructure.Messaging.Producer;
+using VerbTrainer.Infrastructure.Data;
+using VerbTrainer.Domain.Interfaces;
+using VerbTrainer.Infrastructure.Repositories;
+using VerbTrainer.Application.CreateDeck;
+using VerbTrainer.Application.LoadDeck;
+using VerbTrainer.Application.DeleteDeck;
+using VerbTrainer.Application.AddVerbToDeck;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Configuration.AddJsonFile("appsettings.json");
@@ -36,6 +42,13 @@ builder.Services.AddDbContext<VerbTrainerDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("VerbTrainerConnectionString")));
 builder.Services.AddScoped<IRabbitMqConnectionFactory, RabbitMqConnectionFactory>();
 builder.Services.AddScoped<IMessagingProducer, MessagingProducer>();
+builder.Services.AddScoped<IDeckRepository, DeckRepository>();
+builder.Services.AddScoped<IDeckVerbRepository, DeckVerbRepository>();
+builder.Services.AddScoped<IVerbRepository, VerbRepository>();
+builder.Services.AddScoped<ICreateDeckHandler, CreateDeckHandler>();
+builder.Services.AddScoped<ILoadDeckHandler, LoadDeckHandler>();
+builder.Services.AddScoped<IDeleteDeckHandler, DeleteDeckHandler>();
+builder.Services.AddScoped<IAddVerbToDeckHandler, AddVerbToDeckHandler>();
 
 var app = builder.Build();
 

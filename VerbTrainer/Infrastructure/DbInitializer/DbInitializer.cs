@@ -1,9 +1,12 @@
 ﻿using HebrewVerbs;
 using System.Xml.Serialization;
-using VerbTrainer.Data;
-using VerbTrainer.Models.Domain;
+using VerbTrainer.Infrastructure.Data;
+using VerbTrainer.Infrastructure.Data.Models.Hebrew;
+using Conjugation = VerbTrainer.Infrastructure.Data.Models.Hebrew.Conjugation;
+using Tense = VerbTrainer.Infrastructure.Data.Models.Hebrew.Tense;
+using Verb = VerbTrainer.Infrastructure.Data.Models.Hebrew.Verb;
 
-namespace VerbTrainer.DbInitializer
+namespace VerbTrainer.Infrastructure.DbInitializer
 {
     public class DbInitializer
 	{
@@ -30,7 +33,7 @@ namespace VerbTrainer.DbInitializer
 			var ti = 0;
 			foreach (var tt in Enum.GetNames(typeof(TenseType)))
 			{
-				_context.Tenses.Add(new Models.Domain.Tense() { Id = ++ti, Name = tt });
+				_context.Tenses.Add(new Tense() { Id = ++ti, Name = tt });
 			}
 
 			var grouped = _verbs.ListOfVerbs.Take(100).GroupBy(v => v.Binyan);
@@ -44,13 +47,13 @@ namespace VerbTrainer.DbInitializer
 				foreach (var v in kvp)
 				{
 					_context.Verbs.Add(
-						new Models.Domain.Verb() { Id = ++vi, Name = v.Name, BinyanId = bi, Meaning = v.Meaning, Root = v.Root });
+						new Verb() { Id = ++vi, Name = v.Name, BinyanId = bi, Meaning = v.Meaning, Root = v.Root });
 
 					foreach (var t in v.Tenses)
 					{
 						_context.Conjugations.Add(
 							t.Conjugations.Select(
-								c => new Models.Domain.Conjugation()
+								c => new Conjugation()
 								{
 									VerbId = vi,
 									Text = c.Text,
@@ -65,13 +68,13 @@ namespace VerbTrainer.DbInitializer
 
             _context.SaveChanges();
 
-            _context.Decks.Add(new Deck { Id = 1, UserId = 1, Name = "Top 100 Hebrew Verbs" });
+            _context.Decks.Add(Deck.CreateNew("Top 100 Hebrew Verbs", 1));
             _context.SaveChanges();
 			Deck deck = _context.Decks.First(d => d.Name == "Top 100 Hebrew Verbs");
 
-            List<Models.Domain.Verb> top100 = _context.Verbs.ToList();
+            List<Verb> top100 = _context.Verbs.ToList();
 
-			top100.ForEach(v => _context.DeckVerbs.Add(new DeckVerb { DeckId = deck.Id, VerbId = v.Id }));
+			top100.ForEach(v => _context.DeckVerbs.Add(DeckVerb.CreateNew(deck.Id, v.Id)));
 
             _context.SaveChanges();
 		}
