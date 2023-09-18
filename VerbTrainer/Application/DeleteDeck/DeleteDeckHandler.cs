@@ -32,8 +32,9 @@ namespace VerbTrainer.Application.DeleteDeck
                 throw new DeckNotFoundException(
                 $"Deck {id} not found.");
             }
-            bool success = await _deckRepository.DeleteAsync(deck);
-            if (!success)
+            await _deckRepository.DeleteAsync(deck);
+            int recordsDeleted = await _deckRepository.SaveChangesAsync();
+            if (recordsDeleted == 0)
             {
                 throw new CouldNotDeleteDeckException(
                     $"Deck ID {id} was not deleted");
