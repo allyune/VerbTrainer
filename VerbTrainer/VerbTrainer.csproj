@@ -23,29 +23,55 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
     <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
     <PackageReference Include="RabbitMQ.Client.Core.DependencyInjection" Version="5.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="allverbs" />
-    <None Remove="Data\" />
-    <None Remove="Models\Domain\" />
     <None Remove="ViewModels\" />
     <None Remove="DTOs\" />
     <None Remove="Infrastructure\" />
     <None Remove="Infrastructure\Messaging\" />
     <None Remove="Infrastructure\Messaging\Producer\" />
     <None Remove="Infrastructure\Messaging\Configuration\" />
+    <None Remove="Infrastructure\Data\" />
+    <None Remove="Infrastructure\DbInitializer\" />
+    <None Remove="Infrastructure\Data\Models\" />
+    <None Remove="Infrastructure\Repositories\" />
+    <None Remove="Domain\" />
+    <None Remove="Domain\Base\" />
+    <None Remove="Domain\Interfaces\" />
+    <None Remove="Application\" />
+    <None Remove="Application\LoadUserDecks\" />
+    <None Remove="Application\LoadDeck\" />
+    <None Remove="Application\LoadConjugations\" />
+    <None Remove="Application\CreateDeck\" />
+    <None Remove="Application\DeleteDeck\" />
+    <None Remove="Application\AddVerbToDeck\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="allverbs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Models\Domain\" />
     <Folder Include="ViewModels\" />
     <Folder Include="DTOs\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Infrastructure\Messaging\" />
     <Folder Include="Infrastructure\Messaging\Producer\" />
     <Folder Include="Infrastructure\Messaging\Configuration\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\Data\" />
+    <Folder Include="Infrastructure\DbInitializer\" />
+    <Folder Include="Infrastructure\Data\Models\" />
+    <Folder Include="Infrastructure\Repositories\" />
+    <Folder Include="Domain\" />
+    <Folder Include="Domain\Base\" />
+    <Folder Include="Domain\Interfaces\" />
+    <Folder Include="Application\" />
+    <Folder Include="Application\LoadUserDecks\" />
+    <Folder Include="Application\LoadDeck\" />
+    <Folder Include="Application\LoadConjugations\" />
+    <Folder Include="Application\CreateDeck\" />
+    <Folder Include="Application\DeleteDeck\" />
+    <Folder Include="Application\AddVerbToDeck\" />
   </ItemGroup>
 </Project>

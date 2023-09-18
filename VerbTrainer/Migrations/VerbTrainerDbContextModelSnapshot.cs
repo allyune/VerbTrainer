@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using VerbTrainer.Data;
+using VerbTrainer.Infrastructure.Data;
 
 #nullable disable
 
@@ -16,12 +16,12 @@ namespace VerbTrainer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("VerbTrainer.Models.Domain.Binyan", b =>
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.Binyan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,12 +38,15 @@ namespace VerbTrainer.Migrations
                     b.ToTable("Binyanim");
                 });
 
-            modelBuilder.Entity("VerbTrainer.Models.Domain.Conjugation", b =>
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.Conjugation", b =>
                 {
                     b.Property<int>("VerbId")
                         .HasColumnType("integer");
 
                     b.Property<int>("TenseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Id")
                         .HasColumnType("integer");
 
                     b.Property<string>("Meaning")
@@ -65,7 +68,50 @@ namespace VerbTrainer.Migrations
                     b.ToTable("Conjugations");
                 });
 
-            modelBuilder.Entity("VerbTrainer.Models.Domain.Tense", b =>
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.Deck", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Decks");
+                });
+
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.DeckVerb", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DeckId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("VerbId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeckId");
+
+                    b.HasIndex("VerbId");
+
+                    b.ToTable("DeckVerbs");
+                });
+
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.Tense", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +128,7 @@ namespace VerbTrainer.Migrations
                     b.ToTable("Tenses");
                 });
 
-            modelBuilder.Entity("VerbTrainer.Models.Domain.Verb", b =>
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.Verb", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,15 +158,15 @@ namespace VerbTrainer.Migrations
                     b.ToTable("Verbs");
                 });
 
-            modelBuilder.Entity("VerbTrainer.Models.Domain.Conjugation", b =>
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.Conjugation", b =>
                 {
-                    b.HasOne("VerbTrainer.Models.Domain.Tense", "Tense")
+                    b.HasOne("VerbTrainer.Infrastructure.Data.Models.Hebrew.Tense", "Tense")
                         .WithMany()
                         .HasForeignKey("TenseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VerbTrainer.Models.Domain.Verb", "Verb")
+                    b.HasOne("VerbTrainer.Infrastructure.Data.Models.Hebrew.Verb", "Verb")
                         .WithMany("Conjugations")
                         .HasForeignKey("VerbId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -131,9 +177,28 @@ namespace VerbTrainer.Migrations
                     b.Navigation("Verb");
                 });
 
-            modelBuilder.Entity("VerbTrainer.Models.Domain.Verb", b =>
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.DeckVerb", b =>
                 {
-                    b.HasOne("VerbTrainer.Models.Domain.Binyan", "Binyan")
+                    b.HasOne("VerbTrainer.Infrastructure.Data.Models.Hebrew.Deck", "Deck")
+                        .WithMany("DeckVerbs")
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VerbTrainer.Infrastructure.Data.Models.Hebrew.Verb", "Verb")
+                        .WithMany("DeckVerbs")
+                        .HasForeignKey("VerbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deck");
+
+                    b.Navigation("Verb");
+                });
+
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.Verb", b =>
+                {
+                    b.HasOne("VerbTrainer.Infrastructure.Data.Models.Hebrew.Binyan", "Binyan")
                         .WithMany("Verbs")
                         .HasForeignKey("BinyanId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -142,14 +207,21 @@ namespace VerbTrainer.Migrations
                     b.Navigation("Binyan");
                 });
 
-            modelBuilder.Entity("VerbTrainer.Models.Domain.Binyan", b =>
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.Binyan", b =>
                 {
                     b.Navigation("Verbs");
                 });
 
-            modelBuilder.Entity("VerbTrainer.Models.Domain.Verb", b =>
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.Deck", b =>
+                {
+                    b.Navigation("DeckVerbs");
+                });
+
+            modelBuilder.Entity("VerbTrainer.Infrastructure.Data.Models.Hebrew.Verb", b =>
                 {
                     b.Navigation("Conjugations");
+
+                    b.Navigation("DeckVerbs");
                 });
 #pragma warning restore 612, 618
         }

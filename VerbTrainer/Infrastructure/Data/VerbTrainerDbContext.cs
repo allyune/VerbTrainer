@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using VerbTrainer.Models.Domain;
+using VerbTrainer.Infrastructure.Data.Models.Hebrew;
 
-namespace VerbTrainer.Data
+namespace VerbTrainer.Infrastructure.Data
 {
 	public class VerbTrainerDbContext : DbContext
 	{
@@ -24,8 +24,9 @@ namespace VerbTrainer.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<DeckVerb>()
-				.HasKey(dv => new { dv.DeckId, dv.VerbId });
-
+                .HasOne(dv => dv.Verb)
+                .WithOne()
+                .HasForeignKey<DeckVerb>(dv => dv.VerbId);
 
             modelBuilder.Entity<Verb>()
                 .HasMany(v => v.DeckVerbs)

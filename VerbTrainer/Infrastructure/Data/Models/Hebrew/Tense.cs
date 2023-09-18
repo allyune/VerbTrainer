@@ -2,11 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace VerbTrainer.Models.Domain
+namespace VerbTrainer.Infrastructure.Data.Models.Hebrew
 {
 
-	public class Tense
-	{
+	public class Tense : BaseVerbTrainerModel
+    {
 		public int Id { get; set; }
 		public string Name { get; set; }
 	}

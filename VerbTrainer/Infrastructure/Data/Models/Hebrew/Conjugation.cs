@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace VerbTrainer.Models.Domain
+namespace VerbTrainer.Infrastructure.Data.Models.Hebrew
 {
-    public class Conjugation
+    public class Conjugation : BaseVerbTrainerModel
     {
         [ForeignKey("VerbId")]
         public Verb Verb { get; set; }

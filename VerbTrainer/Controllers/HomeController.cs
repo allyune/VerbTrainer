@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using VerbTrainer.Data;
 using VerbTrainer.Models;
 using HebrewVerbs;
 using VerbTrainer.ViewModels;
 using Newtonsoft.Json;
+using VerbTrainer.Infrastructure.Data;
 
 namespace VerbTrainer.Controllers;
 
@@ -19,7 +17,6 @@ public class HomeController : Controller
     {
         _logger = logger;
         _dbContext = dbContext;
-
     }
 
     public IActionResult Index()

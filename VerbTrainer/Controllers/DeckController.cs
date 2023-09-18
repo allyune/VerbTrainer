@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using VerbTrainer.Data;
 using VerbTrainer.Models;
 using VerbTrainer.DTOs;
-using VerbTrainer.Models.Domain;
-using Microsoft.AspNetCore.Authorization;
+using VerbTrainer.Infrastructure.Data.Models.Hebrew;
+using VerbTrainer.Application.CreateDeck;
+using VerbTrainer.Application.LoadDeck;
+using VerbTrainer.Infrastructure.Data.Models;
+using VerbTrainer.Application.DeleteDeck;
+using VerbTrainer.Application.AddVerbToDeck;
 
 namespace VerbTrainer.Controllers
 {
@@ -12,129 +15,115 @@ namespace VerbTrainer.Controllers
     public class DeckController : Controller
     {
         private readonly ILogger<DeckController> _logger;
-        private readonly VerbTrainerDbContext _dbContext;
+        private readonly ICreateDeckHandler _createDeckHandler;
+        private readonly ILoadDeckHandler _loadDeckHandler;
+        private readonly IDeleteDeckHandler _deleteDeckHandler;
+        private readonly IAddVerbToDeckHandler _addVerbToDeckHandler;
 
-        public DeckController(ILogger<DeckController> logger, VerbTrainerDbContext dbContext)
+        public DeckController(
+            ILogger<DeckController> logger,
+            ICreateDeckHandler createDeckHandler,
+            ILoadDeckHandler loadDeckHandler,
+            IDeleteDeckHandler deleteDeckHandler,
+            IAddVerbToDeckHandler addVerbToDeckHandler)
         {
             _logger = logger;
-            _dbContext = dbContext;
-
+            _createDeckHandler = createDeckHandler;
+            _loadDeckHandler = loadDeckHandler;
+            _deleteDeckHandler = deleteDeckHandler;
+            _addVerbToDeckHandler = addVerbToDeckHandler;
         }
 
         [HttpGet("{deckid}")]
-        public IActionResult GetDeckById(int deckid)
+        public async Task<IActionResult> GetDeckById(int deckId)
         {
-            Deck? deck = _dbContext.Decks.FirstOrDefault(d => d.Id == deckid);
-            if (deck == null)
+            Deck deck;
+            try
             {
-                return NotFound();
+                deck = await _loadDeckHandler.LoadDeckById(deckId);
             }
-            DeckDto deckDto = new DeckDto
-            {
-                Name = deck.Name,
-                Verbs = _dbContext.Verbs
-                        .Where(v => _dbContext.DeckVerbs.Any(dw => dw.DeckId == deck.Id && dw.VerbId == v.Id))
-                        .Include(verb => verb.Conjugations)
-                            .ThenInclude(conjugation => conjugation.Tense)
-                        .Select(verb => new VerbDto
-                        {
-                            Id = verb.Id,
-                            Name = verb.Name,
-                            Meaning = verb.Meaning,
-                            Binyan = verb.Binyan,
-                            Root = verb.Root,
-                            Conjugations = verb.Conjugations.ToList()
-                        })
-                        .ToList()
-            };
 
-                
+            catch (DeckNotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest($"Deck with ID {deckId} not found.");
+            }
+
+            // TODO: Use mapper for conversions
+            ICollection<DeckVerb>? deckVerbs = deck.DeckVerbs;
+            List<Verb>? verbs = deckVerbs?.Select(v => v.Verb).ToList();
+            List<VerbDto>? verbDtos = verbs?.Select(
+                v => VerbDto.CreateNew(
+                    v.Id,
+                    v.Name,
+                    v.Root,
+                    v.Meaning,
+                    v.Binyan,
+                    v.Conjugations.ToList())).ToList();
+
+            DeckDto deckDto = DeckDto.CreateNew(deck.Name, verbDtos);
             return Json(deckDto);
         }
 
         [HttpPost]
-        public IActionResult AddDeck([FromBody] AddDeckDto data)
+        public async Task<IActionResult> AddDeck([FromBody] AddDeckDto data)
         {
-            _dbContext.Decks.Add(new Deck { UserId = data.UserId, Name = data.DeckName });
-            _dbContext.SaveChanges();
-
-            return Ok(200);
+            // TODO: validate dto with fluent validator
+            int newDeckId = await _createDeckHandler.CreateDeckForUser(
+                data.UserId, data.DeckName);
+            return Ok(newDeckId);
         }
 
         [HttpDelete("{deckid}")]
-        public IActionResult DeleteDeck(int deckid)
+        public async Task<IActionResult> DeleteDeck(int deckId)
         {
-            Deck deckToDelete = _dbContext.Decks.First(d => d.Id == deckid);
-            if (deckToDelete != null)
+            try
             {
-                _dbContext.Decks.Remove(deckToDelete);
-                _dbContext.SaveChanges();
-                return Ok(200);
+                await _deleteDeckHandler.DeleteDeckById(deckId);
             }
-            else
+            catch (DeckNotFoundException ex)
             {
-                return NotFound();
+                _logger.LogError(ex.Message);
+                return BadRequest($"Deck with ID {deckId} not found.");
             }
+            catch (CouldNotDeleteDeckException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(
+                    500,
+                    $"Error occured while deleting Deck {deckId}. Try again");
+            }
+
+            return Ok();
+
         }
-
-        // TODO: User-related logic to be moved to Auth/User service
-
-        //[HttpGet("user/{id}")]
-        //[Authorize]
-        //public IActionResult GetUserDecks(int id)
-        //{
-        //    User? user = _dbContext.Users.FirstOrDefault(u => u.Id == id);
-
-        //    if (user == null)
-        //    {
-        //        return NotFound("User not found");
-        //    }
-
-        //    List<Deck> userDecks = _dbContext.Decks.Where(d => d.UserId == id).ToList();
-
-        //    var userDTOs = userDecks.Select(deck => new DeckDto
-        //    {
-        //        Name = deck.Name,
-        //        Verbs = _dbContext.Verbs
-        //                .Where(v => _dbContext.DeckVerbs.Any(dw => dw.DeckId == deck.Id && dw.VerbId == v.Id))
-        //                .Include(verb => verb.Conjugations)
-        //                    .ThenInclude(conjugation => conjugation.Tense)
-        //                .Select(verb => new VerbDto
-        //                {
-        //                    Id = verb.Id,
-        //                    Name = verb.Name,
-        //                    Meaning = verb.Meaning,
-        //                    Binyan = verb.Binyan,
-        //                    Root = verb.Root,
-        //                    Conjugations = verb.Conjugations.ToList()
-        //                })
-        //                .ToList()
-        //    });
-        //    return Json(userDTOs);
-        //}
 
 
         [HttpPost("verb")]
-        public IActionResult AddVerbToDeck([FromBody] AddVerbDto data)
+        public async Task<IActionResult> AddVerbToDeck([FromBody] AddVerbDto data)
         {
-            Deck? deck = _dbContext.Decks.FirstOrDefault(d => d.Id == data.DeckId);
-            Verb? verb = _dbContext.Verbs.FirstOrDefault(v => v.Id == data.VerbId);
-
-            if (deck == null || verb == null)
+            try
             {
-                return NotFound("Deck or Verb not found");
+                await _addVerbToDeckHandler.AddVerbToDeck(data.VerbId, data.DeckId);
             }
-
-            if (!_dbContext.DeckVerbs.Any(dv => dv.DeckId == deck.Id && dv.VerbId == verb.Id))
+            catch (RecordDoesNotExistsException ex)
             {
-                DeckVerb deckVerb = new DeckVerb
-                {
-                    DeckId = deck.Id,
-                    VerbId = verb.Id
-                };
-
-                _dbContext.DeckVerbs.Add(deckVerb);
-                _dbContext.SaveChanges();
+                _logger.LogError(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (DeckVerbAlreadyExistsException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(AddVerbToDeckException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
             }
             return Ok(200);
         }
