@@ -36,7 +36,6 @@
     <None Remove="Infrastructure\Data\" />
     <None Remove="Infrastructure\DbInitializer\" />
     <None Remove="Infrastructure\Data\Models\" />
-    <None Remove="Migrations\" />
     <None Remove="Infrastructure\Repositories\" />
     <None Remove="Domain\" />
     <None Remove="Domain\Base\" />
@@ -63,7 +62,6 @@
     <Folder Include="Infrastructure\Data\" />
     <Folder Include="Infrastructure\DbInitializer\" />
     <Folder Include="Infrastructure\Data\Models\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Infrastructure\Repositories\" />
     <Folder Include="Domain\" />
     <Folder Include="Domain\Base\" />
