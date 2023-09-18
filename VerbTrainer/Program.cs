@@ -12,6 +12,7 @@ using VerbTrainer.Infrastructure.Repositories;
 using VerbTrainer.Application.CreateDeck;
 using VerbTrainer.Application.LoadDeck;
 using VerbTrainer.Application.DeleteDeck;
+using VerbTrainer.Application.AddVerbToDeck;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Configuration.AddJsonFile("appsettings.json");
@@ -43,6 +44,7 @@ builder.Services.AddScoped<IRabbitMqConnectionFactory, RabbitMqConnectionFactory
 builder.Services.AddScoped<IMessagingProducer, MessagingProducer>();
 builder.Services.AddScoped<IDeckRepository, DeckRepository>();
 builder.Services.AddScoped<IDeckVerbRepository, DeckVerbRepository>();
+builder.Services.AddScoped<IVerbRepository, VerbRepository>();
 builder.Services.AddScoped<ICreateDeckHandler, CreateDeckHandler>();
 builder.Services.AddScoped<ILoadDeckHandler, LoadDeckHandler>();
 builder.Services.AddScoped<IDeleteDeckHandler, DeleteDeckHandler>();
