@@ -69,7 +69,7 @@ namespace VerbTrainer.Application.AddVerbToDeck
             if (recordsAdded == 0)
             {
                 throw new AddVerbToDeckException(
-                    $"Couldn't add verb {verbId} to deck {deckId}");
+                    $"Couldn't add verb {verbId} to deck {deckId}. Try again.");
             }
 
         }
