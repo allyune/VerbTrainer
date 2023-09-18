@@ -24,11 +24,6 @@ namespace VerbTrainer.Infrastructure.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<DeckVerb>()
-                .HasOne(dv => dv.Deck)
-                .WithOne()
-                .HasForeignKey<DeckVerb>(dv => dv.DeckId);
-
-            modelBuilder.Entity<DeckVerb>()
                 .HasOne(dv => dv.Verb)
                 .WithOne()
                 .HasForeignKey<DeckVerb>(dv => dv.VerbId);
