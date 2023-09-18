@@ -8,6 +8,7 @@ namespace VerbTrainer.Domain.Base
     {
         Task<T?> GetAsync(Expression<Func<T, bool>> expression);
         Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
+        Task<bool> CheckRecordExists(Expression<Func<T, bool>> expression);
     }
 }
 

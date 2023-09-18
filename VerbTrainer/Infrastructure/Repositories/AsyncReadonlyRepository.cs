@@ -18,14 +18,19 @@ namespace VerbTrainer.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        Task<T?> IAsyncReadonlyRepository<T>.GetAsync(Expression<Func<T, bool>> expression)
+        public Task<T?> GetAsync(Expression<Func<T, bool>> expression)
         {
             return _dbSet.FirstOrDefaultAsync(expression);
         }
 
-        Task<List<T>> IAsyncReadonlyRepository<T>.ListAsync(Expression<Func<T, bool>> expression)
+        public Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
         {
             return _dbSet.Where(expression).ToListAsync();
+        }
+
+        public async Task<bool> CheckRecordExists(Expression<Func<T, bool>> expression)
+        {
+            return await GetAsync(expression) != null;
         }
     }
 }
