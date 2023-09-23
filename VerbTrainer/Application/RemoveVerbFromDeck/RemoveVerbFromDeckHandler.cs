@@ -5,22 +5,22 @@ using VerbTrainer.Application.SharedExceptions;
 using VerbTrainer.Domain.Interfaces;
 using VerbTrainer.Infrastructure.Data.Models.Hebrew;
 
-namespace VerbTrainer.Application.AddVerbToDeck
+namespace VerbTrainer.Application.RemoveVerbFromDeck
 {
-    public interface IAddVerbToDeckHandler
+    public interface IRemoveVerbFromDeckHandler
     {
-        Task AddVerbToDeck(int verbId, int deckId);
+        Task RemoveVerbFromDeck(int verbId, int deckId);
     }
 
-    public class AddVerbToDeckHandler : IAddVerbToDeckHandler
+    public class RemoveVerbFromDeckHandler : IRemoveVerbFromDeckHandler
     {
-        private readonly ILogger<AddVerbToDeckHandler> _logger;
+        private readonly ILogger<RemoveVerbFromDeckHandler> _logger;
         private readonly IDeckVerbRepository _deckVerbRepository;
         private readonly IDeckRepository _deckRepository;
         private readonly IVerbRepository _verbRepository;
 
-        public AddVerbToDeckHandler(
-            ILogger<AddVerbToDeckHandler> logger,
+        public RemoveVerbFromDeckHandler(
+            ILogger<RemoveVerbFromDeckHandler> logger,
             IDeckVerbRepository deckVerbRepository,
             IDeckRepository deckRepository,
             IVerbRepository verbRepository)
@@ -46,31 +46,23 @@ namespace VerbTrainer.Application.AddVerbToDeck
             return true;
         }
 
-        private async Task<bool> _checkVerbDeckExists(
+        public async Task RemoveVerbFromDeck(
             int verbId, int deckId)
         {
-            bool recordExists = await _deckVerbRepository.CheckRecordExists(
-                dv => dv.DeckId == deckId && dv.VerbId == verbId);
-            if (recordExists)
+            _ = await _checkVerbAndDeckExist(verbId, deckId);
+            DeckVerb? deckVerb = await _deckVerbRepository.GetAsync(
+                dw => dw.DeckId == deckId && dw.VerbId == verbId);
+            if (deckVerb is null)
             {
-                throw new DeckVerbAlreadyExistsException(
-                    $"Verb {verbId} already linked to deck {deckId}");
+                throw new VerbNotInDeckException(
+                    $"Verb {verbId} is not linked to deck {deckId}");
             }
-            return false;
-        }
-
-        public async Task AddVerbToDeck(
-            int verbId, int deckId)
-        {
-            _ = await _checkVerbAndDeckExist(verbId, deckId);
-            _ = await _checkVerbAndDeckExist(verbId, deckId);
-            DeckVerb deckVerb = DeckVerb.CreateNew(deckId, verbId);
-            await _deckVerbRepository.AddAsync(deckVerb);
-            int recordsAdded = await _deckVerbRepository.SaveChangesAsync();
-            if (recordsAdded == 0)
+            await _deckVerbRepository.DeleteAsync(deckVerb);
+            int recordsDeleted = await _deckVerbRepository.SaveChangesAsync();
+            if (recordsDeleted == 0)
             {
-                throw new AddVerbToDeckException(
-                    $"Couldn't add verb {verbId} to deck {deckId}. Try again.");
+                throw new RemoveVerbFromDeckException(
+                    $"Couldn't remove verb {verbId} from deck {deckId}. Try again.");
             }
 
         }

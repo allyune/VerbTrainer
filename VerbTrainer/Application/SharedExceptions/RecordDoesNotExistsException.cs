@@ -1,5 +1,5 @@
 ﻿using System;
-namespace VerbTrainer.Application.AddVerbToDeck
+namespace VerbTrainer.Application.SharedExceptions
 {
 	public class RecordDoesNotExistsException : Exception
 	{
