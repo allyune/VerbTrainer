@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainerMessaging", "Ver
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbTrainerUser", "VerbTrainerUser\VerbTrainerUser.csproj", "{B508B7E8-3042-4F76-8395-3D5D6D445D27}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{4F26F09B-82E9-4A47-A130-52E5807FF12D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B508B7E8-3042-4F76-8395-3D5D6D445D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B508B7E8-3042-4F76-8395-3D5D6D445D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B508B7E8-3042-4F76-8395-3D5D6D445D27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F26F09B-82E9-4A47-A130-52E5807FF12D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F26F09B-82E9-4A47-A130-52E5807FF12D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F26F09B-82E9-4A47-A130-52E5807FF12D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F26F09B-82E9-4A47-A130-52E5807FF12D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
