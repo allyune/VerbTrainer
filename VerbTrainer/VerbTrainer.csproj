@@ -47,6 +47,8 @@
     <None Remove="Application\CreateDeck\" />
     <None Remove="Application\DeleteDeck\" />
     <None Remove="Application\AddVerbToDeck\" />
+    <None Remove="Application\SharedExceptions\" />
+    <None Remove="Application\RemoveVerbFromDeck\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="allverbs" />
@@ -73,5 +75,7 @@
     <Folder Include="Application\CreateDeck\" />
     <Folder Include="Application\DeleteDeck\" />
     <Folder Include="Application\AddVerbToDeck\" />
+    <Folder Include="Application\SharedExceptions\" />
+    <Folder Include="Application\RemoveVerbFromDeck\" />
   </ItemGroup>
 </Project>

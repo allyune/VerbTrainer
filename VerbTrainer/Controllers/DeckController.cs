@@ -8,6 +8,8 @@ using VerbTrainer.Application.LoadDeck;
 using VerbTrainer.Infrastructure.Data.Models;
 using VerbTrainer.Application.DeleteDeck;
 using VerbTrainer.Application.AddVerbToDeck;
+using VerbTrainer.Application.SharedExceptions;
+using VerbTrainer.Application.RemoveVerbFromDeck;
 
 namespace VerbTrainer.Controllers
 {
@@ -19,19 +21,22 @@ namespace VerbTrainer.Controllers
         private readonly ILoadDeckHandler _loadDeckHandler;
         private readonly IDeleteDeckHandler _deleteDeckHandler;
         private readonly IAddVerbToDeckHandler _addVerbToDeckHandler;
+        private readonly IRemoveVerbFromDeckHandler _removeVerbFromDeckHandler;
 
         public DeckController(
             ILogger<DeckController> logger,
             ICreateDeckHandler createDeckHandler,
             ILoadDeckHandler loadDeckHandler,
             IDeleteDeckHandler deleteDeckHandler,
-            IAddVerbToDeckHandler addVerbToDeckHandler)
+            IAddVerbToDeckHandler addVerbToDeckHandler,
+            IRemoveVerbFromDeckHandler removeVerbFromDeckHandler)
         {
             _logger = logger;
             _createDeckHandler = createDeckHandler;
             _loadDeckHandler = loadDeckHandler;
             _deleteDeckHandler = deleteDeckHandler;
             _addVerbToDeckHandler = addVerbToDeckHandler;
+            _removeVerbFromDeckHandler = removeVerbFromDeckHandler;
         }
 
         [HttpGet("{deckid}")]
@@ -116,6 +121,36 @@ namespace VerbTrainer.Controllers
                 return BadRequest(ex.Message);
             }
             catch(AddVerbToDeckException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+            return Ok(200);
+        }
+
+        [HttpPost("verb")]
+        public async Task<IActionResult> RemoveVerbFromDeck([FromBody] RemoveVerbDto data)
+        {
+            try
+            {
+                await _removeVerbFromDeckHandler.RemoveVerbFromDeck(
+                    data.VerbId, data.DeckId);
+            }
+            catch (RecordDoesNotExistsException ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (VerbNotInDeckException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (RemoveVerbFromDeckException ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, ex.Message);
